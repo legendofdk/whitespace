@@ -3,7 +3,14 @@ import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { projects } from "@/data/mock";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage({
+  searchParams
+}: {
+  searchParams: Promise<{ featured?: string }>;
+}) {
+  const params = await searchParams;
+  const filteredProjects = params.featured === "true" ? projects.filter((project) => project.isFeatured) : projects;
+
   return (
     <main className="bg-mist pb-16">
       <section className="shell py-16">
@@ -18,7 +25,7 @@ export default function ProjectsPage() {
       <section className="shell pt-16">
         <SectionHeading eyebrow="Toàn bộ dự án" title="Danh sách dự án đáng chú ý tại khu Đông Hà Nội" />
         <div className="grid gap-6 lg:grid-cols-3">
-          {projects.map((project) => (
+          {filteredProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
         </div>

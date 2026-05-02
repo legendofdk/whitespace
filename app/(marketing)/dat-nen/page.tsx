@@ -4,7 +4,16 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { landListings } from "@/data/mock";
 import { toLandCardItem } from "@/lib/real-estate";
 
-export default function LandPage() {
+export default async function LandPage({
+  searchParams
+}: {
+  searchParams: Promise<{ area?: string }>;
+}) {
+  const params = await searchParams;
+  const filteredLandListings = params.area
+    ? landListings.filter((item) => item.area === params.area)
+    : landListings;
+
   return (
     <main className="bg-mist pb-16">
       <section className="shell py-16">
@@ -19,7 +28,7 @@ export default function LandPage() {
       <section className="shell pt-16">
         <SectionHeading eyebrow="Đất nền hot" title="Các sản phẩm nổi bật theo từng khu vực tiềm năng" />
         <div className="grid gap-6 lg:grid-cols-2">
-          {landListings.map((item) => {
+          {filteredLandListings.map((item) => {
             const cardItem = toLandCardItem(item);
 
             return (

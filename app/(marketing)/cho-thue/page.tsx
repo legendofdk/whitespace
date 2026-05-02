@@ -4,7 +4,14 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { rentals } from "@/data/mock";
 import { toRentalCardItem } from "@/lib/real-estate";
 
-export default function RentalPage() {
+export default async function RentalPage({
+  searchParams
+}: {
+  searchParams: Promise<{ area?: string }>;
+}) {
+  const params = await searchParams;
+  const filteredRentals = params.area ? rentals.filter((item) => item.area === params.area) : rentals;
+
   return (
     <main className="bg-mist pb-16">
       <section className="shell py-16">
@@ -19,7 +26,7 @@ export default function RentalPage() {
       <section className="shell pt-16">
         <SectionHeading eyebrow="Cho thuê nổi bật" title="Các vị trí phù hợp kinh doanh và vận hành thực tế" />
         <div className="grid gap-6 lg:grid-cols-2">
-          {rentals.map((item) => {
+          {filteredRentals.map((item) => {
             const cardItem = toRentalCardItem(item);
 
             return (
