@@ -1,0 +1,33 @@
+import Link from "next/link";
+
+export function Footer() {
+  return (
+    <footer className="bg-ink py-14 text-slate-300">
+      <div className="shell grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
+        <div>
+          <p className="font-display text-3xl text-white">WhiteSpace</p>
+          <p className="mt-4 max-w-md text-sm leading-7 text-slate-400">
+            Chuyên giới thiệu dự án, đất nền và sản phẩm cho thuê tại phía Đông Hà Nội với định hướng sang trọng và rõ thông tin.
+          </p>
+        </div>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white">Danh mục</p>
+          <div className="mt-4 flex flex-col gap-3 text-sm">
+            <Link href="/du-an">Dự án</Link>
+            <Link href="/dat-nen">Đất nền</Link>
+            <Link href="/cho-thue">Cho thuê</Link>
+            <Link href="/tin-tuc">Tin tức</Link>
+          </div>
+        </div>
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white">Liên hệ</p>
+          <div className="mt-4 space-y-3 text-sm">
+            <p>Hotline: 0234235344</p>
+            <p>Email: hello@whitespace.vn</p>
+            <p>Văn phòng: Long Biên, Hà Nội</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
