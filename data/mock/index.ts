@@ -18,7 +18,7 @@ export const projects: Project[] = [
     handoverTime: "Q4/2028",
     ownership: "Sở hữu lâu dài",
     price: "Từ 12 tỷ/căn",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Đại đô thị",
     cardMeta: "420 ha • Biệt thự, shophouse, căn hộ",
     thumbnail:
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     handoverTime: "Q2/2027",
     ownership: "Sở hữu lâu dài",
     price: "Từ 11.5 tỷ/căn",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Compound thấp tầng",
     cardMeta: "9.6 ha • Nhà phố, shophouse, biệt thự",
     thumbnail:
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     scale: "6.1 ha",
     productTypes: ["Biệt thự", "Nhà liền kề", "Shophouse"],
     price: "Từ 8.6 tỷ/căn",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Khu thấp tầng",
     cardMeta: "6.1 ha • Biệt thự, liền kề, shophouse",
     thumbnail:
@@ -106,7 +106,7 @@ export const landListings: LandListing[] = [
     acreage: "100 m2",
     legal: "Sổ riêng từng nền",
     price: "10.8 tỷ",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Đất nền",
     cardMeta: "100 m2 • Sổ riêng từng nền",
     thumbnail:
@@ -127,7 +127,7 @@ export const landListings: LandListing[] = [
     acreage: "120 m2",
     legal: "Đầy đủ pháp lý",
     price: "9.6 tỷ",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Đất nền",
     cardMeta: "120 m2 • Pháp lý đầy đủ",
     thumbnail:
@@ -150,7 +150,7 @@ export const rentals: RentalListing[] = [
     coordinates: { lat: 20.9958, lng: 105.9449 },
     size: "180 m2",
     price: "95 triệu/tháng",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Cho thuê",
     cardMeta: "180 m2 • Shophouse thương mại",
     thumbnail:
@@ -171,7 +171,7 @@ export const rentals: RentalListing[] = [
     coordinates: { lat: 21.0419, lng: 105.8898 },
     size: "220 m2",
     price: "110 triệu/tháng",
-    hotline: "0234235344",
+    hotline: "0377281119",
     badge: "Cho thuê",
     cardMeta: "220 m2 • Mặt bằng góc 2 mặt tiền",
     thumbnail:
@@ -196,11 +196,8 @@ export const posts: Post[] = [
       "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1600&q=80",
     thumbnail:
       "https://images.unsplash.com/photo-1460317442991-0ec209397118?auto=format&fit=crop&w=1200&q=80",
-    content: [
-      "Phía Đông Hà Nội đang là điểm đến của dòng tiền khi hạ tầng giao thông, quy hoạch đô thị và mặt bằng tiện ích được đẩy nhanh trong cùng một giai đoạn.",
-      "Những khu vực như Gia Lâm, Long Biên và Đông Anh đang ghi nhận mức độ quan tâm lớn nhờ lợi thế kết nối, tốc độ đô thị hóa và sự xuất hiện của các đại dự án quy mô lớn.",
-      "Trong bối cảnh đó, người mua ưu tiên những dự án có pháp lý rõ ràng, chủ đầu tư uy tín và khả năng khai thác ở thực hoặc cho thuê ổn định."
-    ],
+    content:
+      "<p>Phía Đông Hà Nội đang là điểm đến của dòng tiền khi hạ tầng giao thông, quy hoạch đô thị và mặt bằng tiện ích được đẩy nhanh trong cùng một giai đoạn.</p><p>Những khu vực như Gia Lâm, Long Biên và Đông Anh đang ghi nhận mức độ quan tâm lớn nhờ lợi thế kết nối, tốc độ đô thị hóa và sự xuất hiện của các đại dự án quy mô lớn.</p><p>Trong bối cảnh đó, người mua ưu tiên những dự án có pháp lý rõ ràng, chủ đầu tư uy tín và khả năng khai thác ở thực hoặc cho thuê ổn định.</p>",
     relatedPostSlugs: ["5-tieu-chi-chon-du-an", "ha-tang-va-gia-tri-dat-nen"],
     seoTitle: "Xu hướng bất động sản cao cấp năm 2026",
     seoDescription: "Góc nhìn thị trường và dòng tiền đang dịch chuyển về khu Đông Hà Nội."
@@ -216,11 +213,8 @@ export const posts: Post[] = [
       "https://images.unsplash.com/photo-1430285561322-7808604715df?auto=format&fit=crop&w=1600&q=80",
     thumbnail:
       "https://images.unsplash.com/photo-1430285561322-7808604715df?auto=format&fit=crop&w=1200&q=80",
-    content: [
-      "Tiêu chí đầu tiên luôn là vị trí và khả năng kết nối thực tế tới các trục giao thông lớn, trung tâm hành chính và khu dịch vụ.",
-      "Tiếp theo là pháp lý và uy tín chủ đầu tư, bởi đây là nền tảng để bảo toàn dòng tiền trong dài hạn.",
-      "Ngoài ra, người mua nên nhìn thêm vào nhịp phát triển hạ tầng, mật độ cư dân hiện hữu và khả năng thanh khoản ở từng phân khúc cụ thể."
-    ],
+    content:
+      "<p>Tiêu chí đầu tiên luôn là vị trí và khả năng kết nối thực tế tới các trục giao thông lớn, trung tâm hành chính và khu dịch vụ.</p><p>Tiếp theo là pháp lý và uy tín chủ đầu tư, bởi đây là nền tảng để bảo toàn dòng tiền trong dài hạn.</p><p>Ngoài ra, người mua nên nhìn thêm vào nhịp phát triển hạ tầng, mật độ cư dân hiện hữu và khả năng thanh khoản ở từng phân khúc cụ thể.</p>",
     relatedPostSlugs: ["xu-huong-bat-dong-san-2026", "ha-tang-va-gia-tri-dat-nen"],
     seoTitle: "5 tiêu chí chọn dự án để ở và giữ tài sản",
     seoDescription: "Các tiêu chí quan trọng khi chọn dự án bất động sản tại phía Đông Hà Nội."
@@ -236,11 +230,8 @@ export const posts: Post[] = [
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=80",
     thumbnail:
       "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80",
-    content: [
-      "Giá trị đất nền thường thay đổi mạnh khi khu vực xuất hiện các công trình hạ tầng có khả năng rút ngắn thời gian di chuyển và tăng mật độ sử dụng thực tế.",
-      "Tại phía Đông Hà Nội, các cây cầu mới, trục vành đai và khu đô thị quy mô lớn đang tạo ra kỳ vọng rõ ràng về mặt bằng giá trong trung hạn.",
-      "Tuy nhiên, nhà đầu tư vẫn cần chọn những vị trí có pháp lý chắc chắn và thanh khoản tốt thay vì chỉ chạy theo tin tức ngắn hạn."
-    ],
+    content:
+      "<p>Giá trị đất nền thường thay đổi mạnh khi khu vực xuất hiện các công trình hạ tầng có khả năng rút ngắn thời gian di chuyển và tăng mật độ sử dụng thực tế.</p><p>Tại phía Đông Hà Nội, các cây cầu mới, trục vành đai và khu đô thị quy mô lớn đang tạo ra kỳ vọng rõ ràng về mặt bằng giá trong trung hạn.</p><p>Tuy nhiên, nhà đầu tư vẫn cần chọn những vị trí có pháp lý chắc chắn và thanh khoản tốt thay vì chỉ chạy theo tin tức ngắn hạn.</p>",
     relatedPostSlugs: ["xu-huong-bat-dong-san-2026", "5-tieu-chi-chon-du-an"],
     seoTitle: "Hạ tầng tác động thế nào đến giá trị đất nền",
     seoDescription: "Phân tích tác động của hạ tầng tới mặt bằng giá đất nền khu Đông Hà Nội."

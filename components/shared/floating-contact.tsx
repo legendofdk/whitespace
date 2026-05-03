@@ -1,6 +1,6 @@
 const contactItems = [
   {
-    href: "https://facebook.com",
+    href: "https://www.facebook.com/chucucls.chucucls",
     label: "Facebook",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
@@ -11,7 +11,7 @@ const contactItems = [
     pulseClass: "before:bg-[#1877F2]/30"
   },
   {
-    href: "tel:0234235344",
+    href: "tel:0377281119",
     label: "Phone",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[15px] w-[15px] fill-current">
@@ -22,7 +22,7 @@ const contactItems = [
     pulseClass: "before:bg-[#16a34a]/30"
   },
   {
-    href: "https://zalo.me",
+    href: "https://zalo.me/0377281119",
     label: "Zalo",
     icon: <span className="text-base font-black leading-none">Z</span>,
     bgClass: "bg-[#0068ff]",

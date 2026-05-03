@@ -3,21 +3,20 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PostCard } from "@/components/cards/post-card";
-import { posts } from "@/data/mock";
+import { HtmlContent } from "@/components/shared/html-content";
+import { getPublicPostBySlug, getPublicPosts } from "@/lib/public-api";
 
-export function generateStaticParams() {
-  return posts.map((post) => ({ slug: post.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = posts.find((item) => item.slug === slug);
+  const [post, allPosts] = await Promise.all([getPublicPostBySlug(slug), getPublicPosts()]);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = posts.filter((item) => post.relatedPostSlugs?.includes(item.slug));
+  const relatedPosts = allPosts.filter((item) => post.relatedPostSlugs?.includes(item.slug));
   const heroImage = post.bannerImage ?? post.thumbnail;
 
   return (
@@ -48,9 +47,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             <div className="rounded-[32px] border border-line p-8">
               <div className="space-y-5 text-base leading-8 text-steel">
                 <p className="text-lg font-medium text-ink">{post.excerpt}</p>
-                {post.content.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
+                <HtmlContent
+                  html={post.content}
+                  className="prose prose-slate max-w-none prose-p:leading-8 prose-headings:font-display prose-headings:text-ink prose-strong:text-ink"
+                />
               </div>
             </div>
           </article>
@@ -69,10 +69,10 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                 Cần thêm thông tin về dự án, đất nền hoặc sản phẩm cho thuê tại phía Đông Hà Nội, liên hệ ngay để được hỗ trợ.
               </p>
               <a
-                href="tel:0234235344"
+                href="tel:0377281119"
                 className="mt-6 inline-flex rounded-full bg-sand px-5 py-3 text-sm font-semibold text-ink"
               >
-                Hotline 0234235344
+                Hotline 0377281119
               </a>
             </div>
           </aside>

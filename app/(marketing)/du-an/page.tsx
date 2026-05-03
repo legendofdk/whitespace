@@ -1,15 +1,21 @@
 import { ProjectCard } from "@/components/cards/project-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { projects } from "@/data/mock";
+import { getPublicProjects } from "@/lib/public-api";
+
+export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage({
   searchParams
 }: {
-  searchParams: Promise<{ featured?: string }>;
+  searchParams: Promise<{ featured?: string; area?: string; search?: string }>;
 }) {
   const params = await searchParams;
-  const filteredProjects = params.featured === "true" ? projects.filter((project) => project.isFeatured) : projects;
+  const filteredProjects = await getPublicProjects({
+    featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
+    area: params.area || undefined,
+    search: params.search || undefined
+  });
 
   return (
     <main className="bg-mist pb-16">
@@ -19,7 +25,33 @@ export default async function ProjectsPage({
       </section>
 
       <section className="shell">
-        <FilterBar placeholder="Tìm theo tên dự án" filters={["Khu vực", "Loại sản phẩm", "Mức giá"]} />
+        <FilterBar
+          action="/du-an"
+          searchPlaceholder="Tìm theo tên dự án"
+          searchDefaultValue={params.search ?? ""}
+          filters={[
+            {
+              name: "area",
+              label: "Khu vực",
+              defaultValue: params.area ?? "",
+              options: [
+                { label: "Tất cả khu vực", value: "" },
+                { label: "Gia Lâm", value: "gia-lam" },
+                { label: "Long Biên", value: "long-bien" },
+                { label: "Đông Anh", value: "dong-anh" }
+              ]
+            },
+            {
+              name: "featured",
+              label: "Nổi bật",
+              defaultValue: params.featured ?? "",
+              options: [
+                { label: "Tất cả dự án", value: "" },
+                { label: "Dự án nổi bật", value: "true" }
+              ]
+            }
+          ]}
+        />
       </section>
 
       <section className="shell pt-16">

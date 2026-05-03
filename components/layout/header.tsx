@@ -1,47 +1,51 @@
 "use client";
 
-import { projects } from "@/data/mock";
 import Link from "next/link";
 import { useState } from "react";
 
-const featuredProjectItems = projects
-  .filter((project) => project.isFeatured)
-  .map((project) => ({
-    href: `/du-an/${project.slug}`,
-    label: project.name
-  }));
+type HeaderProps = {
+  featuredProjects: Array<{
+    slug: string;
+    name: string;
+  }>;
+  areas: Array<{
+    id: string;
+    name: string;
+    slug: string;
+  }>;
+};
 
-const navItems = [
-  {
-    href: "/du-an",
-    label: "Dự án",
-    children: featuredProjectItems
-  },
-  {
-    href: "/dat-nen",
-    label: "Đất nền",
-    children: [
-      { href: "/dat-nen?area=Gia%20L%C3%A2m", label: "Gia Lâm" },
-      { href: "/dat-nen?area=Long%20Bi%C3%AAn", label: "Long Biên" },
-      { href: "/dat-nen?area=%C4%90%C3%B4ng%20Anh", label: "Đông Anh" }
-    ]
-  },
-  {
-    href: "/cho-thue",
-    label: "Cho thuê",
-    children: [
-      { href: "/cho-thue?area=Gia%20L%C3%A2m", label: "Gia Lâm" },
-      { href: "/cho-thue?area=Long%20Bi%C3%AAn", label: "Long Biên" },
-      { href: "/cho-thue?area=%C4%90%C3%B4ng%20Anh", label: "Đông Anh" }
-    ]
-  },
-  { href: "/tin-tuc", label: "Tin tức" },
-  { href: "/lien-he", label: "Liên hệ" }
-];
-
-export function Header() {
+export function Header({ featuredProjects, areas }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const navItems = [
+    {
+      href: "/du-an",
+      label: "Dự án",
+      children: featuredProjects.map((project) => ({
+        href: `/du-an/${project.slug}`,
+        label: project.name
+      }))
+    },
+    {
+      href: "/dat-nen",
+      label: "Đất nền",
+      children: areas.map((area) => ({
+        href: `/dat-nen?area=${area.slug}`,
+        label: area.name
+      }))
+    },
+    {
+      href: "/cho-thue",
+      label: "Cho thuê",
+      children: areas.map((area) => ({
+        href: `/cho-thue?area=${area.slug}`,
+        label: area.name
+      }))
+    },
+    { href: "/tin-tuc", label: "Tin tức" },
+    { href: "/lien-he", label: "Liên hệ" }
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur">
@@ -105,7 +109,7 @@ export function Header() {
             </div>
           ))}
           <a
-            href="tel:0234235344"
+            href="tel:0377281119"
             className="rounded-full border border-sand/40 bg-sand px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white"
           >
             Hotline 24/7

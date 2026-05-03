@@ -1,16 +1,22 @@
 import { ListingCard } from "@/components/cards/listing-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { rentals } from "@/data/mock";
+import { getPublicRentals } from "@/lib/public-api";
 import { toRentalCardItem } from "@/lib/real-estate";
+
+export const dynamic = "force-dynamic";
 
 export default async function RentalPage({
   searchParams
 }: {
-  searchParams: Promise<{ area?: string }>;
+  searchParams: Promise<{ area?: string; search?: string; featured?: string }>;
 }) {
   const params = await searchParams;
-  const filteredRentals = params.area ? rentals.filter((item) => item.area === params.area) : rentals;
+  const filteredRentals = await getPublicRentals({
+    area: params.area,
+    search: params.search || undefined,
+    featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined
+  });
 
   return (
     <main className="bg-mist pb-16">
@@ -20,7 +26,33 @@ export default async function RentalPage({
       </section>
 
       <section className="shell">
-        <FilterBar placeholder="Tìm kiếm sản phẩm cho thuê" filters={["Khu vực", "Giá thuê", "Diện tích"]} />
+        <FilterBar
+          action="/cho-thue"
+          searchPlaceholder="Tìm kiếm sản phẩm cho thuê"
+          searchDefaultValue={params.search ?? ""}
+          filters={[
+            {
+              name: "area",
+              label: "Khu vực",
+              defaultValue: params.area ?? "",
+              options: [
+                { label: "Tất cả khu vực", value: "" },
+                { label: "Gia Lâm", value: "gia-lam" },
+                { label: "Long Biên", value: "long-bien" },
+                { label: "Đông Anh", value: "dong-anh" }
+              ]
+            },
+            {
+              name: "featured",
+              label: "Nổi bật",
+              defaultValue: params.featured ?? "",
+              options: [
+                { label: "Tất cả sản phẩm", value: "" },
+                { label: "Cho thuê nổi bật", value: "true" }
+              ]
+            }
+          ]}
+        />
       </section>
 
       <section className="shell pt-16">

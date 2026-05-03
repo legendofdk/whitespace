@@ -4,11 +4,18 @@ import { ListingCard } from "@/components/cards/listing-card";
 import { PostCard } from "@/components/cards/post-card";
 import { ProjectCard } from "@/components/cards/project-card";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { landListings, posts, projects, rentals } from "@/data/mock";
+import { getPublicLandListings, getPublicPosts, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { toLandCardItem, toRentalCardItem } from "@/lib/real-estate";
 
-export default function HomePage() {
-  const featuredProjects = projects.filter((project) => project.isFeatured);
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [featuredProjects, landListings, rentals, posts] = await Promise.all([
+    getPublicProjects({ featured: true }),
+    getPublicLandListings({ featured: true }),
+    getPublicRentals({ featured: true }),
+    getPublicPosts()
+  ]);
 
   return (
     <main>
@@ -141,7 +148,7 @@ export default function HomePage() {
         <div className="shell">
           <SectionHeading eyebrow="Tin tức thị trường" title="Góc nhìn thị trường và thông tin đáng chú ý" />
           <div className="grid gap-6 lg:grid-cols-3">
-            {posts.map((post) => (
+            {posts.slice(0, 3).map((post) => (
               <PostCard key={post.id} post={post} />
             ))}
           </div>

@@ -1,0 +1,65 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
+import { adminApiBaseUrl } from "./admin-api";
+
+const adminLinks = [
+  { href: "/dashboard/areas", label: "Khu vực" },
+  { href: "/dashboard/projects", label: "Dự án" },
+  { href: "/dashboard/land-listings", label: "Đất nền" },
+  { href: "/dashboard/rentals", label: "Cho thuê" },
+  { href: "/dashboard/posts", label: "Tin tức" },
+  { href: "/dashboard/contacts", label: "Liên hệ" }
+];
+
+export function AdminSidebar() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await fetch(`${adminApiBaseUrl}/api/auth/logout`, {
+      method: "POST",
+      credentials: "include"
+    });
+
+    router.replace("/admin/login");
+    router.refresh();
+  }
+
+  return (
+    <aside className="rounded-[32px] bg-ink p-6 text-white">
+      <Link href="/dashboard" className="font-display text-3xl">
+        WhiteSpace
+      </Link>
+      <p className="mt-2 text-sm leading-7 text-slate-300">Khu quản trị nội dung cho dự án, đất nền, cho thuê và tin tức.</p>
+
+      <nav className="mt-8 flex flex-col gap-2">
+        {adminLinks.map((item) => {
+          const isActive = pathname === item.href;
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`rounded-full px-4 py-3 text-sm font-medium transition ${
+                isActive ? "bg-white text-ink" : "text-slate-200 hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
+      </nav>
+
+      <button
+        type="button"
+        onClick={() => void handleLogout()}
+        className="mt-8 inline-flex rounded-full border border-white/15 px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white"
+      >
+        Đăng xuất
+      </button>
+    </aside>
+  );
+}

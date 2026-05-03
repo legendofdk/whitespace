@@ -59,7 +59,7 @@ export type Post = {
   excerpt: string;
   thumbnail: string;
   bannerImage?: string;
-  content: string[];
+  content: string;
   relatedPostSlugs?: string[];
   seoTitle?: string;
   seoDescription?: string;

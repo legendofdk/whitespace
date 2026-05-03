@@ -22,9 +22,9 @@ export function Footer() {
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.24em] text-white">Liên hệ</p>
           <div className="mt-4 space-y-3 text-sm">
-            <p>Hotline: 0234235344</p>
-            <p>Email: hello@whitespace.vn</p>
-            <p>Văn phòng: Long Biên, Hà Nội</p>
+            <p>Hotline / Zalo: 0377281119</p>
+            <p>Email: viettrung2580@gmail.com</p>
+            <p>Văn phòng: Bình Minh Garden, số 93 phố Đức Giang, phường Đức Giang, quận Long Biên, Hà Nội.</p>
           </div>
         </div>
       </div>
