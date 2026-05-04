@@ -12,38 +12,49 @@ type FilterField = {
 
 type FilterBarProps = {
   action: string;
+  showSearch?: boolean;
   searchName?: string;
-  searchPlaceholder: string;
+  searchPlaceholder?: string;
   searchDefaultValue?: string;
   filters?: FilterField[];
 };
 
 export function FilterBar({
   action,
+  showSearch = true,
   searchName = "search",
-  searchPlaceholder,
+  searchPlaceholder = "Tìm kiếm",
   searchDefaultValue = "",
   filters = []
 }: FilterBarProps) {
-  const gridClass =
-    filters.length >= 3
+  const gridClass = showSearch
+    ? filters.length >= 3
       ? "lg:grid-cols-[1.5fr_repeat(3,1fr)_auto]"
       : filters.length === 2
         ? "lg:grid-cols-[1.5fr_repeat(2,1fr)_auto]"
         : filters.length === 1
           ? "lg:grid-cols-[1.5fr_1fr_auto]"
-          : "lg:grid-cols-[1.5fr_auto]";
+          : "lg:grid-cols-[1.5fr_auto]"
+    : filters.length >= 3
+      ? "lg:grid-cols-[repeat(3,1fr)_auto]"
+      : filters.length === 2
+        ? "lg:grid-cols-[repeat(2,1fr)_auto]"
+        : filters.length === 1
+          ? "lg:grid-cols-[1fr_auto]"
+          : "lg:grid-cols-[auto]";
 
   return (
     <form action={action} className="glass-card p-5">
       <div className={`grid gap-4 ${gridClass}`}>
-        <input
-          type="text"
-          name={searchName}
-          defaultValue={searchDefaultValue}
-          placeholder={searchPlaceholder}
-          className="h-12 rounded-full border border-line px-5 text-sm outline-none transition focus:border-navy"
-        />
+        {showSearch ? (
+          <input
+            type="text"
+            name={searchName}
+            defaultValue={searchDefaultValue}
+            placeholder={searchPlaceholder}
+            className="h-12 rounded-full border border-line px-5 text-sm outline-none transition focus:border-navy"
+          />
+        ) : null}
         {filters.map((field) => (
           <select
             key={field.name}

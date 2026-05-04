@@ -1,33 +1,28 @@
-# Backend CMS
+# WhiteSpace Backend
 
-Backend được tách riêng để phục vụ CMS/admin và API nội bộ, không ảnh hưởng frontend Next.js hiện tại.
+## Deploy to Vercel
 
-## Structure
+Deploy this `backend/` folder as a separate Vercel project.
 
-```text
-backend/
-  prisma/
-  src/
-    config/
-    lib/
-    middlewares/
-    modules/
-    routes/
+Recommended Vercel settings:
+
+- Root Directory: `backend`
+- Build Command: `npm run vercel-build`
+- Output Directory: leave empty
+
+Required environment variables:
+
+```env
+DATABASE_URL=postgresql://...
+CORS_ORIGIN=https://whitespace-two-ecru.vercel.app
+BACKEND_PUBLIC_URL=https://your-backend-vercel-domain.vercel.app
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=change-this-password
+ADMIN_AUTH_SECRET=change-this-secret
+NODE_ENV=production
 ```
 
-## Modules khởi tạo
+Important limitation:
 
-- `auth`
-- `projects`
-- `land-listings`
-- `rentals`
-- `posts`
-- `media`
-- `contacts`
-
-## Giai đoạn tiếp theo
-
-1. `npm install` trong `backend/`
-2. Tạo database PostgreSQL
-3. Chạy `prisma generate`
-4. Viết CRUD thật cho từng module
+- Local file uploads in `uploads/` are not durable on Vercel.
+- For production, move media uploads to Cloudinary, S3, or another external storage service.

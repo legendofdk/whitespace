@@ -8,13 +8,12 @@ export const dynamic = "force-dynamic";
 export default async function ProjectsPage({
   searchParams
 }: {
-  searchParams: Promise<{ featured?: string; area?: string; search?: string }>;
+  searchParams: Promise<{ featured?: string; area?: string }>;
 }) {
   const params = await searchParams;
   const filteredProjects = await getPublicProjects({
     featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
-    area: params.area || undefined,
-    search: params.search || undefined
+    area: params.area || undefined
   });
 
   return (
@@ -27,8 +26,7 @@ export default async function ProjectsPage({
       <section className="shell">
         <FilterBar
           action="/du-an"
-          searchPlaceholder="Tìm theo tên dự án"
-          searchDefaultValue={params.search ?? ""}
+          showSearch={false}
           filters={[
             {
               name: "area",

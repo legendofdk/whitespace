@@ -9,12 +9,11 @@ export const dynamic = "force-dynamic";
 export default async function LandPage({
   searchParams
 }: {
-  searchParams: Promise<{ area?: string; search?: string; featured?: string }>;
+  searchParams: Promise<{ area?: string; featured?: string }>;
 }) {
   const params = await searchParams;
   const filteredLandListings = await getPublicLandListings({
     area: params.area,
-    search: params.search || undefined,
     featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined
   });
 
@@ -28,8 +27,7 @@ export default async function LandPage({
       <section className="shell">
         <FilterBar
           action="/dat-nen"
-          searchPlaceholder="Tìm kiếm đất nền"
-          searchDefaultValue={params.search ?? ""}
+          showSearch={false}
           filters={[
             {
               name: "area",

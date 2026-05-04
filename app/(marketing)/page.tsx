@@ -1,11 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { ListingCard } from "@/components/cards/listing-card";
-import { PostCard } from "@/components/cards/post-card";
-import { ProjectCard } from "@/components/cards/project-card";
+import { FeaturedProjectCarousel } from "@/components/shared/featured-project-carousel";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicLandListings, getPublicPosts, getPublicProjects, getPublicRentals } from "@/lib/public-api";
-import { toLandCardItem, toRentalCardItem } from "@/lib/real-estate";
+import { toLandCardItem } from "@/lib/real-estate";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +16,10 @@ export default async function HomePage() {
     getPublicRentals({ featured: true }),
     getPublicPosts()
   ]);
+  const featuredLandListings = landListings.slice(0, 6);
+  const latestPost = posts[0];
+  const secondaryPosts = posts.slice(1, 5);
+  const featuredRentals = rentals.slice(0, 10);
 
   return (
     <main>
@@ -62,59 +66,65 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-gap bg-mist">
-        <div className="shell">
-          <SectionHeading
-            eyebrow="Danh mục chủ lực"
-            title="Danh mục bất động sản nổi bật tại phía Đông Hà Nội"
-          />
-          <div className="grid gap-5 md:grid-cols-3">
-            {[
-              ["Dự án cao cấp", "Tập trung những dự án nổi bật, phù hợp nhu cầu an cư và đầu tư dài hạn."],
-              ["Đất nền chọn lọc", "Ưu tiên các vị trí có pháp lý rõ ràng và tiềm năng tăng giá theo hạ tầng."],
-              ["Cho thuê thương mại", "Phù hợp nhu cầu khai thác kinh doanh, mở văn phòng hoặc phát triển thương hiệu."]
-            ].map(([title, text]) => (
-              <div key={title} className="rounded-[28px] border border-line bg-white p-8 shadow-soft">
-                <h3 className="font-display text-3xl text-ink">{title}</h3>
-                <p className="mt-4 text-sm leading-7 text-steel">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="section-gap">
         <div className="shell">
           <SectionHeading eyebrow="Dự án nổi bật" title="Những dự án đáng quan tâm tại khu Đông Hà Nội" />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {featuredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          <FeaturedProjectCarousel projects={featuredProjects} />
         </div>
       </section>
 
       <section className="section-gap bg-mist">
         <div className="shell">
           <SectionHeading eyebrow="Đất nền hot" title="Sản phẩm nổi bật theo từng khu vực tiềm năng" />
-          <div className="grid gap-6 lg:grid-cols-2">
-            {landListings.map((item) => {
+          <div className="grid gap-5">
+            {featuredLandListings.map((item) => {
               const cardItem = toLandCardItem(item);
 
               return (
-                <ListingCard
+                <Link
                   key={item.id}
                   href={cardItem.href}
-                  title={cardItem.name}
-                  address={cardItem.address}
-                  area={cardItem.area}
-                  badge={cardItem.badge}
-                  metric={cardItem.cardMeta}
-                  price={cardItem.price}
-                  image={cardItem.thumbnail}
-                />
+                  className="group grid gap-5 overflow-hidden rounded-[28px] border border-line bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:grid-cols-[260px_1fr]"
+                >
+                  <div className="relative h-52 overflow-hidden rounded-[24px] bg-mist md:h-full">
+                    <Image
+                      src={cardItem.thumbnail}
+                      alt={cardItem.name}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-4 md:py-2">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div>
+                        <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-navy">
+                          {cardItem.area}
+                        </span>
+                        <h3 className="mt-4 font-display text-4xl leading-tight text-ink">{cardItem.name}</h3>
+                        <p className="mt-3 text-sm text-steel">{cardItem.address}</p>
+                      </div>
+                      <div className="rounded-2xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-4 py-3 text-right shadow-[0_12px_24px_rgba(191,138,38,0.14)] ring-1 ring-[#e7c06d]">
+                        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">Giá bán</p>
+                        <p className="mt-1 text-2xl font-black leading-none text-[#8b5a16]">{cardItem.price}</p>
+                      </div>
+                    </div>
+                    <p className="text-sm font-medium text-navy">{cardItem.cardMeta}</p>
+                    <p className="line-clamp-3 max-w-3xl text-sm leading-7 text-steel">{cardItem.description.replace(/<[^>]+>/g, " ")}</p>
+                    <span className="mt-auto inline-flex self-start rounded-full border border-ink px-4 py-2.5 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
+                      Xem chi tiết
+                    </span>
+                  </div>
+                </Link>
               );
             })}
+          </div>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/dat-nen"
+              className="inline-flex rounded-full border border-ink px-6 py-3 text-sm font-semibold text-ink transition hover:bg-ink hover:text-white"
+            >
+              Xem tất cả đất nền
+            </Link>
           </div>
         </div>
       </section>
@@ -122,24 +132,66 @@ export default async function HomePage() {
       <section className="section-gap">
         <div className="shell">
           <SectionHeading eyebrow="Cho thuê nổi bật" title="Mặt bằng và shophouse phù hợp khai thác thương mại" />
-          <div className="grid gap-6 lg:grid-cols-2">
-            {rentals.map((item) => {
-              const cardItem = toRentalCardItem(item);
-
-              return (
-                <ListingCard
+          <div className="overflow-hidden rounded-[28px] border border-line bg-white shadow-soft">
+            <div className="hidden grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] gap-4 border-b border-line bg-mist px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-steel lg:grid">
+              <span>Ảnh</span>
+              <span>Khu vực</span>
+              <span>Diện tích</span>
+              <span>Loại hình</span>
+              <span>Giá thuê</span>
+              <span className="text-right">Chi tiết</span>
+            </div>
+            <div className="divide-y divide-line">
+              {featuredRentals.map((item) => (
+                <Link
                   key={item.id}
-                  href={cardItem.href}
-                  title={cardItem.name}
-                  address={cardItem.address}
-                  area={cardItem.area}
-                  badge={cardItem.badge}
-                  metric={cardItem.cardMeta}
-                  price={cardItem.price}
-                  image={cardItem.thumbnail}
-                />
-              );
-            })}
+                  href={`/cho-thue/${item.slug}`}
+                  className="group block transition hover:bg-mist/60"
+                >
+                  <div className="grid gap-4 px-6 py-5 lg:grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] lg:items-center">
+                    <div className="relative h-20 overflow-hidden rounded-2xl border border-line bg-mist">
+                      <Image
+                        src={item.thumbnail}
+                        alt={item.name}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Khu vực</p>
+                      <p className="text-lg font-semibold text-ink">{item.name}</p>
+                      <p className="mt-1 text-sm font-medium text-navy">{item.area}</p>
+                      <p className="mt-1 text-sm text-steel">{item.address}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Diện tích</p>
+                      <p className="text-sm font-medium text-ink">{item.size}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Loại hình</p>
+                      <p className="text-sm text-ink">{item.rentalType ?? item.cardMeta}</p>
+                    </div>
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Giá thuê</p>
+                      <p className="text-lg font-bold text-[#8b5a16]">{item.price}</p>
+                    </div>
+                    <div className="flex lg:justify-end">
+                      <span className="inline-flex rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
+                        Xem chi tiết
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="mt-8 flex justify-center">
+            <Link
+              href="/cho-thue"
+              className="inline-flex rounded-full border border-ink px-6 py-3 text-sm font-semibold text-ink transition hover:bg-ink hover:text-white"
+            >
+              Xem thêm
+            </Link>
           </div>
         </div>
       </section>
@@ -147,11 +199,58 @@ export default async function HomePage() {
       <section className="section-gap bg-mist">
         <div className="shell">
           <SectionHeading eyebrow="Tin tức thị trường" title="Góc nhìn thị trường và thông tin đáng chú ý" />
-          <div className="grid gap-6 lg:grid-cols-3">
-            {posts.slice(0, 3).map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
+          {latestPost ? (
+            <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+              <Link
+                href={`/tin-tuc/${latestPost.slug}`}
+                className="group relative block overflow-hidden rounded-[32px] bg-ink shadow-soft"
+              >
+                <div className="relative min-h-[540px]">
+                  <Image
+                    src={latestPost.thumbnail}
+                    alt={latestPost.title}
+                    fill
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.08),rgba(8,18,37,0.82))]" />
+                  <div className="absolute inset-x-0 bottom-0 p-8 text-white sm:p-10">
+                    <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-sand">
+                      <span>{latestPost.category}</span>
+                      <span>{latestPost.publishedAt}</span>
+                    </div>
+                    <h3 className="mt-4 max-w-2xl font-display text-4xl leading-tight sm:text-5xl">
+                      {latestPost.title}
+                    </h3>
+                    <p className="mt-4 max-w-2xl text-sm leading-8 text-slate-200">{latestPost.excerpt}</p>
+                  </div>
+                </div>
+              </Link>
+
+              <div className="grid content-start gap-x-6 gap-y-12 sm:grid-cols-2">
+                {secondaryPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/tin-tuc/${post.slug}`}
+                    className="group relative block overflow-hidden rounded-[28px] bg-ink shadow-soft"
+                  >
+                    <div className="relative aspect-square">
+                      <Image
+                        src={post.thumbnail}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.12),rgba(8,18,37,0.86))]" />
+                      <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sand">{post.publishedAt}</p>
+                        <h3 className="mt-3 font-display text-2xl leading-tight">{post.title}</h3>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
 
