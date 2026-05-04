@@ -1,5 +1,4 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import { env } from "../../config/env.js";
 const upload = multer({
@@ -8,11 +7,32 @@ const upload = multer({
         fileSize: 8 * 1024 * 1024
     }
 });
+cloudinary.config({
+    cloud_name: env.CLOUDINARY_CLOUD_NAME,
+    api_key: env.CLOUDINARY_API_KEY,
+    api_secret: env.CLOUDINARY_API_SECRET
+});
 function sanitizeFolder(folder) {
     return folder.replace(/[^a-z0-9-_]/gi, "").toLowerCase() || "general";
 }
 function sanitizeFileName(fileName) {
     return fileName.replace(/[^a-z0-9.-_]/gi, "-").toLowerCase();
+}
+function uploadToCloudinary(fileBuffer, options) {
+    return new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream({
+            folder: options.folder,
+            public_id: options.publicId,
+            resource_type: "image"
+        }, (error, result) => {
+            if (error || !result?.secure_url) {
+                reject(error ?? new Error("CLOUDINARY_UPLOAD_FAILED"));
+                return;
+            }
+            resolve({ secure_url: result.secure_url });
+        });
+        stream.end(fileBuffer);
+    });
 }
 function runUpload(request) {
     return new Promise((resolve, reject) => {
@@ -31,18 +51,16 @@ export async function handleMediaUpload(request) {
         throw new Error("FILE_REQUIRED");
     }
     const folder = sanitizeFolder(typeof request.query.folder === "string" ? request.query.folder : "general");
-    const uploadsDir = path.resolve(process.cwd(), "uploads", folder);
-    await fs.mkdir(uploadsDir, { recursive: true });
-    const extension = path.extname(request.file.originalname) || ".bin";
-    const baseName = sanitizeFileName(path.basename(request.file.originalname, extension));
-    const fileName = `${Date.now()}-${baseName}${extension}`;
-    const filePath = path.join(uploadsDir, fileName);
-    await fs.writeFile(filePath, request.file.buffer);
-    const relativeUrl = `/uploads/${folder}/${fileName}`;
+    const originalName = request.file.originalname.replace(/\.[^.]+$/, "");
+    const baseName = sanitizeFileName(originalName);
+    const publicId = `${Date.now()}-${baseName || "image"}`;
+    const result = await uploadToCloudinary(request.file.buffer, {
+        folder: `whitespace/${folder}`,
+        publicId
+    });
     return {
-        fileName,
+        fileName: publicId,
         folder,
-        url: `${env.BACKEND_PUBLIC_URL}${relativeUrl}`,
-        relativeUrl
+        url: result.secure_url
     };
 }

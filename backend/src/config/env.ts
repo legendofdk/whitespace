@@ -9,6 +9,9 @@ const envSchema = z.object({
   DATABASE_URL: z.string().min(1),
   CORS_ORIGIN: z.string().default("http://localhost:3000"),
   BACKEND_PUBLIC_URL: z.string().default("http://localhost:4000"),
+  CLOUDINARY_CLOUD_NAME: z.string().min(1),
+  CLOUDINARY_API_KEY: z.string().min(1),
+  CLOUDINARY_API_SECRET: z.string().min(1),
   ADMIN_USERNAME: z.string().min(1),
   ADMIN_PASSWORD: z.string().min(1),
   ADMIN_AUTH_SECRET: z.string().min(1)
