@@ -31,6 +31,10 @@ export function getAdminSessionToken() {
     .digest("hex");
 }
 
+export function validateAdminCredentials(username: string, password: string) {
+  return safeEqual(username, getRequiredEnvValue("ADMIN_USERNAME")) && safeEqual(password, getRequiredEnvValue("ADMIN_PASSWORD"));
+}
+
 export async function isAdminAuthenticated() {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;

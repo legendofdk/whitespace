@@ -3,8 +3,6 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
-import { adminApiBaseUrl } from "@/components/admin/admin-api";
-
 export function LoginForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -18,7 +16,7 @@ export function LoginForm() {
     setErrorMessage("");
 
     try {
-      const response = await fetch(`${adminApiBaseUrl}/api/auth/login`, {
+      const response = await fetch("/api/admin-auth/login", {
         method: "POST",
         credentials: "include",
         headers: {
