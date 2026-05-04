@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { InteractiveNearbyMap } from "@/components/shared/interactive-nearby-map";
 import { NearbyPlaces } from "@/components/shared/nearby-places";
 
 type MapNearbyPanelProps = {
@@ -132,8 +131,6 @@ export function MapNearbyPanel({ area, center, title, defaultMapUrl, hideNearbyP
             </Link>
           </div>
         </div>
-      ) : process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ? (
-        <InteractiveNearbyMap center={center} items={items} title={title} />
       ) : (
         <div className="overflow-hidden rounded-[32px] border border-line">
           <iframe
