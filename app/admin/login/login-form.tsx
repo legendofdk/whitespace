@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
+import { adminApiBaseUrl } from "@/components/admin/admin-api";
+
 export function LoginForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
@@ -16,16 +18,26 @@ export function LoginForm() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/admin-auth/login", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ username, password })
-      });
+      const [frontendResponse, backendResponse] = await Promise.all([
+        fetch("/api/admin-auth/login", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username, password })
+        }),
+        fetch(`${adminApiBaseUrl}/api/auth/login`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username, password })
+        })
+      ]);
 
-      if (!response.ok) {
+      if (!frontendResponse.ok || !backendResponse.ok) {
         throw new Error("LOGIN_FAILED");
       }
 

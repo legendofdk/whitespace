@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
+import { adminApiBaseUrl } from "./admin-api";
+
 const adminLinks = [
   { href: "/dashboard/areas", label: "Khu vực" },
   { href: "/dashboard/projects", label: "Dự án" },
@@ -17,10 +19,16 @@ export function AdminSidebar() {
   const router = useRouter();
 
   async function handleLogout() {
-    await fetch("/api/admin-auth/logout", {
-      method: "POST",
-      credentials: "include"
-    });
+    await Promise.all([
+      fetch("/api/admin-auth/logout", {
+        method: "POST",
+        credentials: "include"
+      }),
+      fetch(`${adminApiBaseUrl}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include"
+      })
+    ]);
 
     router.replace("/admin/login");
     router.refresh();

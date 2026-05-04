@@ -9,7 +9,7 @@ import { ADMIN_SESSION_COOKIE, getAdminSessionToken, hasValidAdminSession, valid
 function setSessionCookie(response: Response, maxAge: number) {
   response.cookie(ADMIN_SESSION_COOKIE, getAdminSessionToken(), {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: env.NODE_ENV === "production" ? "none" : "lax",
     secure: env.NODE_ENV === "production",
     path: "/",
     maxAge
@@ -40,7 +40,7 @@ authRouter.post("/login", (request: Request, response: Response) => {
 authRouter.post("/logout", (_request: Request, response: Response) => {
   response.cookie(ADMIN_SESSION_COOKIE, "", {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: env.NODE_ENV === "production" ? "none" : "lax",
     secure: env.NODE_ENV === "production",
     path: "/",
     maxAge: 0
