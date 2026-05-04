@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -51,8 +52,8 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur">
       <div className="shell flex min-h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-3 text-white">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-sand/40 bg-white/5 font-display text-xl">
-            W
+          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white p-0.5 shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
+            <Image src="/logo.jpeg" alt="WhiteSpace" width={52} height={52} className="h-auto w-full object-contain" />
           </div>
           <div>
             <div className="font-display text-2xl leading-none">WhiteSpace</div>

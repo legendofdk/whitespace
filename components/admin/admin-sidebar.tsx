@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -36,8 +37,8 @@ export function AdminSidebar() {
 
   return (
     <aside className="rounded-[32px] bg-ink p-6 text-white">
-      <Link href="/dashboard" className="font-display text-3xl">
-        WhiteSpace
+      <Link href="/dashboard" className="inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-white p-0.5 shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
+        <Image src="/logo.jpeg" alt="WhiteSpace" width={60} height={60} className="h-auto w-full object-contain" />
       </Link>
       <p className="mt-2 text-sm leading-7 text-slate-300">Khu quản trị nội dung cho dự án, đất nền, cho thuê và tin tức.</p>
 
