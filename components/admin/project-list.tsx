@@ -18,6 +18,7 @@ type ProjectItem = {
 export function ProjectList() {
   const [items, setItems] = useState<ProjectItem[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function loadProjects() {
     setErrorMessage("");
@@ -36,6 +37,34 @@ export function ProjectList() {
   useEffect(() => {
     void loadProjects();
   }, []);
+
+  async function handleDelete(item: ProjectItem) {
+    const confirmed = window.confirm(`Xóa dự án "${item.name}"?`);
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(item.id);
+    setErrorMessage("");
+
+    try {
+      const response = await fetchAdminApi(`/api/projects/${item.slug}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        const errorData = (await response.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(errorData?.message || "DELETE_FAILED");
+      }
+
+      await loadProjects();
+    } catch {
+      setErrorMessage("Chưa thể xóa dự án.");
+    } finally {
+      setDeletingId(null);
+    }
+  }
 
   return (
     <main className="py-4">
@@ -60,10 +89,12 @@ export function ProjectList() {
 
         <div className="mt-6 grid gap-4">
           {items.map((item) => (
-            <Link key={item.id} href={`/dashboard/projects/${item.slug}`} className="block rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
+            <div key={item.id} className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-ink">{item.name}</h3>
+                  <Link href={`/dashboard/projects/${item.slug}`} className="text-lg font-semibold text-ink hover:underline">
+                    {item.name}
+                  </Link>
                   <p className="mt-1 text-sm text-steel">
                     {item.area} • {item.price}
                   </p>
@@ -72,9 +103,17 @@ export function ProjectList() {
                 <div className="flex items-center gap-2">
                   <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink">{item.status}</span>
                   {item.isFeatured ? <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-ink">Nổi bật</span> : null}
+                  <button
+                    type="button"
+                    onClick={() => void handleDelete(item)}
+                    disabled={deletingId === item.id}
+                    className="rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+                  >
+                    {deletingId === item.id ? "Đang xóa..." : "Xóa"}
+                  </button>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

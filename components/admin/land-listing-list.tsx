@@ -19,6 +19,7 @@ type Item = {
 export function LandListingList() {
   const [items, setItems] = useState<Item[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function loadItems() {
     setErrorMessage("");
@@ -36,6 +37,34 @@ export function LandListingList() {
     void loadItems();
   }, []);
 
+  async function handleDelete(item: Item) {
+    const confirmed = window.confirm(`Xóa đất nền "${item.name}"?`);
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(item.id);
+    setErrorMessage("");
+
+    try {
+      const response = await fetchAdminApi(`/api/land-listings/${item.slug}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        const errorData = (await response.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(errorData?.message || "DELETE_FAILED");
+      }
+
+      await loadItems();
+    } catch {
+      setErrorMessage("Chưa thể xóa đất nền.");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   return (
     <main className="py-4">
       <div className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
@@ -52,19 +81,29 @@ export function LandListingList() {
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         <div className="mt-6 grid gap-4">
           {items.map((item) => (
-            <Link key={item.id} href={`/dashboard/land-listings/${item.slug}`} className="block rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
+            <div key={item.id} className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-ink">{item.name}</h3>
+                  <Link href={`/dashboard/land-listings/${item.slug}`} className="text-lg font-semibold text-ink hover:underline">
+                    {item.name}
+                  </Link>
                   <p className="mt-1 text-sm text-steel">{item.area} • {item.price}{item.acreage ? ` • ${item.acreage}` : ""}</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.18em] text-steel">{item.slug}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink">{item.status}</span>
                   {item.isFeatured ? <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-ink">Nổi bật</span> : null}
+                  <button
+                    type="button"
+                    onClick={() => void handleDelete(item)}
+                    disabled={deletingId === item.id}
+                    className="rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+                  >
+                    {deletingId === item.id ? "Đang xóa..." : "Xóa"}
+                  </button>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
