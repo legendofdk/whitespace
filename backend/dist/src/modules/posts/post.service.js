@@ -1,3 +1,4 @@
+import { deleteCloudinaryAssets, getCloudinaryPublicIdFromUrl, getRemovedAssetPublicIds } from "../../lib/cloudinary.js";
 import { prisma } from "../../lib/prisma.js";
 const postInclude = {
     area: true
@@ -93,7 +94,9 @@ export async function createPost(input) {
             content: input.content,
             category: input.category,
             thumbnail: input.thumbnail,
+            thumbnailPublicId: getCloudinaryPublicIdFromUrl(input.thumbnail),
             bannerImage: input.bannerImage,
+            bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
             seoTitle: input.seoTitle,
             seoDescription: input.seoDescription,
             publishedAt: input.publishedAt ? new Date(input.publishedAt) : undefined,
@@ -113,6 +116,11 @@ export async function updatePost(slug, input) {
         return null;
     }
     const areaId = await getAreaIdBySlug(input.areaSlug);
+    const nextUrls = [input.thumbnail, input.bannerImage].filter((value) => Boolean(value));
+    const removedAssetPublicIds = getRemovedAssetPublicIds([
+        { url: existing.thumbnail, publicId: existing.thumbnailPublicId },
+        { url: existing.bannerImage, publicId: existing.bannerImagePublicId }
+    ], nextUrls);
     const item = await prisma.post.update({
         where: { id: existing.id },
         data: {
@@ -122,7 +130,9 @@ export async function updatePost(slug, input) {
             content: input.content,
             category: input.category,
             thumbnail: input.thumbnail,
+            thumbnailPublicId: getCloudinaryPublicIdFromUrl(input.thumbnail),
             bannerImage: input.bannerImage,
+            bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
             seoTitle: input.seoTitle,
             seoDescription: input.seoDescription,
             publishedAt: input.publishedAt ? new Date(input.publishedAt) : null,
@@ -132,6 +142,7 @@ export async function updatePost(slug, input) {
         },
         include: postInclude
     });
+    await deleteCloudinaryAssets(removedAssetPublicIds);
     return mapPost(item);
 }
 export async function deletePost(slug) {
@@ -141,8 +152,10 @@ export async function deletePost(slug) {
     if (!existing) {
         return false;
     }
+    const assetPublicIds = [existing.thumbnailPublicId, existing.bannerImagePublicId].filter((value) => Boolean(value));
     await prisma.post.delete({
         where: { id: existing.id }
     });
+    await deleteCloudinaryAssets(assetPublicIds);
     return true;
 }

@@ -1,5 +1,6 @@
 import { Prisma, PropertyKind } from "@prisma/client";
 
+import { deleteCloudinaryAssets, getCloudinaryPublicIdFromUrl, getRemovedAssetPublicIds } from "../../lib/cloudinary.js";
 import { prisma } from "../../lib/prisma.js";
 import type { LandListingBodyInput, ListLandListingsQueryInput } from "./land-listing.schema.js";
 
@@ -136,7 +137,9 @@ export async function createLandListing(input: LandListingBodyInput) {
       price: input.price,
       hotline: input.hotline,
       thumbnail: input.thumbnail,
+      thumbnailPublicId: getCloudinaryPublicIdFromUrl(input.thumbnail),
       bannerImage: input.bannerImage,
+      bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
       description: input.description,
       mapEmbedUrl: input.mapEmbedUrl,
       isFeatured: input.isFeatured,
@@ -148,7 +151,11 @@ export async function createLandListing(input: LandListingBodyInput) {
       badge: input.badge,
       cardMeta: input.cardMeta,
       gallery: {
-        create: input.gallery.map((url, index) => ({ url, sortOrder: index }))
+        create: input.gallery.map((url, index) => ({
+          url,
+          publicId: getCloudinaryPublicIdFromUrl(url),
+          sortOrder: index
+        }))
       }
     },
     include: landListingInclude
@@ -162,6 +169,9 @@ export async function updateLandListing(slug: string, input: LandListingBodyInpu
     where: {
       kind: PropertyKind.LAND,
       slug
+    },
+    include: {
+      gallery: true
     }
   });
 
@@ -170,6 +180,15 @@ export async function updateLandListing(slug: string, input: LandListingBodyInpu
   }
 
   const areaId = await getAreaIdBySlug(input.areaSlug);
+  const nextUrls = [input.thumbnail, input.bannerImage, ...input.gallery].filter((value): value is string => Boolean(value));
+  const removedAssetPublicIds = getRemovedAssetPublicIds(
+    [
+      { url: existing.thumbnail, publicId: existing.thumbnailPublicId },
+      { url: existing.bannerImage, publicId: existing.bannerImagePublicId },
+      ...existing.gallery.map((media) => ({ url: media.url, publicId: media.publicId }))
+    ],
+    nextUrls
+  );
 
   const item = await prisma.property.update({
     where: {
@@ -185,7 +204,9 @@ export async function updateLandListing(slug: string, input: LandListingBodyInpu
       price: input.price,
       hotline: input.hotline,
       thumbnail: input.thumbnail,
+      thumbnailPublicId: getCloudinaryPublicIdFromUrl(input.thumbnail),
       bannerImage: input.bannerImage,
+      bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
       description: input.description,
       mapEmbedUrl: input.mapEmbedUrl,
       isFeatured: input.isFeatured,
@@ -198,11 +219,17 @@ export async function updateLandListing(slug: string, input: LandListingBodyInpu
       cardMeta: input.cardMeta,
       gallery: {
         deleteMany: {},
-        create: input.gallery.map((url, index) => ({ url, sortOrder: index }))
+        create: input.gallery.map((url, index) => ({
+          url,
+          publicId: getCloudinaryPublicIdFromUrl(url),
+          sortOrder: index
+        }))
       }
     },
     include: landListingInclude
   });
+
+  await deleteCloudinaryAssets(removedAssetPublicIds);
 
   return mapLandListing(item);
 }
@@ -212,6 +239,9 @@ export async function deleteLandListing(slug: string) {
     where: {
       kind: PropertyKind.LAND,
       slug
+    },
+    include: {
+      gallery: true
     }
   });
 
@@ -219,11 +249,19 @@ export async function deleteLandListing(slug: string) {
     return false;
   }
 
+  const assetPublicIds = [
+    existing.thumbnailPublicId,
+    existing.bannerImagePublicId,
+    ...existing.gallery.map((media) => media.publicId)
+  ].filter((value): value is string => Boolean(value));
+
   await prisma.property.delete({
     where: {
       id: existing.id
     }
   });
+
+  await deleteCloudinaryAssets(assetPublicIds);
 
   return true;
 }

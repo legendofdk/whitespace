@@ -42,7 +42,9 @@ model Property {
   cardMeta         String?
   description      String
   thumbnail        String
+  thumbnailPublicId String?
   bannerImage      String?
+  bannerImagePublicId String?
   gallery          Media[]
   mapEmbedUrl      String?
   seoTitle         String?
@@ -85,6 +87,7 @@ model PropertyUtility {
 model Media {
   id         String    @id @default(cuid())
   url        String
+  publicId   String?
   alt        String?
   sortOrder  Int       @default(0)
   propertyId String?
@@ -102,7 +105,9 @@ model Post {
   content         String
   category        String
   thumbnail       String
+  thumbnailPublicId String?
   bannerImage     String?
+  bannerImagePublicId String?
   seoTitle        String?
   seoDescription  String?
   publishedAt     DateTime?

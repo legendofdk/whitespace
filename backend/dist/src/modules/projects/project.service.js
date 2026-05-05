@@ -1,4 +1,5 @@
 import { PropertyKind } from "@prisma/client";
+import { deleteCloudinaryAssets, getCloudinaryPublicIdFromUrl, getRemovedAssetPublicIds } from "../../lib/cloudinary.js";
 import { prisma } from "../../lib/prisma.js";
 const projectInclude = {
     area: true,
@@ -134,7 +135,9 @@ export async function createProject(input) {
             price: input.price,
             hotline: input.hotline,
             thumbnail: input.thumbnail,
+            thumbnailPublicId: getCloudinaryPublicIdFromUrl(input.thumbnail),
             bannerImage: input.bannerImage,
+            bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
             description: input.description,
             mapEmbedUrl: input.mapEmbedUrl,
             isFeatured: input.isFeatured,
@@ -149,7 +152,11 @@ export async function createProject(input) {
                 create: input.utilities.map((label) => ({ label }))
             },
             gallery: {
-                create: input.gallery.map((url, index) => ({ url, sortOrder: index }))
+                create: input.gallery.map((url, index) => ({
+                    url,
+                    publicId: getCloudinaryPublicIdFromUrl(url),
+                    sortOrder: index
+                }))
             }
         },
         include: projectInclude
@@ -161,12 +168,21 @@ export async function updateProject(slug, input) {
         where: {
             kind: PropertyKind.PROJECT,
             slug
+        },
+        include: {
+            gallery: true
         }
     });
     if (!existing) {
         return null;
     }
     const areaId = await getAreaIdBySlug(input.areaSlug);
+    const nextUrls = [input.thumbnail, input.bannerImage, ...input.gallery].filter((value) => Boolean(value));
+    const removedAssetPublicIds = getRemovedAssetPublicIds([
+        { url: existing.thumbnail, publicId: existing.thumbnailPublicId },
+        { url: existing.bannerImage, publicId: existing.bannerImagePublicId },
+        ...existing.gallery.map((media) => ({ url: media.url, publicId: media.publicId }))
+    ], nextUrls);
     const item = await prisma.property.update({
         where: {
             id: existing.id
@@ -187,7 +203,9 @@ export async function updateProject(slug, input) {
             price: input.price,
             hotline: input.hotline,
             thumbnail: input.thumbnail,
+            thumbnailPublicId: getCloudinaryPublicIdFromUrl(input.thumbnail),
             bannerImage: input.bannerImage,
+            bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
             description: input.description,
             mapEmbedUrl: input.mapEmbedUrl,
             isFeatured: input.isFeatured,
@@ -204,11 +222,16 @@ export async function updateProject(slug, input) {
             },
             gallery: {
                 deleteMany: {},
-                create: input.gallery.map((url, index) => ({ url, sortOrder: index }))
+                create: input.gallery.map((url, index) => ({
+                    url,
+                    publicId: getCloudinaryPublicIdFromUrl(url),
+                    sortOrder: index
+                }))
             }
         },
         include: projectInclude
     });
+    await deleteCloudinaryAssets(removedAssetPublicIds);
     return mapProject(item);
 }
 export async function deleteProject(slug) {
@@ -216,15 +239,24 @@ export async function deleteProject(slug) {
         where: {
             kind: PropertyKind.PROJECT,
             slug
+        },
+        include: {
+            gallery: true
         }
     });
     if (!existing) {
         return false;
     }
+    const assetPublicIds = [
+        existing.thumbnailPublicId,
+        existing.bannerImagePublicId,
+        ...existing.gallery.map((media) => media.publicId)
+    ].filter((value) => Boolean(value));
     await prisma.property.delete({
         where: {
             id: existing.id
         }
     });
+    await deleteCloudinaryAssets(assetPublicIds);
     return true;
 }
