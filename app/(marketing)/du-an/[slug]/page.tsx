@@ -93,16 +93,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div className="rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
               {project.apartments?.length ? (
-                <div className="mt-6 grid gap-4">
+                <div className="mt-6 grid grid-cols-2 gap-4">
                   {project.apartments.map((apartment) => (
                     <Link
                       key={apartment.id}
                       href={`/can-ho/${apartment.slug}`}
-                      className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5 hover:border-ink/20"
+                      className="aspect-square rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5 hover:border-ink/20"
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">Căn hộ</p>
-                      <p className="mt-2 text-2xl font-semibold text-ink">{apartment.name}</p>
-                      <p className="mt-3 text-sm text-steel">
+                      <p className="mt-3 text-3xl font-semibold text-ink">{apartment.name}</p>
+                      <p className="mt-4 text-sm leading-7 text-steel">
                         {apartment.price}
                         {apartment.size ? ` • ${apartment.size}` : ""}
                         {apartment.rentalType ? ` • ${apartment.rentalType}` : ""}
