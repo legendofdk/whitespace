@@ -22,9 +22,14 @@ async function proxyRequest(request: NextRequest, params: Promise<{ path: string
 
   const headers = new Headers();
   const contentType = request.headers.get("content-type");
+  const cookie = request.headers.get("cookie");
 
   if (contentType) {
     headers.set("content-type", contentType);
+  }
+
+  if (cookie) {
+    headers.set("cookie", cookie);
   }
 
   const init: RequestInit = {
