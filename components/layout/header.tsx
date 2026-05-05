@@ -49,15 +49,15 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
       <div className="shell flex min-h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 text-white">
+        <Link href="/" className="flex items-center gap-3 text-ink">
           <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white p-0.5 shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
-            <Image src="/logo.jpeg" alt="WhiteSpace" width={52} height={52} className="h-auto w-full object-contain" />
+            <Image src="/favicon.jpeg" alt="Batdongsanphiadong" width={52} height={52} className="h-auto w-full object-contain" />
           </div>
           <div>
-            <div className="font-display text-2xl leading-none">WhiteSpace</div>
-            <div className="text-[10px] uppercase tracking-[0.32em] text-slate-300">Luxury Real Estate</div>
+            <div className="font-display text-2xl leading-none">Batdongsanphiadong</div>
+            <div className="text-[10px] uppercase tracking-[0.32em] text-steel">Luxury Real Estate</div>
           </div>
         </Link>
 
@@ -79,7 +79,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
                       setActiveDropdown(null);
                     }
                   }}
-                  className="inline-flex min-h-10 items-center rounded-full px-3 text-sm text-slate-200 transition hover:text-white"
+                  className="inline-flex min-h-10 items-center rounded-full px-3 text-sm text-ink transition hover:text-[#8b5a16]"
                 >
                   {item.label}
                 </Link>
@@ -93,13 +93,13 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
                       : "invisible translate-y-2 opacity-0"
                   }`}
                 >
-                  <div className="rounded-[24px] border border-white/10 bg-ink/95 p-3 shadow-[0_24px_60px_rgba(0,0,0,0.35)]">
+                  <div className="rounded-[24px] border border-line bg-white p-3 shadow-[0_24px_60px_rgba(15,23,42,0.12)]">
                     {item.children.map((child) => (
                       <Link
                         key={child.href}
                         href={child.href}
                         onClick={() => setActiveDropdown(null)}
-                        className="block rounded-2xl px-4 py-3 text-sm text-slate-200 transition hover:bg-white/5 hover:text-white"
+                        className="block rounded-2xl px-4 py-3 text-sm text-ink transition hover:bg-mist hover:text-[#8b5a16]"
                       >
                         {child.label}
                       </Link>
@@ -120,7 +120,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink md:hidden"
           aria-label="Open menu"
         >
           <span className="text-lg">{open ? "×" : "≡"}</span>
@@ -128,11 +128,11 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
       </div>
 
       {open ? (
-        <div className="border-t border-white/10 bg-ink md:hidden">
+        <div className="border-t border-line bg-white md:hidden">
           <div className="shell flex flex-col py-4">
             {navItems.map((item) => (
-              <div key={item.href} className="border-b border-white/10 py-4">
-                <Link href={item.href} onClick={() => setOpen(false)} className="text-sm text-slate-200">
+              <div key={item.href} className="border-b border-line py-4">
+                <Link href={item.href} onClick={() => setOpen(false)} className="text-sm text-ink">
                   {item.label}
                 </Link>
                 {item.children?.length ? (
@@ -142,7 +142,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
                         key={child.href}
                         href={child.href}
                         onClick={() => setOpen(false)}
-                        className="text-sm text-slate-400"
+                        className="text-sm text-steel"
                       >
                         {child.label}
                       </Link>

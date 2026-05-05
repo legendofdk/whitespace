@@ -7,7 +7,7 @@ export function Footer() {
       <div className="shell grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div>
           <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-white p-0.5 shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
-            <Image src="/logo.jpeg" alt="WhiteSpace" width={60} height={60} className="h-auto w-full object-contain" />
+            <Image src="/favicon.jpeg" alt="Batdongsanphiadong" width={60} height={60} className="h-auto w-full object-contain" />
           </div>
           <p className="mt-4 max-w-md text-sm leading-7 text-slate-400">
             Chuyên giới thiệu dự án, đất nền và sản phẩm cho thuê tại phía Đông Hà Nội với định hướng sang trọng và rõ thông tin.
