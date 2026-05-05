@@ -83,6 +83,27 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                 ))}
               </div>
             </div>
+
+            <div className="rounded-[32px] border border-line p-8">
+              <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
+              {project.apartments?.length ? (
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {project.apartments.map((apartment) => (
+                    <div key={apartment.id} className="rounded-[24px] border border-line bg-mist p-5">
+                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">Căn hộ</p>
+                      <p className="mt-2 text-2xl font-semibold text-ink">{apartment.name}</p>
+                      <p className="mt-3 text-sm text-steel">
+                        {apartment.price}
+                        {apartment.size ? ` • ${apartment.size}` : ""}
+                        {apartment.rentalType ? ` • ${apartment.rentalType}` : ""}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
+              )}
+            </div>
           </div>
 
           <aside className="space-y-6">

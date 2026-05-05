@@ -1,4 +1,4 @@
-export type RealEstateKind = "project" | "land" | "rental";
+export type RealEstateKind = "project" | "land" | "rental" | "apartment";
 
 export type RealEstateBase = {
   id: string;
@@ -33,6 +33,16 @@ export type Project = RealEstateBase & {
   handoverTime?: string;
   ownership?: string;
   utilities: string[];
+  apartments?: {
+    id: string;
+    slug: string;
+    name: string;
+    price: string;
+    size?: string;
+    rentalType?: string;
+    status: string;
+    isFeatured: boolean;
+  }[];
   floorPlanImages?: string[];
   seoTitle?: string;
   seoDescription?: string;
@@ -48,6 +58,14 @@ export type RentalListing = RealEstateBase & {
   size: string;
   rentalType?: string;
   bannerImage?: string;
+};
+
+export type ApartmentListing = RealEstateBase & {
+  size: string;
+  rentalType?: string;
+  bannerImage?: string;
+  projectName?: string;
+  projectSlug?: string;
 };
 
 export type Post = {

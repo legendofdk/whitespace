@@ -17,6 +17,7 @@ enum PropertyKind {
   PROJECT
   LAND
   RENTAL
+  APARTMENT
 }
 
 model Area {
@@ -67,11 +68,15 @@ model Property {
   rentalType       String?
   latitude         Decimal?       @db.Decimal(10, 7)
   longitude        Decimal?       @db.Decimal(10, 7)
+  parentProjectId  String?
+  parentProject    Property?      @relation("ProjectApartments", fields: [parentProjectId], references: [id], onDelete: Cascade)
+  apartments       Property[]     @relation("ProjectApartments")
   utilities        PropertyUtility[]
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
   @@index([kind, areaId, status])
+  @@index([parentProjectId])
 }
 
 model PropertyUtility {

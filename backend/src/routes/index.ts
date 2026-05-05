@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { requireAdminAuth } from "../middlewares/require-admin-auth.js";
+import { apartmentRouter } from "../modules/apartments/apartment.routes.js";
 import { areaRouter } from "../modules/areas/area.routes.js";
 import { authRouter } from "../modules/auth/auth.routes.js";
 import { contactRouter } from "../modules/contacts/contact.routes.js";
@@ -14,6 +15,7 @@ export const apiRouter = Router();
 
 apiRouter.use("/auth", authRouter);
 apiRouter.use("/areas", areaRouter);
+apiRouter.use("/apartments", apartmentRouter);
 apiRouter.use("/contacts", contactRouter);
 apiRouter.use("/projects", projectRouter);
 apiRouter.use("/land-listings", landListingRouter);

@@ -203,6 +203,49 @@ const rentalSeeds = [
   }
 ];
 
+const apartmentSeeds = [
+  {
+    slug: "can-102-ocean-park",
+    name: "102",
+    projectSlug: "vinhomes-ocean-park-gia-lam",
+    address: "Tòa S2.01, Vinhomes Ocean Park, Gia Lâm, Hà Nội",
+    size: "72 m2",
+    rentalType: "Căn hộ 2PN",
+    price: "4.2 tỷ",
+    hotline: "0234235344",
+    badge: "Căn hộ",
+    cardMeta: "72 m2 • 2PN • Full nội thất",
+    description: "Căn hộ mã 102 phù hợp ở thực và khai thác cho thuê dài hạn.",
+    thumbnail:
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+    isFeatured: true,
+    status: ContentStatus.PUBLISHED,
+    latitude: "20.9958",
+    longitude: "105.9449",
+    gallery: []
+  },
+  {
+    slug: "can-103-ocean-park",
+    name: "103",
+    projectSlug: "vinhomes-ocean-park-gia-lam",
+    address: "Tòa S2.01, Vinhomes Ocean Park, Gia Lâm, Hà Nội",
+    size: "81 m2",
+    rentalType: "Căn hộ 3PN",
+    price: "4.9 tỷ",
+    hotline: "0234235344",
+    badge: "Căn hộ",
+    cardMeta: "81 m2 • 3PN • Ban công Đông Nam",
+    description: "Căn hộ mã 103 có diện tích lớn hơn, phù hợp hộ gia đình.",
+    thumbnail:
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80",
+    isFeatured: false,
+    status: ContentStatus.PUBLISHED,
+    latitude: "20.9958",
+    longitude: "105.9449",
+    gallery: []
+  }
+];
+
 const postSeeds = [
   {
     slug: "xu-huong-bat-dong-san-2026",
@@ -475,6 +518,68 @@ async function main() {
         longitude: rental.longitude,
         gallery: {
           create: rental.gallery.map((url, index) => ({
+            url,
+            sortOrder: index
+          }))
+        }
+      }
+    });
+  }
+
+  for (const apartment of apartmentSeeds) {
+    const project = await prisma.property.findUniqueOrThrow({
+      where: { slug: apartment.projectSlug }
+    });
+
+    await prisma.property.upsert({
+      where: { slug: apartment.slug },
+      update: {
+        kind: PropertyKind.APARTMENT,
+        name: apartment.name,
+        areaId: project.areaId,
+        parentProjectId: project.id,
+        address: apartment.address,
+        size: apartment.size,
+        rentalType: apartment.rentalType,
+        price: apartment.price,
+        hotline: apartment.hotline,
+        badge: apartment.badge,
+        cardMeta: apartment.cardMeta,
+        description: apartment.description,
+        thumbnail: apartment.thumbnail,
+        isFeatured: apartment.isFeatured,
+        status: apartment.status,
+        latitude: apartment.latitude,
+        longitude: apartment.longitude,
+        gallery: {
+          deleteMany: {},
+          create: apartment.gallery.map((url, index) => ({
+            url,
+            sortOrder: index
+          }))
+        }
+      },
+      create: {
+        kind: PropertyKind.APARTMENT,
+        slug: apartment.slug,
+        name: apartment.name,
+        areaId: project.areaId,
+        parentProjectId: project.id,
+        address: apartment.address,
+        size: apartment.size,
+        rentalType: apartment.rentalType,
+        price: apartment.price,
+        hotline: apartment.hotline,
+        badge: apartment.badge,
+        cardMeta: apartment.cardMeta,
+        description: apartment.description,
+        thumbnail: apartment.thumbnail,
+        isFeatured: apartment.isFeatured,
+        status: apartment.status,
+        latitude: apartment.latitude,
+        longitude: apartment.longitude,
+        gallery: {
+          create: apartment.gallery.map((url, index) => ({
             url,
             sortOrder: index
           }))

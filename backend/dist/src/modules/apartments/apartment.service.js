@@ -1,63 +1,37 @@
 import { PropertyKind } from "@prisma/client";
 import { deleteCloudinaryAssets, getCloudinaryPublicIdFromUrl, getRemovedAssetPublicIds } from "../../lib/cloudinary.js";
 import { prisma } from "../../lib/prisma.js";
-const projectInclude = {
+const apartmentInclude = {
     area: true,
-    apartments: {
-        where: {
-            kind: PropertyKind.APARTMENT
-        },
-        orderBy: {
-            name: "asc"
-        }
-    },
-    utilities: {
-        orderBy: {
-            createdAt: "asc"
-        }
-    },
+    parentProject: true,
     gallery: {
         orderBy: {
             sortOrder: "asc"
         }
     }
 };
-function mapProject(item) {
+function mapApartment(item) {
     return {
         id: item.id,
         kind: item.kind,
         name: item.name,
         slug: item.slug,
-        investor: item.investor,
         area: item.area.name,
         areaSlug: item.area.slug,
+        projectId: item.parentProject?.id ?? null,
+        projectName: item.parentProject?.name ?? null,
+        projectSlug: item.parentProject?.slug ?? null,
         address: item.address,
-        scale: item.scale,
-        productTypes: item.productTypes,
-        villaInfo: item.villaInfo,
-        shophouseInfo: item.shophouseInfo,
-        startTime: item.startTime,
-        handoverTime: item.handoverTime,
-        ownership: item.ownership,
+        size: item.size,
+        rentalType: item.rentalType,
         price: item.price,
         hotline: item.hotline,
         badge: item.badge,
         cardMeta: item.cardMeta,
-        apartments: item.apartments.map((apartment) => ({
-            id: apartment.id,
-            name: apartment.name,
-            slug: apartment.slug,
-            price: apartment.price,
-            size: apartment.size,
-            rentalType: apartment.rentalType,
-            status: apartment.status,
-            isFeatured: apartment.isFeatured
-        })),
         thumbnail: item.thumbnail,
         bannerImage: item.bannerImage,
         gallery: item.gallery.map((media) => media.url),
         description: item.description,
-        utilities: item.utilities.map((utility) => utility.label),
         mapEmbedUrl: item.mapEmbedUrl,
         isFeatured: item.isFeatured,
         seoTitle: item.seoTitle,
@@ -73,18 +47,21 @@ function mapProject(item) {
         updatedAt: item.updatedAt
     };
 }
-async function getAreaIdBySlug(areaSlug) {
-    const area = await prisma.area.findUnique({
-        where: { slug: areaSlug }
+async function getProjectBySlug(projectSlug) {
+    const project = await prisma.property.findFirst({
+        where: {
+            kind: PropertyKind.PROJECT,
+            slug: projectSlug
+        }
     });
-    if (!area) {
-        throw new Error("AREA_NOT_FOUND");
+    if (!project) {
+        throw new Error("PROJECT_NOT_FOUND");
     }
-    return area.id;
+    return project;
 }
-export async function getProjectList(query = {}) {
+export async function getApartmentList(query = {}) {
     const where = {
-        kind: PropertyKind.PROJECT
+        kind: PropertyKind.APARTMENT
     };
     if (query.search) {
         where.OR = [
@@ -95,7 +72,7 @@ export async function getProjectList(query = {}) {
                 }
             },
             {
-                investor: {
+                address: {
                     contains: query.search,
                     mode: "insensitive"
                 }
@@ -107,6 +84,11 @@ export async function getProjectList(query = {}) {
             slug: query.area
         };
     }
+    if (query.projectSlug) {
+        where.parentProject = {
+            slug: query.projectSlug
+        };
+    }
     if (typeof query.featured === "boolean") {
         where.isFeatured = query.featured;
     }
@@ -115,41 +97,36 @@ export async function getProjectList(query = {}) {
     }
     const items = await prisma.property.findMany({
         where,
-        include: projectInclude,
-        orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }]
+        include: apartmentInclude,
+        orderBy: [{ name: "asc" }, { createdAt: "desc" }]
     });
-    return items.map(mapProject);
+    return items.map(mapApartment);
 }
-export async function getProjectBySlug(slug) {
+export async function getApartmentBySlug(slug) {
     const item = await prisma.property.findFirst({
         where: {
-            kind: PropertyKind.PROJECT,
+            kind: PropertyKind.APARTMENT,
             slug
         },
-        include: projectInclude
+        include: apartmentInclude
     });
     if (!item) {
         return null;
     }
-    return mapProject(item);
+    return mapApartment(item);
 }
-export async function createProject(input) {
-    const areaId = await getAreaIdBySlug(input.areaSlug);
+export async function createApartment(input) {
+    const project = await getProjectBySlug(input.projectSlug);
     const item = await prisma.property.create({
         data: {
-            kind: PropertyKind.PROJECT,
+            kind: PropertyKind.APARTMENT,
             name: input.name,
             slug: input.slug,
-            investor: input.investor,
-            areaId,
+            areaId: project.areaId,
+            parentProjectId: project.id,
             address: input.address,
-            scale: input.scale,
-            productTypes: input.productTypes,
-            villaInfo: input.villaInfo,
-            shophouseInfo: input.shophouseInfo,
-            startTime: input.startTime,
-            handoverTime: input.handoverTime,
-            ownership: input.ownership,
+            size: input.size,
+            rentalType: input.rentalType,
             price: input.price,
             hotline: input.hotline,
             thumbnail: input.thumbnail,
@@ -166,9 +143,6 @@ export async function createProject(input) {
             longitude: input.longitude,
             badge: input.badge,
             cardMeta: input.cardMeta,
-            utilities: {
-                create: input.utilities.map((label) => ({ label }))
-            },
             gallery: {
                 create: input.gallery.map((url, index) => ({
                     url,
@@ -177,14 +151,14 @@ export async function createProject(input) {
                 }))
             }
         },
-        include: projectInclude
+        include: apartmentInclude
     });
-    return mapProject(item);
+    return mapApartment(item);
 }
-export async function updateProject(slug, input) {
+export async function updateApartment(slug, input) {
     const existing = await prisma.property.findFirst({
         where: {
-            kind: PropertyKind.PROJECT,
+            kind: PropertyKind.APARTMENT,
             slug
         },
         include: {
@@ -194,7 +168,7 @@ export async function updateProject(slug, input) {
     if (!existing) {
         return null;
     }
-    const areaId = await getAreaIdBySlug(input.areaSlug);
+    const project = await getProjectBySlug(input.projectSlug);
     const nextUrls = [input.thumbnail, input.bannerImage, ...input.gallery].filter((value) => Boolean(value));
     const removedAssetPublicIds = getRemovedAssetPublicIds([
         { url: existing.thumbnail, publicId: existing.thumbnailPublicId },
@@ -208,16 +182,11 @@ export async function updateProject(slug, input) {
         data: {
             name: input.name,
             slug: input.slug,
-            investor: input.investor,
-            areaId,
+            areaId: project.areaId,
+            parentProjectId: project.id,
             address: input.address,
-            scale: input.scale,
-            productTypes: input.productTypes,
-            villaInfo: input.villaInfo,
-            shophouseInfo: input.shophouseInfo,
-            startTime: input.startTime,
-            handoverTime: input.handoverTime,
-            ownership: input.ownership,
+            size: input.size,
+            rentalType: input.rentalType,
             price: input.price,
             hotline: input.hotline,
             thumbnail: input.thumbnail,
@@ -234,10 +203,6 @@ export async function updateProject(slug, input) {
             longitude: input.longitude,
             badge: input.badge,
             cardMeta: input.cardMeta,
-            utilities: {
-                deleteMany: {},
-                create: input.utilities.map((label) => ({ label }))
-            },
             gallery: {
                 deleteMany: {},
                 create: input.gallery.map((url, index) => ({
@@ -247,27 +212,19 @@ export async function updateProject(slug, input) {
                 }))
             }
         },
-        include: projectInclude
+        include: apartmentInclude
     });
     await deleteCloudinaryAssets(removedAssetPublicIds);
-    return mapProject(item);
+    return mapApartment(item);
 }
-export async function deleteProject(slug) {
+export async function deleteApartment(slug) {
     const existing = await prisma.property.findFirst({
         where: {
-            kind: PropertyKind.PROJECT,
+            kind: PropertyKind.APARTMENT,
             slug
         },
         include: {
-            gallery: true,
-            apartments: {
-                where: {
-                    kind: PropertyKind.APARTMENT
-                },
-                include: {
-                    gallery: true
-                }
-            }
+            gallery: true
         }
     });
     if (!existing) {
@@ -276,19 +233,8 @@ export async function deleteProject(slug) {
     const assetPublicIds = [
         existing.thumbnailPublicId,
         existing.bannerImagePublicId,
-        ...existing.gallery.map((media) => media.publicId),
-        ...existing.apartments.flatMap((apartment) => [
-            apartment.thumbnailPublicId,
-            apartment.bannerImagePublicId,
-            ...apartment.gallery.map((media) => media.publicId)
-        ])
+        ...existing.gallery.map((media) => media.publicId)
     ].filter((value) => Boolean(value));
-    await prisma.property.deleteMany({
-        where: {
-            parentProjectId: existing.id,
-            kind: PropertyKind.APARTMENT
-        }
-    });
     await prisma.property.delete({
         where: {
             id: existing.id

@@ -1,4 +1,4 @@
-import type { LandListing, Post, Project, RentalListing } from "@/types";
+import type { ApartmentListing, LandListing, Post, Project, RentalListing } from "@/types";
 
 const backendUrl = process.env.BACKEND_URL ?? process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:4000";
 
@@ -37,6 +37,16 @@ type BackendProject = {
   handoverTime?: string | null;
   ownership?: string | null;
   utilities?: string[];
+  apartments?: {
+    id: string;
+    slug: string;
+    name: string;
+    price: string;
+    size?: string | null;
+    rentalType?: string | null;
+    status: string;
+    isFeatured: boolean;
+  }[];
   seoTitle?: string | null;
   seoDescription?: string | null;
 };
@@ -87,6 +97,11 @@ type BackendRental = {
   coordinates?: BackendCoordinates;
   seoTitle?: string | null;
   seoDescription?: string | null;
+};
+
+type BackendApartment = BackendRental & {
+  projectName?: string | null;
+  projectSlug?: string | null;
 };
 
 type BackendPost = {
@@ -151,6 +166,16 @@ function mapProject(item: BackendProject): Project {
     handoverTime: item.handoverTime ?? undefined,
     ownership: item.ownership ?? undefined,
     utilities: item.utilities ?? [],
+    apartments: (item.apartments ?? []).map((apartment) => ({
+      id: apartment.id,
+      slug: apartment.slug,
+      name: apartment.name,
+      price: apartment.price,
+      size: apartment.size ?? undefined,
+      rentalType: apartment.rentalType ?? undefined,
+      status: apartment.status,
+      isFeatured: apartment.isFeatured
+    })),
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined
   };
@@ -201,6 +226,32 @@ function mapRental(item: BackendRental): RentalListing {
     size: item.size ?? "Đang cập nhật",
     rentalType: item.rentalType ?? undefined,
     bannerImage: item.bannerImage ?? item.thumbnail
+  };
+}
+
+function mapApartment(item: BackendApartment): ApartmentListing {
+  return {
+    id: item.id,
+    slug: item.slug,
+    name: item.name,
+    kind: "apartment",
+    area: item.area,
+    address: item.address,
+    coordinates: withFallbackCoordinates(item.coordinates),
+    price: item.price,
+    hotline: item.hotline,
+    thumbnail: item.thumbnail,
+    gallery: item.gallery ?? [],
+    description: item.description,
+    mapEmbedUrl: item.mapEmbedUrl ?? undefined,
+    isFeatured: item.isFeatured,
+    badge: item.badge ?? undefined,
+    cardMeta: item.cardMeta ?? "",
+    size: item.size ?? "Đang cập nhật",
+    rentalType: item.rentalType ?? undefined,
+    bannerImage: item.bannerImage ?? item.thumbnail,
+    projectName: item.projectName ?? undefined,
+    projectSlug: item.projectSlug ?? undefined
   };
 }
 
@@ -333,6 +384,30 @@ export async function getPublicRentals(params?: {
 export async function getPublicRentalBySlug(slug: string) {
   const item = await fetchJson<BackendRental>(`/api/rentals/${slug}`);
   return mapRental(item);
+}
+
+export async function getPublicApartments(params?: {
+  projectSlug?: string;
+  area?: string;
+  search?: string;
+}) {
+  const searchParams = new URLSearchParams();
+
+  if (params?.projectSlug) {
+    searchParams.set("projectSlug", params.projectSlug);
+  }
+
+  if (params?.area) {
+    searchParams.set("area", params.area);
+  }
+
+  if (params?.search) {
+    searchParams.set("search", params.search);
+  }
+
+  const suffix = searchParams.toString() ? `?${searchParams.toString()}` : "";
+  const items = await fetchList<BackendApartment>(`/api/apartments${suffix}`);
+  return items.map(mapApartment);
 }
 
 export async function getPublicAreas() {

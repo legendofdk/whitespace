@@ -19,7 +19,7 @@ export function toProjectCardItem(project: Project): RealEstateCardItem {
   return {
     id: project.id,
     slug: project.slug,
-    kind: project.kind,
+    kind: "project",
     name: project.name,
     area: project.area,
     address: project.address,
@@ -36,7 +36,7 @@ export function toLandCardItem(item: LandListing): RealEstateCardItem {
   return {
     id: item.id,
     slug: item.slug,
-    kind: item.kind,
+    kind: "land",
     name: item.name,
     area: item.area,
     address: item.address,
@@ -53,7 +53,7 @@ export function toRentalCardItem(item: RentalListing): RealEstateCardItem {
   return {
     id: item.id,
     slug: item.slug,
-    kind: item.kind,
+    kind: "rental",
     name: item.name,
     area: item.area,
     address: item.address,
