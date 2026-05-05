@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 import { ImageUploadField } from "./image-upload-field";
+import { FieldLabel } from "./field-label";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
@@ -83,11 +84,12 @@ export function PostEditor({ slug }: { slug?: string }) {
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         {status === "success" ? <p className="mt-4 text-sm font-medium text-green-700">Lưu dữ liệu thành công.</p> : null}
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
-          <label className={`${fieldClassName} xl:col-span-2`}><span className={labelClassName}>Tiêu đề</span><input value={form.title} onChange={(e) => setForm((c) => ({ ...c, title: e.target.value, slug: slugTouched ? c.slug : slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tiêu đề" required /></label>
-          <label className={`${fieldClassName} xl:col-span-2`}><span className={labelClassName}>Slug</span><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
+          <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Tiêu đề" required className={labelClassName} /><input value={form.title} onChange={(e) => setForm((c) => ({ ...c, title: e.target.value, slug: slugTouched ? c.slug : slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tiêu đề" required /></label>
+          <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Slug" required className={labelClassName} /><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
           <div className="xl:col-span-2">
             <ImageUploadField
               label="Ảnh đại diện"
+              required
               value={form.thumbnail}
               folder="posts"
               description="Chọn một ảnh đại diện để hiển thị ở danh sách bài viết và trang chi tiết."
@@ -105,11 +107,12 @@ export function PostEditor({ slug }: { slug?: string }) {
               onUploaded={(url) => setForm((c) => ({ ...c, bannerImage: url }))}
             />
           </div>
-          <label className={`${fieldClassName} xl:col-span-2`}><span className={labelClassName}>Tóm tắt</span><textarea value={form.excerpt} onChange={(e) => setForm((c) => ({ ...c, excerpt: e.target.value }))} className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none" placeholder="Tóm tắt" required /></label>
-          <label className={fieldClassName}><span className={labelClassName}>Khu vực</span><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
+          <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Tóm tắt" required className={labelClassName} /><textarea value={form.excerpt} onChange={(e) => setForm((c) => ({ ...c, excerpt: e.target.value }))} className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none" placeholder="Tóm tắt" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Khu vực" className={labelClassName} /><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
           <div className="xl:col-span-2">
             <RichTextEditor
               label="Nội dung"
+              required
               value={form.content}
               onChange={(value) => setForm((c) => ({ ...c, content: value }))}
               placeholder="Nội dung bài viết"

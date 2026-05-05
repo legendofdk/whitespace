@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 import { ImageUploadField } from "./image-upload-field";
+import { FieldLabel } from "./field-label";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
@@ -231,7 +232,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
 
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
           <label className={fieldClassName}>
-            <span className={labelClassName}>Tên dự án</span>
+            <FieldLabel label="Tên dự án" required className={labelClassName} />
             <input
               value={form.name}
               onChange={(event) =>
@@ -247,7 +248,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Slug</span>
+            <FieldLabel label="Slug" required className={labelClassName} />
             <input
               value={form.slug}
               onChange={(event) => {
@@ -260,11 +261,11 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Chủ đầu tư</span>
+            <FieldLabel label="Chủ đầu tư" className={labelClassName} />
             <input value={form.investor} onChange={(e) => setForm((c) => ({ ...c, investor: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Chủ đầu tư" />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Khu vực</span>
+            <FieldLabel label="Khu vực" className={labelClassName} />
             <select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">
               {areaOptions.map((area) => (
                 <option key={area.id} value={area.slug}>
@@ -274,11 +275,11 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             </select>
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
-            <span className={labelClassName}>Địa chỉ</span>
+            <FieldLabel label="Địa chỉ" required className={labelClassName} />
             <input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required />
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
-            <span className={labelClassName}>Link Google Map</span>
+            <FieldLabel label="Link Google Map" className={labelClassName} />
             <input
               value={form.mapEmbedUrl}
               onChange={(e) => setForm((c) => ({ ...c, mapEmbedUrl: e.target.value }))}
@@ -287,11 +288,11 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Giá bán</span>
+            <FieldLabel label="Giá bán" required className={labelClassName} />
             <input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá bán" required />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Quy mô</span>
+            <FieldLabel label="Quy mô" className={labelClassName} />
             <input value={form.scale} onChange={(e) => setForm((c) => ({ ...c, scale: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Quy mô" />
           </label>
           <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
@@ -304,22 +305,23 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             Dự án nổi bật
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
-            <span className={labelClassName}>Loại sản phẩm</span>
+            <FieldLabel label="Loại sản phẩm" className={labelClassName} />
             <input value={form.productTypes} onChange={(e) => setForm((c) => ({ ...c, productTypes: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại sản phẩm, cách nhau bằng dấu phẩy" />
           </label>
           <div className="xl:col-span-2">
-            <ImageUploadField label="Ảnh đại diện" value={form.thumbnail} folder="projects" description="Chọn một ảnh đại diện để hiển thị ở card và trang chi tiết." onUploaded={(url) => setForm((c) => ({ ...c, thumbnail: url }))} />
+            <ImageUploadField label="Ảnh đại diện" required value={form.thumbnail} folder="projects" description="Chọn một ảnh đại diện để hiển thị ở card và trang chi tiết." onUploaded={(url) => setForm((c) => ({ ...c, thumbnail: url }))} />
           </div>
           <div className="xl:col-span-2">
             <RichTextEditor
               label="Mô tả"
+              required
               value={form.description}
               onChange={(value) => setForm((c) => ({ ...c, description: value }))}
               placeholder="Mô tả"
             />
           </div>
           <label className={`${fieldClassName} xl:col-span-2`}>
-            <span className={labelClassName}>Tiện ích</span>
+            <FieldLabel label="Tiện ích" className={labelClassName} />
             <textarea value={form.utilities} onChange={(e) => setForm((c) => ({ ...c, utilities: e.target.value }))} className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none" placeholder="Tiện ích, cách nhau bằng dấu phẩy" />
           </label>
           <div className="xl:col-span-2">

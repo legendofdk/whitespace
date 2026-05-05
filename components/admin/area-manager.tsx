@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 
 import { fetchAdminApi } from "./admin-api";
+import { FieldLabel } from "./field-label";
 import { slugify } from "./slug";
 
 type AreaItem = {
@@ -150,7 +151,7 @@ export function AreaManager() {
 
           <form onSubmit={handleSubmit} className="mt-8 grid gap-4">
             <label className="grid gap-2">
-              <span className="text-sm font-medium text-ink">Tên khu vực</span>
+              <FieldLabel label="Tên khu vực" required />
               <input
                 value={form.name}
                 onChange={(event) =>
@@ -167,7 +168,7 @@ export function AreaManager() {
             </label>
 
             <label className="grid gap-2">
-              <span className="text-sm font-medium text-ink">Slug</span>
+              <FieldLabel label="Slug" required />
               <input
                 value={form.slug}
                 onChange={(event) => {
@@ -181,7 +182,7 @@ export function AreaManager() {
             </label>
 
             <label className="grid gap-2">
-              <span className="text-sm font-medium text-ink">Mô tả ngắn</span>
+              <FieldLabel label="Mô tả ngắn" />
               <textarea
                 value={form.description}
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}

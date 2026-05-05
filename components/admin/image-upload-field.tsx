@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { ChangeEvent, useMemo, useState } from "react";
 
+import { FieldLabel } from "./field-label";
+
 type ImageUploadFieldProps = {
   label: string;
   value: string;
   folder: string;
   description?: string;
+  required?: boolean;
   multiple?: boolean;
   onUploaded: (url: string) => void;
   onRemove?: (url: string) => void;
@@ -18,6 +21,7 @@ export function ImageUploadField({
   value,
   folder,
   description,
+  required = false,
   multiple = false,
   onUploaded,
   onRemove
@@ -73,7 +77,7 @@ export function ImageUploadField({
   return (
     <div className="grid gap-4 rounded-[24px] border border-dashed border-line bg-mist/70 p-4">
       <div>
-        <label className="text-sm font-medium text-ink">{label}</label>
+        <FieldLabel label={label} required={required} />
         {description ? <p className="mt-1 text-xs leading-6 text-steel">{description}</p> : null}
       </div>
 

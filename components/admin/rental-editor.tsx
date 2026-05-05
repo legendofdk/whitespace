@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 import { ImageUploadField } from "./image-upload-field";
+import { FieldLabel } from "./field-label";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
@@ -83,12 +84,12 @@ export function RentalEditor({ slug }: { slug?: string }) {
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         {status === "success" ? <p className="mt-4 text-sm font-medium text-green-700">Lưu dữ liệu thành công.</p> : null}
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
-          <label className={fieldClassName}><span className={labelClassName}>Tên sản phẩm</span><input value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value, slug: slugTouched ? c.slug : slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tên sản phẩm" required /></label>
-          <label className={fieldClassName}><span className={labelClassName}>Slug</span><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
-          <label className={fieldClassName}><span className={labelClassName}>Khu vực</span><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
-          <label className={fieldClassName}><span className={labelClassName}>Địa chỉ</span><input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required /></label>
-          <label className={fieldClassName}><span className={labelClassName}>Giá thuê</span><input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá thuê" required /></label>
-          <label className={fieldClassName}><span className={labelClassName}>Diện tích</span><input value={form.size} onChange={(e) => setForm((c) => ({ ...c, size: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Diện tích" /></label>
+          <label className={fieldClassName}><FieldLabel label="Tên sản phẩm" required className={labelClassName} /><input value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value, slug: slugTouched ? c.slug : slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tên sản phẩm" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Slug" required className={labelClassName} /><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Khu vực" className={labelClassName} /><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
+          <label className={fieldClassName}><FieldLabel label="Địa chỉ" required className={labelClassName} /><input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Giá thuê" required className={labelClassName} /><input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá thuê" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Diện tích" className={labelClassName} /><input value={form.size} onChange={(e) => setForm((c) => ({ ...c, size: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Diện tích" /></label>
           <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
             <input
               type="checkbox"
@@ -98,10 +99,11 @@ export function RentalEditor({ slug }: { slug?: string }) {
             />
             Sản phẩm nổi bật
           </label>
-          <label className={fieldClassName}><span className={labelClassName}>Loại hình</span><input value={form.rentalType} onChange={(e) => setForm((c) => ({ ...c, rentalType: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại hình" /></label>
+          <label className={fieldClassName}><FieldLabel label="Loại hình" className={labelClassName} /><input value={form.rentalType} onChange={(e) => setForm((c) => ({ ...c, rentalType: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại hình" /></label>
           <div className="xl:col-span-2">
             <ImageUploadField
               label="Ảnh đại diện"
+              required
               value={form.thumbnail}
               folder="rentals"
               description="Chọn một ảnh đại diện để hiển thị ở danh sách và trang chi tiết."
@@ -112,6 +114,7 @@ export function RentalEditor({ slug }: { slug?: string }) {
           <div className="xl:col-span-2">
             <RichTextEditor
               label="Mô tả"
+              required
               value={form.description}
               onChange={(value) => setForm((c) => ({ ...c, description: value }))}
               placeholder="Mô tả"

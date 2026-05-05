@@ -2,11 +2,14 @@
 
 import dynamic from "next/dynamic";
 
+import { FieldLabel } from "./field-label";
+
 type RichTextEditorProps = {
   label: string;
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  required?: boolean;
 };
 
 const EditorClient = dynamic(
@@ -123,10 +126,10 @@ const EditorClient = dynamic(
   }
 );
 
-export function RichTextEditor({ label, value, onChange, placeholder }: RichTextEditorProps) {
+export function RichTextEditor({ label, value, onChange, placeholder, required = false }: RichTextEditorProps) {
   return (
     <div className="grid gap-2">
-      <span className="text-sm font-medium text-ink">{label}</span>
+      <FieldLabel label={label} required={required} />
       <div className="admin-ck-editor rounded-[24px] border border-line bg-white">
         <EditorClient value={value} onChange={onChange} placeholder={placeholder} />
       </div>

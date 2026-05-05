@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 import { fetchAdminApi } from "./admin-api";
+import { FieldLabel } from "./field-label";
 import { ImageUploadField } from "./image-upload-field";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
@@ -194,7 +195,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
 
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
           <label className={fieldClassName}>
-            <span className={labelClassName}>Tên căn hộ</span>
+            <FieldLabel label="Tên căn hộ" required className={labelClassName} />
             <input
               value={form.name}
               onChange={(event) =>
@@ -210,7 +211,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
             />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Slug</span>
+            <FieldLabel label="Slug" required className={labelClassName} />
             <input
               value={form.slug}
               onChange={(event) => {
@@ -223,7 +224,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
             />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Dự án</span>
+            <FieldLabel label="Dự án" required className={labelClassName} />
             <select
               value={form.projectSlug}
               onChange={(event) => setForm((current) => ({ ...current, projectSlug: event.target.value }))}
@@ -241,7 +242,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
             </select>
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Địa chỉ</span>
+            <FieldLabel label="Địa chỉ" required className={labelClassName} />
             <input
               value={form.address}
               onChange={(event) => setForm((current) => ({ ...current, address: event.target.value }))}
@@ -251,24 +252,25 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
             />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Giá</span>
+            <FieldLabel label="Giá" required className={labelClassName} />
             <input value={form.price} onChange={(event) => setForm((current) => ({ ...current, price: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá" required />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Diện tích</span>
+            <FieldLabel label="Diện tích" className={labelClassName} />
             <input value={form.size} onChange={(event) => setForm((current) => ({ ...current, size: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Diện tích" />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Loại hình</span>
+            <FieldLabel label="Loại hình" className={labelClassName} />
             <input value={form.rentalType} onChange={(event) => setForm((current) => ({ ...current, rentalType: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại hình" />
           </label>
           <label className={fieldClassName}>
-            <span className={labelClassName}>Hotline</span>
+            <FieldLabel label="Hotline" required className={labelClassName} />
             <input value={form.hotline} onChange={(event) => setForm((current) => ({ ...current, hotline: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Hotline" required />
           </label>
           <div className="xl:col-span-2">
             <ImageUploadField
               label="Ảnh đại diện"
+              required
               value={form.thumbnail}
               folder="apartments"
               description="Chọn một ảnh đại diện để hiển thị ở danh sách và trang chi tiết."
@@ -277,7 +279,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
             />
           </div>
           <div className="xl:col-span-2">
-            <RichTextEditor label="Mô tả" value={form.description} onChange={(value) => setForm((current) => ({ ...current, description: value }))} placeholder="Mô tả căn hộ" />
+            <RichTextEditor label="Mô tả" required value={form.description} onChange={(value) => setForm((current) => ({ ...current, description: value }))} placeholder="Mô tả căn hộ" />
           </div>
           <div className="xl:col-span-2">
             <ImageUploadField
