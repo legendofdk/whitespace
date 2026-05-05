@@ -9,6 +9,7 @@ import { adminApiBaseUrl } from "./admin-api";
 const adminLinks = [
   { href: "/dashboard/areas", label: "Khu vực" },
   { href: "/dashboard/projects", label: "Dự án" },
+  { href: "/dashboard/apartments", label: "Căn hộ" },
   { href: "/dashboard/land-listings", label: "Chuyển nhượng" },
   { href: "/dashboard/rentals", label: "Cho thuê" },
   { href: "/dashboard/posts", label: "Tin tức" },
