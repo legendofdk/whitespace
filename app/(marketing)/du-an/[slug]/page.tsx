@@ -98,11 +98,10 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                     <Link
                       key={apartment.id}
                       href={`/can-ho/${apartment.slug}`}
-                      className="flex aspect-square flex-col justify-between rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5 hover:border-ink/20"
+                      className="flex aspect-square flex-col rounded-[24px] border border-line bg-mist p-6 transition hover:-translate-y-0.5 hover:border-ink/20"
                     >
-                      <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">Căn hộ</p>
-                      <p className="mt-3 text-3xl font-semibold text-ink">{apartment.name}</p>
-                      <div className="mt-4 space-y-3 text-sm">
+                      <p className="text-4xl font-semibold leading-none text-ink">{apartment.name}</p>
+                      <div className="mt-8 space-y-5 text-sm">
                         <div>
                           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Giá</p>
                           <p className="mt-1 font-semibold text-ink">{apartment.price}</p>
