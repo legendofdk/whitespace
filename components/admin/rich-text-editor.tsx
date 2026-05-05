@@ -2,8 +2,6 @@
 
 import dynamic from "next/dynamic";
 
-import { adminApiBaseUrl } from "./admin-api";
-
 type RichTextEditorProps = {
   label: string;
   value: string;
@@ -34,7 +32,7 @@ const EditorClient = dynamic(
           const xhr = new XMLHttpRequest();
           this.xhr = xhr;
 
-          xhr.open("POST", `${adminApiBaseUrl}/api/media/upload?folder=editor`, true);
+          xhr.open("POST", "/api/admin/media/upload?folder=editor", true);
           xhr.withCredentials = true;
           xhr.responseType = "json";
 

@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { ChangeEvent, useMemo, useState } from "react";
 
-import { adminApiBaseUrl } from "./admin-api";
-
 type ImageUploadFieldProps = {
   label: string;
   value: string;
@@ -50,7 +48,7 @@ export function ImageUploadField({
         const formData = new FormData();
         formData.append("file", file);
 
-        const response = await fetch(`${adminApiBaseUrl}/api/media/upload?folder=${folder}`, {
+        const response = await fetch(`/api/admin/media/upload?folder=${folder}`, {
           method: "POST",
           credentials: "include",
           body: formData
