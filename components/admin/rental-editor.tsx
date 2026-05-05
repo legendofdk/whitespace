@@ -17,7 +17,7 @@ export function RentalEditor({ slug }: { slug?: string }) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<"idle" | "loading" | "submitting" | "success" | "error">(slug ? "loading" : "idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [slugTouched, setSlugTouched] = useState(Boolean(slug));
+  const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";

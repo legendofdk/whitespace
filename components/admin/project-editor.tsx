@@ -53,7 +53,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
     slug ? "loading" : "idle"
   );
   const [errorMessage, setErrorMessage] = useState("");
-  const [slugTouched, setSlugTouched] = useState(Boolean(slug));
+  const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";
