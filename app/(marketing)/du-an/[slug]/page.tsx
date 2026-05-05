@@ -98,16 +98,24 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                     <Link
                       key={apartment.id}
                       href={`/can-ho/${apartment.slug}`}
-                      className="aspect-square rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5 hover:border-ink/20"
+                      className="flex aspect-square flex-col justify-between rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5 hover:border-ink/20"
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">Căn hộ</p>
                       <p className="mt-3 text-3xl font-semibold text-ink">{apartment.name}</p>
-                      <p className="mt-4 text-sm leading-7 text-steel">
-                        {apartment.price}
-                        {apartment.size ? ` • ${apartment.size}` : ""}
-                        {apartment.rentalType ? ` • ${apartment.rentalType}` : ""}
-                      </p>
+                      <div className="mt-4 space-y-3 text-sm">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Giá</p>
+                          <p className="mt-1 font-semibold text-ink">{apartment.price}</p>
+                        </div>
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Diện tích</p>
+                          <p className="mt-1 font-semibold text-ink">{apartment.size ?? "Đang cập nhật"}</p>
+                        </div>
+                      </div>
                     </Link>
+                  ))}
+                  {Array.from({ length: Math.max(0, 3 - project.apartments.length) }).map((_, index) => (
+                    <div key={`placeholder-${index}`} aria-hidden="true" className="aspect-square rounded-[24px] border border-transparent opacity-0" />
                   ))}
                 </div>
               ) : (
