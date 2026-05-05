@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
-import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
 import { getPublicRentalBySlug } from "@/lib/public-api";
 
 export const dynamic = "force-dynamic";
@@ -84,14 +83,6 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
             </div>
 
             <DetailGallery title={item.name} images={item.gallery.length ? item.gallery : [item.thumbnail]} />
-
-            <MapNearbyPanel
-              area={item.area}
-              center={item.coordinates}
-              title={item.name}
-              defaultMapUrl={item.mapEmbedUrl}
-              hideNearbyPlaces
-            />
           </aside>
         </div>
       </section>

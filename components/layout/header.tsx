@@ -30,7 +30,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
     },
     {
       href: "/dat-nen",
-      label: "Đất nền",
+      label: "Chuyển nhượng",
       children: areas.map((area) => ({
         href: `/dat-nen?area=${area.slug}`,
         label: area.name

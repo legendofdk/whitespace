@@ -23,7 +23,7 @@ export default async function AdminLoginPage({
           <p className="text-sm font-semibold uppercase tracking-[0.26em] text-sand">Admin CMS</p>
           <h1 className="mt-5 font-display text-5xl leading-tight">Đăng nhập khu quản trị Batdongsanphiadong</h1>
           <p className="mt-5 max-w-md text-sm leading-8 text-slate-300">
-            Khu vực này dùng để quản lý dự án, đất nền, cho thuê, tin tức và dữ liệu khách hàng từ website.
+            Khu vực này dùng để quản lý dự án, chuyển nhượng, cho thuê, tin tức và dữ liệu khách hàng từ website.
           </p>
           <Link
             href="/"

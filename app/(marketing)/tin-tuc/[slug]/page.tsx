@@ -66,7 +66,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             <div className="rounded-[32px] border border-line bg-ink p-8 text-white">
               <p className="text-sm uppercase tracking-[0.22em] text-sand">Nhận tư vấn nhanh</p>
               <p className="mt-4 text-sm leading-7 text-slate-300">
-                Cần thêm thông tin về dự án, đất nền hoặc sản phẩm cho thuê tại phía Đông Hà Nội, liên hệ ngay để được hỗ trợ.
+                Cần thêm thông tin về dự án, chuyển nhượng hoặc sản phẩm cho thuê tại phía Đông Hà Nội, liên hệ ngay để được hỗ trợ.
               </p>
               <a
                 href="tel:0377281119"

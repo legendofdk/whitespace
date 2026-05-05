@@ -29,7 +29,7 @@ export function LandListingList() {
       const data = (await response.json()) as { items: Item[] };
       setItems(data.items);
     } catch {
-      setErrorMessage("Chưa thể tải danh sách đất nền từ backend.");
+      setErrorMessage("Chưa thể tải danh sách chuyển nhượng từ backend.");
     }
   }
 
@@ -38,7 +38,7 @@ export function LandListingList() {
   }, []);
 
   async function handleDelete(item: Item) {
-    const confirmed = window.confirm(`Xóa đất nền "${item.name}"?`);
+    const confirmed = window.confirm(`Xóa sản phẩm chuyển nhượng "${item.name}"?`);
 
     if (!confirmed) {
       return;
@@ -59,7 +59,7 @@ export function LandListingList() {
 
       await loadItems();
     } catch {
-      setErrorMessage("Chưa thể xóa đất nền.");
+      setErrorMessage("Chưa thể xóa sản phẩm chuyển nhượng.");
     } finally {
       setDeletingId(null);
     }
@@ -70,8 +70,8 @@ export function LandListingList() {
       <div className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-steel">Danh sách đất nền</p>
-            <h1 className="mt-2 font-display text-4xl text-ink">Quản lý đất nền</h1>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-steel">Danh sách chuyển nhượng</p>
+            <h1 className="mt-2 font-display text-4xl text-ink">Quản lý chuyển nhượng</h1>
           </div>
           <div className="flex items-center gap-3">
             <button type="button" onClick={() => void loadItems()} className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink">Tải lại</button>

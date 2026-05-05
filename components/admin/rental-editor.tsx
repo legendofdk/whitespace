@@ -9,7 +9,7 @@ import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
-const initialForm = { name: "", slug: "", areaSlug: "gia-lam", address: "", size: "", rentalType: "Shophouse", price: "", hotline: "0377281119", thumbnail: "", bannerImage: "", gallery: "", description: "", mapEmbedUrl: "", isFeatured: true, seoTitle: "", seoDescription: "", status: "PUBLISHED", latitude: "", longitude: "", badge: "Cho thuê", cardMeta: "" };
+const initialForm = { name: "", slug: "", areaSlug: "gia-lam", address: "", size: "", rentalType: "Shophouse", price: "", hotline: "0377281119", thumbnail: "", bannerImage: "", gallery: "", description: "", isFeatured: true, seoTitle: "", seoDescription: "", status: "PUBLISHED", latitude: "", longitude: "", badge: "Cho thuê", cardMeta: "" };
 
 export function RentalEditor({ slug }: { slug?: string }) {
   const router = useRouter();
@@ -43,7 +43,7 @@ export function RentalEditor({ slug }: { slug?: string }) {
         const response = await fetchAdminApi(`/api/rentals/${slug}`);
         if (!response.ok) throw new Error("LOAD_FAILED");
         const item = (await response.json()) as any;
-        setForm({ name: item.name, slug: item.slug, areaSlug: item.areaSlug, address: item.address, size: item.size ?? "", rentalType: item.rentalType ?? "", price: item.price, hotline: item.hotline, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", gallery: item.gallery?.join("\n") ?? "", description: item.description, mapEmbedUrl: item.mapEmbedUrl ?? "", isFeatured: item.isFeatured, seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", status: item.status, latitude: item.coordinates?.lat?.toString() ?? "", longitude: item.coordinates?.lng?.toString() ?? "", badge: item.badge ?? "Cho thuê", cardMeta: item.cardMeta ?? "" });
+        setForm({ name: item.name, slug: item.slug, areaSlug: item.areaSlug, address: item.address, size: item.size ?? "", rentalType: item.rentalType ?? "", price: item.price, hotline: item.hotline, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", gallery: item.gallery?.join("\n") ?? "", description: item.description, isFeatured: item.isFeatured, seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", status: item.status, latitude: item.coordinates?.lat?.toString() ?? "", longitude: item.coordinates?.lng?.toString() ?? "", badge: item.badge ?? "Cho thuê", cardMeta: item.cardMeta ?? "" });
         setStatus("idle");
       } catch {
         setStatus("error");
@@ -61,7 +61,7 @@ export function RentalEditor({ slug }: { slug?: string }) {
       const response = await fetchAdminApi(isEditing ? `/api/rentals/${slug}` : "/api/rentals", {
         method: isEditing ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, gallery: form.gallery.split("\n").map((item) => item.trim()).filter(Boolean), size: form.size || undefined, rentalType: form.rentalType || undefined, latitude: form.latitude || undefined, longitude: form.longitude || undefined, bannerImage: form.bannerImage || undefined, mapEmbedUrl: form.mapEmbedUrl || undefined, seoTitle: form.seoTitle || undefined, seoDescription: form.seoDescription || undefined, badge: form.badge || undefined, cardMeta: form.cardMeta || undefined })
+        body: JSON.stringify({ ...form, gallery: form.gallery.split("\n").map((item) => item.trim()).filter(Boolean), size: form.size || undefined, rentalType: form.rentalType || undefined, latitude: form.latitude || undefined, longitude: form.longitude || undefined, bannerImage: form.bannerImage || undefined, seoTitle: form.seoTitle || undefined, seoDescription: form.seoDescription || undefined, badge: form.badge || undefined, cardMeta: form.cardMeta || undefined })
       });
       if (!response.ok) throw new Error("SAVE_FAILED");
       setStatus("success");
@@ -87,7 +87,6 @@ export function RentalEditor({ slug }: { slug?: string }) {
           <label className={fieldClassName}><span className={labelClassName}>Slug</span><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
           <label className={fieldClassName}><span className={labelClassName}>Khu vực</span><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
           <label className={fieldClassName}><span className={labelClassName}>Địa chỉ</span><input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required /></label>
-          <label className={`${fieldClassName} xl:col-span-2`}><span className={labelClassName}>Link Google Map</span><input value={form.mapEmbedUrl} onChange={(e) => setForm((c) => ({ ...c, mapEmbedUrl: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Dán link Google Map hoặc link embed" /></label>
           <label className={fieldClassName}><span className={labelClassName}>Giá thuê</span><input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá thuê" required /></label>
           <label className={fieldClassName}><span className={labelClassName}>Diện tích</span><input value={form.size} onChange={(e) => setForm((c) => ({ ...c, size: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Diện tích" /></label>
           <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">

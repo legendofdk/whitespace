@@ -30,7 +30,7 @@ const initialForm = {
   status: "PUBLISHED",
   latitude: "",
   longitude: "",
-  badge: "Đất nền",
+  badge: "Chuyển nhượng",
   cardMeta: ""
 };
 
@@ -86,13 +86,13 @@ export function LandListingEditor({ slug }: { slug?: string }) {
           status: item.status,
           latitude: item.coordinates?.lat?.toString() ?? "",
           longitude: item.coordinates?.lng?.toString() ?? "",
-          badge: item.badge ?? "Đất nền",
+          badge: item.badge ?? "Chuyển nhượng",
           cardMeta: item.cardMeta ?? ""
         });
         setStatus("idle");
       } catch {
         setStatus("error");
-        setErrorMessage("Chưa thể tải chi tiết đất nền.");
+        setErrorMessage("Chưa thể tải chi tiết sản phẩm chuyển nhượng.");
       }
     }
     void loadItem();
@@ -127,7 +127,7 @@ export function LandListingEditor({ slug }: { slug?: string }) {
       router.refresh();
     } catch {
       setStatus("error");
-      setErrorMessage("Chưa thể lưu đất nền.");
+      setErrorMessage("Chưa thể lưu sản phẩm chuyển nhượng.");
     }
   }
 
@@ -136,8 +136,8 @@ export function LandListingEditor({ slug }: { slug?: string }) {
       <div className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-steel">{isEditing ? "Chi tiết đất nền" : "Tạo đất nền"}</p>
-            <h1 className="mt-2 font-display text-4xl text-ink">{isEditing ? "Chỉnh sửa sản phẩm đất nền" : "Tạo mới đất nền"}</h1>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-steel">{isEditing ? "Chi tiết chuyển nhượng" : "Tạo chuyển nhượng"}</p>
+            <h1 className="mt-2 font-display text-4xl text-ink">{isEditing ? "Chỉnh sửa sản phẩm chuyển nhượng" : "Tạo mới chuyển nhượng"}</h1>
           </div>
           <Link href="/dashboard/land-listings" className="rounded-full border border-line px-4 py-2 text-sm font-semibold text-ink">Quay lại danh sách</Link>
         </div>
@@ -158,7 +158,7 @@ export function LandListingEditor({ slug }: { slug?: string }) {
               onChange={(e) => setForm((c) => ({ ...c, isFeatured: e.target.checked }))}
               className="h-4 w-4 rounded border-line"
             />
-            Đất nền nổi bật
+            Chuyển nhượng nổi bật
           </label>
           <label className={fieldClassName}><span className={labelClassName}>Pháp lý</span><input value={form.legal} onChange={(e) => setForm((c) => ({ ...c, legal: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Pháp lý" /></label>
           <div className="xl:col-span-2">
@@ -181,7 +181,7 @@ export function LandListingEditor({ slug }: { slug?: string }) {
           </div>
           <div className="xl:col-span-2">
             <ImageUploadField
-              label="Bộ ảnh đất nền"
+              label="Bộ ảnh chuyển nhượng"
               value={form.gallery}
               folder="land-listings"
               multiple
@@ -199,7 +199,7 @@ export function LandListingEditor({ slug }: { slug?: string }) {
               onUploaded={(url) => setForm((c) => ({ ...c, gallery: c.gallery ? `${c.gallery}\n${url}` : url }))}
             />
           </div>
-          <button disabled={status === "submitting" || status === "loading"} className="h-12 rounded-full bg-ink text-sm font-semibold text-white disabled:opacity-70 xl:col-span-2">{status === "submitting" ? "Đang lưu..." : isEditing ? "Cập nhật đất nền" : "Tạo đất nền"}</button>
+          <button disabled={status === "submitting" || status === "loading"} className="h-12 rounded-full bg-ink text-sm font-semibold text-white disabled:opacity-70 xl:col-span-2">{status === "submitting" ? "Đang lưu..." : isEditing ? "Cập nhật chuyển nhượng" : "Tạo chuyển nhượng"}</button>
         </form>
       </div>
     </main>

@@ -20,7 +20,7 @@ export default async function LandPage({
   return (
     <main className="bg-mist pb-16">
       <section className="shell py-16">
-        <p className="eyebrow">Đất nền</p>
+        <p className="eyebrow">Chuyển nhượng</p>
         <h1 className="mt-4 font-display text-6xl text-ink">Những vị trí đáng chú ý tại phía Đông Hà Nội</h1>
       </section>
 
@@ -46,7 +46,7 @@ export default async function LandPage({
               defaultValue: params.featured ?? "",
               options: [
                 { label: "Tất cả sản phẩm", value: "" },
-                { label: "Đất nền nổi bật", value: "true" }
+                { label: "Chuyển nhượng nổi bật", value: "true" }
               ]
             }
           ]}
@@ -54,7 +54,7 @@ export default async function LandPage({
       </section>
 
       <section className="shell pt-16">
-        <SectionHeading eyebrow="Đất nền hot" title="Các sản phẩm nổi bật theo từng khu vực tiềm năng" />
+        <SectionHeading eyebrow="Chuyển nhượng hot" title="Các sản phẩm nổi bật theo từng khu vực tiềm năng" />
         <div className="grid gap-6 lg:grid-cols-2">
           {filteredLandListings.map((item) => {
             const cardItem = toLandCardItem(item);

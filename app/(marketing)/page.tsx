@@ -31,7 +31,7 @@ export default async function HomePage() {
               Bất Động Sản Phía Đông Hà Nội
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
-              Tập trung vào các dự án, đất nền và sản phẩm cho thuê tại Gia Lâm, Long Biên, Đông Anh và các khu vực hưởng lợi trực tiếp từ hạ tầng mới, cầu mới và trục phát triển đô thị.
+              Tập trung vào các dự án, chuyển nhượng và sản phẩm cho thuê tại Gia Lâm, Long Biên, Đông Anh và các khu vực hưởng lợi trực tiếp từ hạ tầng mới, cầu mới và trục phát triển đô thị.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link href="/du-an" className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink">
@@ -54,7 +54,7 @@ export default async function HomePage() {
                 </div>
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Loại hình</p>
-                  <p className="mt-2 text-xl font-semibold">Dự án, đất nền</p>
+                  <p className="mt-2 text-xl font-semibold">Dự án, chuyển nhượng</p>
                 </div>
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Động lực tăng giá</p>
@@ -75,7 +75,7 @@ export default async function HomePage() {
 
       <section className="section-gap bg-mist">
         <div className="shell">
-          <SectionHeading eyebrow="Đất nền hot" title="Sản phẩm nổi bật theo từng khu vực tiềm năng" />
+          <SectionHeading eyebrow="Chuyển nhượng hot" title="Sản phẩm nổi bật theo từng khu vực tiềm năng" />
           <div className="grid gap-5">
             {featuredLandListings.map((item) => {
               const cardItem = toLandCardItem(item);
@@ -123,7 +123,7 @@ export default async function HomePage() {
               href="/dat-nen"
               className="inline-flex rounded-full border border-ink px-6 py-3 text-sm font-semibold text-ink transition hover:bg-ink hover:text-white"
             >
-              Xem tất cả đất nền
+              Xem tất cả chuyển nhượng
             </Link>
           </div>
         </div>
@@ -262,7 +262,7 @@ export default async function HomePage() {
               <div className="max-w-3xl">
                 <h2 className="font-display text-5xl">Cần tư vấn nhanh về dự án phía Đông Hà Nội?</h2>
                 <p className="mt-4 text-base leading-8 text-slate-300">
-                  Liên hệ ngay để nhận thông tin dự án, đất nền và sản phẩm cho thuê phù hợp với nhu cầu đầu tư hoặc khai thác thực tế.
+                  Liên hệ ngay để nhận thông tin dự án, chuyển nhượng và sản phẩm cho thuê phù hợp với nhu cầu đầu tư hoặc khai thác thực tế.
                 </p>
               </div>
               <Link href="/lien-he" className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink">

@@ -27,7 +27,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
         </div>
         <div className="shell relative z-10">
           <p className="text-sm uppercase tracking-[0.22em] text-sand">
-            <Link href="/dat-nen">Đất nền</Link> / {item.name}
+            <Link href="/dat-nen">Chuyển nhượng</Link> / {item.name}
           </p>
           <h1 className="mt-6 max-w-4xl font-display text-6xl">{item.name}</h1>
         </div>
@@ -55,7 +55,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
                 ["Địa chỉ", item.address],
                 ["Diện tích", item.acreage],
                 ["Pháp lý", item.legal],
-                ["Loại hình", item.badge ?? "Đất nền"]
+                ["Loại hình", item.badge ?? "Chuyển nhượng"]
               ].map(([label, value]) => (
                 <div key={label} className="rounded-[28px] border border-line bg-mist p-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">{label}</p>
