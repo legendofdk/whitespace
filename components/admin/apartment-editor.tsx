@@ -29,7 +29,6 @@ const initialForm = {
   bannerImage: "",
   gallery: "",
   description: "",
-  isFeatured: false,
   seoTitle: "",
   seoDescription: "",
   status: "PUBLISHED",
@@ -122,7 +121,6 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           bannerImage: item.bannerImage ?? "",
           gallery: item.gallery?.join("\n") ?? "",
           description: item.description,
-          isFeatured: item.isFeatured,
           seoTitle: item.seoTitle ?? "",
           seoDescription: item.seoDescription ?? "",
           status: item.status,
@@ -267,10 +265,6 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           <label className={fieldClassName}>
             <span className={labelClassName}>Hotline</span>
             <input value={form.hotline} onChange={(event) => setForm((current) => ({ ...current, hotline: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Hotline" required />
-          </label>
-          <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
-            <input type="checkbox" checked={form.isFeatured} onChange={(event) => setForm((current) => ({ ...current, isFeatured: event.target.checked }))} className="h-4 w-4 rounded border-line" />
-            Căn hộ nổi bật
           </label>
           <div className="xl:col-span-2">
             <ImageUploadField

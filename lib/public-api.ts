@@ -410,6 +410,11 @@ export async function getPublicApartments(params?: {
   return items.map(mapApartment);
 }
 
+export async function getPublicApartmentBySlug(slug: string) {
+  const item = await fetchJson<BackendApartment>(`/api/apartments/${slug}`);
+  return mapApartment(item);
+}
+
 export async function getPublicAreas() {
   const items = await fetchList<BackendArea>("/api/areas");
   return items.map(mapArea);

@@ -47,20 +47,23 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </p>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                ["Chủ đầu tư", project.investor],
-                ["Địa chỉ", project.address],
-                ["Quy mô", project.scale],
-                ["Khởi công", project.startTime ?? "Đang cập nhật"],
-                ["Bàn giao", project.handoverTime ?? "Đang cập nhật"],
-                ["Pháp lý", project.ownership ?? "Đang cập nhật"]
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-[28px] border border-line bg-mist p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">{label}</p>
-                  <p className="mt-3 text-lg font-semibold text-ink">{value}</p>
-                </div>
-              ))}
+            <div className="rounded-[32px] border border-line bg-mist p-8">
+              <h2 className="font-display text-4xl text-ink">Tổng quan dự án</h2>
+              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                {[
+                  ["Chủ đầu tư", project.investor],
+                  ["Địa chỉ", project.address],
+                  ["Quy mô", project.scale],
+                  ["Khởi công", project.startTime ?? "Đang cập nhật"],
+                  ["Bàn giao", project.handoverTime ?? "Đang cập nhật"],
+                  ["Pháp lý", project.ownership ?? "Đang cập nhật"]
+                ].map(([label, value]) => (
+                  <div key={label} className="border-b border-line/80 pb-4 last:border-b-0 last:pb-0">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">{label}</p>
+                    <p className="mt-2 text-lg font-semibold text-ink">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="rounded-[32px] border border-line p-8">
@@ -84,12 +87,19 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
+          </div>
+
+          <aside className="space-y-6">
             <div className="rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
               {project.apartments?.length ? (
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <div className="mt-6 grid gap-4">
                   {project.apartments.map((apartment) => (
-                    <div key={apartment.id} className="rounded-[24px] border border-line bg-mist p-5">
+                    <Link
+                      key={apartment.id}
+                      href={`/can-ho/${apartment.slug}`}
+                      className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5 hover:border-ink/20"
+                    >
                       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">Căn hộ</p>
                       <p className="mt-2 text-2xl font-semibold text-ink">{apartment.name}</p>
                       <p className="mt-3 text-sm text-steel">
@@ -97,22 +107,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                         {apartment.size ? ` • ${apartment.size}` : ""}
                         {apartment.rentalType ? ` • ${apartment.rentalType}` : ""}
                       </p>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               ) : (
                 <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
               )}
-            </div>
-          </div>
-
-          <aside className="space-y-6">
-            <div className="rounded-[32px] border border-line bg-ink p-8 text-white">
-              <p className="text-sm uppercase tracking-[0.22em] text-sand">Hotline / Zalo</p>
-              <p className="mt-3 text-4xl font-semibold">{project.hotline}</p>
-              <p className="mt-4 text-sm leading-7 text-slate-300">
-                Liên hệ ngay để nhận thông tin chi tiết, bảng giá cập nhật và tư vấn phù hợp với nhu cầu đầu tư hoặc ở thực.
-              </p>
             </div>
 
             <DetailGallery title={project.name} images={project.gallery.length ? project.gallery : [project.thumbnail]} />
