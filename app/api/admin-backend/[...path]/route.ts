@@ -43,7 +43,8 @@ async function proxyRequest(request: NextRequest, params: Promise<{ path: string
   }
 
   const response = await fetch(targetUrl, init);
-  const responseText = await response.text();
+  const hasNoBodyStatus = response.status === 204 || response.status === 205 || response.status === 304;
+  const responseText = hasNoBodyStatus ? null : await response.text();
   const proxyResponse = new NextResponse(responseText, {
     status: response.status
   });
