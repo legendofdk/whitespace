@@ -93,7 +93,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div className="rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
               {project.apartments?.length ? (
-                <div className="mt-6 grid grid-cols-2 gap-4">
+                <div className="mt-6 grid grid-cols-3 gap-4">
                   {project.apartments.map((apartment) => (
                     <Link
                       key={apartment.id}
