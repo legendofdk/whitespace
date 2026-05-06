@@ -112,7 +112,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
           ))}
           <a
             href="tel:0377281119"
-            className="cta-glow cta-glow-gold rounded-full border border-sand/40 bg-sand px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white"
+            className="cta-glow cta-glow-gold hotline-pulse rounded-full border border-sand/40 bg-sand px-5 py-3 text-sm font-semibold text-ink transition hover:border-[#bd9150] hover:bg-[#c79a58] hover:text-[#081225]"
           >
             Hotline 24/7
           </a>
