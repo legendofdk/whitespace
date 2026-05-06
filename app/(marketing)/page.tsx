@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { ListingCard } from "@/components/cards/listing-card";
 import { FeaturedProjectCarousel } from "@/components/shared/featured-project-carousel";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { formatAreaValue } from "@/lib/format-area";
@@ -24,7 +23,7 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section className="relative isolate overflow-hidden bg-ink text-white">
+      <section className="relative isolate overflow-hidden bg-black text-white">
         <div className="absolute inset-0">
           <Image
             src="/hero-hanoi.jpg"
@@ -34,59 +33,68 @@ export default async function HomePage() {
             className="hero-image-motion object-cover object-center"
           />
         </div>
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,16,34,0.9)_0%,rgba(7,16,34,0.74)_42%,rgba(7,16,34,0.5)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(226,198,140,0.24),transparent_28%)]" />
-        <div className="hero-light-sweep absolute inset-y-0 right-0 w-[42vw]" />
-        <div className="shell relative z-10 grid min-h-[calc(100vh-80px)] items-center gap-14 py-16 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.82)_0%,rgba(0,0,0,0.62)_44%,rgba(0,0,0,0.42)_100%)]" />
+        <div className="shell relative z-10 grid min-h-[calc(100vh-80px)] items-center gap-16 py-20 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="relative">
-            <p className="hero-animate hero-animate-delay-1 eyebrow text-sand">Điểm nóng đầu tư</p>
-            <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl leading-none sm:text-7xl">
+            <p className="hero-animate hero-animate-delay-1 text-sm font-medium tracking-[-0.12px] text-[#f5f5f7]">
+              Danh mục nhà đất chọn lọc tại khu Đông Hà Nội
+            </p>
+            <h1 className="hero-animate hero-animate-delay-2 mt-5 max-w-4xl font-display text-5xl font-semibold leading-[1.04] tracking-[-0.32px] sm:text-7xl">
               Bất Động Sản Phía Đông Hà Nội
             </h1>
-            <p className="hero-animate hero-animate-delay-3 mt-6 max-w-2xl text-base leading-8 text-slate-200">
-              Tập trung vào các dự án, chuyển nhượng và sản phẩm cho thuê tại Gia Lâm, Long Biên, Đông Anh và các khu vực hưởng lợi trực tiếp từ hạ tầng mới, cầu mới và trục phát triển đô thị.
+            <p className="hero-animate hero-animate-delay-3 mt-5 max-w-2xl text-[17px] font-normal leading-[1.47] tracking-[-0.374px] text-[#f5f5f7]">
+              Chọn lọc dự án, chuyển nhượng và sản phẩm khai thác thực tế tại Gia Lâm, Long Biên, Đông Anh. Tập trung vào khu vực có câu chuyện hạ tầng rõ, khả năng giữ giá tốt và quỹ hàng đủ sạch để giao dịch.
             </p>
-            <div className="hero-animate hero-animate-delay-4 mt-10 flex flex-wrap gap-4">
-              <Link href="/du-an" className="cta-glow cta-glow-gold rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink shadow-[0_14px_30px_rgba(227,194,132,0.24)]">
-                Xem dự án nổi bật
+            <div className="hero-animate hero-animate-delay-4 mt-8 flex flex-wrap gap-3">
+              {["Dự án", "Chuyển nhượng", "Cho thuê", "Theo dõi khu vực"].map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-white/18 bg-white/6 px-4 py-2 text-[12px] font-medium tracking-[-0.12px] text-[#f5f5f7]"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+            <div className="hero-animate hero-animate-delay-4 mt-10 flex flex-wrap gap-3">
+              <Link href="/du-an" className="rounded-full bg-[#0066cc] px-5 py-3 text-[14px] font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
+                Xem dự án
               </Link>
-              <Link href="/lien-he" className="rounded-full border border-white/25 bg-[#12233b]/78 px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(7,16,34,0.22)] backdrop-blur-md transition hover:border-white/40 hover:bg-[#162b47]">
-                Nhận tư vấn khu vực
+              <Link href="/dat-nen" className="rounded-full border border-[#0066cc] px-5 py-3 text-[14px] font-medium tracking-[-0.224px] text-[#2997ff] transition active:scale-95 hover:bg-[#0066cc] hover:text-white">
+                Xem chuyển nhượng
               </Link>
             </div>
           </div>
 
-          <div className="hero-animate hero-animate-delay-4 relative overflow-hidden rounded-[32px] border border-white/15 bg-[linear-gradient(135deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl">
-            <div className="rounded-[28px] border border-white/10 bg-[#dbe6ff14] p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-sand">Bộ sưu tập nổi bật</p>
-              <h2 className="mt-4 font-display text-5xl">Tâm điểm tăng trưởng mới</h2>
-              <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Khu vực trọng điểm</p>
-                  <p className="mt-2 text-xl font-semibold">Gia Lâm</p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Loại hình</p>
-                  <p className="mt-2 text-xl font-semibold">Dự án, chuyển nhượng</p>
-                </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Động lực tăng giá</p>
-                  <p className="mt-2 text-xl font-semibold">Hạ tầng mới</p>
-                </div>
+          <div className="hero-animate hero-animate-delay-4 rounded-[28px] bg-[#1d1d1f]/78 p-7 backdrop-blur-sm">
+            <p className="text-[14px] font-medium tracking-[-0.224px] text-[#f5f5f7]">Nhịp thị trường hiện tại</p>
+            <div className="mt-6 grid gap-5">
+              <div className="border-b border-white/10 pb-5">
+                <p className="text-[12px] font-medium tracking-[-0.12px] text-[#cccccc]">Khu vực theo dõi sát</p>
+                <p className="mt-2 font-display text-[34px] font-semibold tracking-[-0.374px] text-white">Long Biên, Gia Lâm</p>
+              </div>
+              <div className="border-b border-white/10 pb-5">
+                <p className="text-[12px] font-medium tracking-[-0.12px] text-[#cccccc]">Nhóm tài sản nổi bật</p>
+                <p className="mt-2 text-[21px] font-semibold tracking-[0.231px] text-white">Dự án, shophouse, đất nền</p>
+              </div>
+              <div>
+                <p className="text-[12px] font-medium tracking-[-0.12px] text-[#cccccc]">Tiêu chí chọn hàng</p>
+                <p className="mt-2 text-[17px] leading-[1.47] tracking-[-0.374px] text-[#f5f5f7]">
+                  Pháp lý đủ rõ, vị trí dễ đọc giá trị khai thác, và mức giá còn dư địa cho giao dịch thực.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="section-gap">
+      <section className="bg-white py-20">
         <div className="shell">
           <SectionHeading eyebrow="Dự án nổi bật" title="Những dự án đáng quan tâm tại khu Đông Hà Nội" />
           <FeaturedProjectCarousel projects={featuredProjects} />
         </div>
       </section>
 
-      <section className="section-gap bg-mist">
+      <section className="bg-[#f5f5f7] py-20">
         <div className="shell">
           <SectionHeading eyebrow="Chuyển nhượng hot" title="Sản phẩm nổi bật theo từng khu vực tiềm năng" />
           <div className="grid gap-5">
@@ -142,11 +150,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-gap">
+      <section className="bg-white py-20 text-ink">
         <div className="shell">
           <SectionHeading eyebrow="Cho thuê nổi bật" title="Mặt bằng và shophouse phù hợp khai thác thương mại" />
-          <div className="overflow-hidden rounded-[28px] border border-line bg-white shadow-soft">
-            <div className="hidden grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] gap-4 border-b border-line bg-mist px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-steel lg:grid">
+          <div className="overflow-hidden rounded-[18px] border border-line bg-white">
+            <div className="hidden grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] gap-4 border-b border-line bg-[#fbfbfd] px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-steel lg:grid">
               <span>Ảnh</span>
               <span>Khu vực</span>
               <span>Diện tích</span>
@@ -155,53 +163,61 @@ export default async function HomePage() {
               <span className="text-right">Chi tiết</span>
             </div>
             <div className="divide-y divide-line">
-              {featuredRentals.map((item) => (
-                <Link
-                  key={item.id}
-                  href={`/cho-thue/${item.slug}`}
-                  className="group block transition hover:bg-mist/60"
-                >
-                  <div className="grid gap-4 px-6 py-5 lg:grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] lg:items-center">
-                    <div className="relative h-20 overflow-hidden rounded-2xl border border-line bg-mist">
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.name}
-                        fill
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                      />
+              {featuredRentals.length ? (
+                featuredRentals.map((item) => (
+                  <Link
+                    key={item.id}
+                    href={`/cho-thue/${item.slug}`}
+                    className="group block transition hover:bg-[#f8f8fb]"
+                  >
+                    <div className="grid gap-4 px-6 py-5 lg:grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] lg:items-center">
+                      <div className="relative h-20 overflow-hidden rounded-[8px] border border-line bg-mist">
+                        <Image
+                          src={item.thumbnail}
+                          alt={item.name}
+                          fill
+                          className="object-cover transition duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Khu vực</p>
+                        <p className="text-lg font-semibold text-ink">{item.name}</p>
+                        <p className="mt-1 text-sm font-medium text-[#2997ff]">{item.area}</p>
+                        <p className="mt-0.5 text-sm leading-5 text-steel">{item.address}</p>
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Diện tích</p>
+                        <p className="text-sm font-medium text-ink">{formatAreaValue(item.size)}</p>
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Loại hình</p>
+                        <p className="text-sm text-ink">{item.rentalType ?? item.cardMeta}</p>
+                      </div>
+                      <div>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Giá thuê</p>
+                        <p className="text-lg font-semibold text-ink">{item.price}</p>
+                      </div>
+                      <div className="flex lg:justify-end">
+                        <span className="inline-flex rounded-full border border-[#0066cc] px-4 py-2 text-sm font-medium text-[#0066cc] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                          Xem chi tiết
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Khu vực</p>
-                      <p className="text-lg font-semibold text-ink">{item.name}</p>
-                      <p className="mt-1 text-sm font-medium text-navy">{item.area}</p>
-                      <p className="mt-0.5 text-sm leading-5 text-steel">{item.address}</p>
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Diện tích</p>
-                      <p className="text-sm font-medium text-ink">{formatAreaValue(item.size)}</p>
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Loại hình</p>
-                      <p className="text-sm text-ink">{item.rentalType ?? item.cardMeta}</p>
-                    </div>
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Giá thuê</p>
-                      <p className="text-lg font-bold text-[#8b5a16]">{item.price}</p>
-                    </div>
-                    <div className="flex lg:justify-end">
-                      <span className="inline-flex rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
-                        Xem chi tiết
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))
+              ) : (
+                <div className="px-6 py-12 text-center">
+                  <p className="text-[17px] leading-[1.47] tracking-[-0.374px] text-steel">
+                    Chưa có sản phẩm cho thuê nổi bật nào được cập nhật.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-8 flex justify-center">
             <Link
               href="/cho-thue"
-              className="inline-flex rounded-full border border-ink px-6 py-3 text-sm font-semibold text-ink transition hover:bg-ink hover:text-white"
+              className="inline-flex rounded-full border border-[#0066cc] px-6 py-3 text-sm font-medium text-[#0066cc] transition active:scale-95 hover:bg-[#0066cc] hover:text-white"
             >
               Xem thêm
             </Link>
@@ -209,7 +225,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-gap bg-mist">
+      <section className="bg-[#f5f5f7] py-20">
         <div className="shell">
           <SectionHeading eyebrow="Tin tức thị trường" title="Góc nhìn thị trường và thông tin đáng chú ý" />
           {latestPost ? (
