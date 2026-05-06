@@ -39,24 +39,24 @@ export default async function HomePage() {
         <div className="hero-light-sweep absolute inset-y-0 right-0 w-[42vw]" />
         <div className="shell relative z-10 grid min-h-[calc(100vh-80px)] items-center gap-14 py-16 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="relative">
-            <p className="eyebrow text-sand">Điểm nóng đầu tư</p>
-            <h1 className="mt-6 max-w-4xl font-display text-6xl leading-none sm:text-7xl">
+            <p className="hero-animate hero-animate-delay-1 eyebrow text-sand">Điểm nóng đầu tư</p>
+            <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl leading-none sm:text-7xl">
               Bất Động Sản Phía Đông Hà Nội
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200">
+            <p className="hero-animate hero-animate-delay-3 mt-6 max-w-2xl text-base leading-8 text-slate-200">
               Tập trung vào các dự án, chuyển nhượng và sản phẩm cho thuê tại Gia Lâm, Long Biên, Đông Anh và các khu vực hưởng lợi trực tiếp từ hạ tầng mới, cầu mới và trục phát triển đô thị.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/du-an" className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink shadow-[0_14px_30px_rgba(227,194,132,0.24)]">
+            <div className="hero-animate hero-animate-delay-4 mt-10 flex flex-wrap gap-4">
+              <Link href="/du-an" className="cta-glow cta-glow-gold rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink shadow-[0_14px_30px_rgba(227,194,132,0.24)]">
                 Xem dự án nổi bật
               </Link>
-              <Link href="/lien-he" className="rounded-full border border-white/20 bg-white/8 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm">
+              <Link href="/lien-he" className="rounded-full border border-white/25 bg-[#12233b]/78 px-6 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(7,16,34,0.22)] backdrop-blur-md transition hover:border-white/40 hover:bg-[#162b47]">
                 Nhận tư vấn khu vực
               </Link>
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[32px] border border-white/15 bg-[linear-gradient(135deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+          <div className="hero-animate hero-animate-delay-4 relative overflow-hidden rounded-[32px] border border-white/15 bg-[linear-gradient(135deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl">
             <div className="rounded-[28px] border border-white/10 bg-[#dbe6ff14] p-6">
               <p className="text-sm uppercase tracking-[0.24em] text-sand">Bộ sưu tập nổi bật</p>
               <h2 className="mt-4 font-display text-5xl">Tâm điểm tăng trưởng mới</h2>
@@ -278,7 +278,7 @@ export default async function HomePage() {
                   Liên hệ ngay để nhận thông tin dự án, chuyển nhượng và sản phẩm cho thuê phù hợp với nhu cầu đầu tư hoặc khai thác thực tế.
                 </p>
               </div>
-              <Link href="/lien-he" className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink">
+              <Link href="/lien-he" className="cta-glow cta-glow-gold rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink">
                 Liên hệ tư vấn ngay
               </Link>
             </div>

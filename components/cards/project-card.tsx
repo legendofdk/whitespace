@@ -6,9 +6,9 @@ import { Project } from "@/types";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-white shadow-soft">
+    <article className="content-lift group flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-white shadow-soft transition duration-500 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)]">
       <div className="relative h-56">
-        <Image src={project.thumbnail} alt={project.name} fill className="object-cover" />
+        <Image src={project.thumbnail} alt={project.name} fill className="object-cover transition duration-700 group-hover:scale-[1.04]" />
       </div>
       <div className="flex flex-1 flex-col gap-2.5 p-6">
         <div className="flex items-center justify-between gap-4">

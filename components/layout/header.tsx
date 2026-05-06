@@ -49,7 +49,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/92 shadow-[0_14px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.1)]">
       <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(148,163,184,0.45),transparent)]" />
       <div className="shell flex min-h-20 items-center justify-between">
         <Link href="/" className="flex items-center gap-3 text-ink">
@@ -112,7 +112,7 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
           ))}
           <a
             href="tel:0377281119"
-            className="rounded-full border border-sand/40 bg-sand px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white"
+            className="cta-glow cta-glow-gold rounded-full border border-sand/40 bg-sand px-5 py-3 text-sm font-semibold text-ink transition hover:bg-white"
           >
             Hotline 24/7
           </a>
