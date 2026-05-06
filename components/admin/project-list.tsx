@@ -98,7 +98,6 @@ export function ProjectList() {
                   <p className="mt-1 text-sm text-steel">
                     {item.area} • {item.price}
                   </p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-steel">{item.slug}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink">{item.status}</span>

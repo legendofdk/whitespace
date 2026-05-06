@@ -227,7 +227,6 @@ export function AreaManager() {
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <h3 className="text-lg font-semibold text-ink">{item.name}</h3>
-                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-steel">{item.slug}</p>
                       {item.description ? <p className="mt-3 text-sm leading-7 text-steel">{item.description}</p> : null}
                       <p className="mt-3 text-sm text-steel">
                         {item.propertyCount} bất động sản • {item.postCount} bài viết
