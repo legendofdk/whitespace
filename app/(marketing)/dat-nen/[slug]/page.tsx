@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
+import { formatAreaValue } from "@/lib/format-area";
 import { getPublicLandListingBySlug } from "@/lib/public-api";
 
 export const dynamic = "force-dynamic";
@@ -54,7 +55,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
-                ["Diện tích", item.acreage],
+                ["Diện tích", formatAreaValue(item.acreage)],
                 ["Pháp lý", item.legal],
                 ["Loại hình", item.badge ?? "Chuyển nhượng"]
               ].map(([label, value]) => (

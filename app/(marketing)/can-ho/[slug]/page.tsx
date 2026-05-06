@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
+import { formatAreaValue } from "@/lib/format-area";
 import { getPublicApartmentBySlug } from "@/lib/public-api";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +54,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               {[
                 ["Dự án", item.projectName ?? "Đang cập nhật"],
                 ["Khu vực", item.area],
-                ["Diện tích", item.size],
+                ["Diện tích", formatAreaValue(item.size)],
                 ["Loại hình", item.rentalType ?? item.badge ?? "Căn hộ"],
                 ["Thông tin nhanh", item.cardMeta]
               ].map(([label, value]) => (

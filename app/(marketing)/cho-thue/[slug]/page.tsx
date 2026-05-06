@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
+import { formatAreaValue } from "@/lib/format-area";
 import { getPublicRentalBySlug } from "@/lib/public-api";
 
 export const dynamic = "force-dynamic";
@@ -53,7 +54,7 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
-                ["Diện tích", item.size],
+                ["Diện tích", formatAreaValue(item.size)],
                 ["Loại hình", item.rentalType ?? item.badge ?? "Cho thuê"],
                 ["Hình thức", item.cardMeta]
               ].map(([label, value]) => (

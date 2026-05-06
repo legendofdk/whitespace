@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ListingCard } from "@/components/cards/listing-card";
 import { FeaturedProjectCarousel } from "@/components/shared/featured-project-carousel";
 import { SectionHeading } from "@/components/shared/section-heading";
+import { formatAreaValue } from "@/lib/format-area";
 import { getPublicLandListings, getPublicPosts, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
 
@@ -165,7 +166,7 @@ export default async function HomePage() {
                     </div>
                     <div>
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Diện tích</p>
-                      <p className="text-sm font-medium text-ink">{item.size}</p>
+                      <p className="text-sm font-medium text-ink">{formatAreaValue(item.size)}</p>
                     </div>
                     <div>
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Loại hình</p>

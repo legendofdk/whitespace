@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { formatAreaValue } from "@/lib/format-area";
+
 import { fetchAdminApi } from "./admin-api";
 
 type Item = {
@@ -87,7 +89,7 @@ export function LandListingList() {
                   <Link href={`/dashboard/land-listings/${item.slug}`} className="text-lg font-semibold text-ink hover:underline">
                     {item.name}
                   </Link>
-                  <p className="mt-1 text-sm text-steel">{item.area} • {item.price}{item.acreage ? ` • ${item.acreage}` : ""}</p>
+                  <p className="mt-1 text-sm text-steel">{item.area} • {item.price}{item.acreage ? ` • ${formatAreaValue(item.acreage)}` : ""}</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.18em] text-steel">{item.slug}</p>
                 </div>
                 <div className="flex items-center gap-2">

@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { formatAreaValue } from "@/lib/format-area";
+
 import { fetchAdminApi } from "./admin-api";
 
 type ApartmentItem = {
@@ -139,7 +141,7 @@ export function ApartmentList() {
                   </Link>
                   <p className="mt-1 text-sm text-steel">
                     {item.projectName ?? "Chưa gắn dự án"} • {item.price}
-                    {item.size ? ` • ${item.size}` : ""}
+                    {item.size ? ` • ${formatAreaValue(item.size)}` : ""}
                     {item.rentalType ? ` • ${item.rentalType}` : ""}
                   </p>
                   <p className="mt-1 text-xs uppercase tracking-[0.18em] text-steel">{item.slug}</p>

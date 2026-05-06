@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
+import { formatAreaValue } from "@/lib/format-area";
 import { getPublicProjectBySlug } from "@/lib/public-api";
 
 export const dynamic = "force-dynamic";
@@ -77,6 +78,46 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             </div>
 
             <div className="rounded-[32px] border border-line p-8">
+              <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
+              {project.apartments?.length ? (
+                <div className="mt-6 grid gap-4">
+                  {project.apartments.map((apartment) => (
+                    <Link
+                      key={apartment.id}
+                      href={`/can-ho/${apartment.slug}`}
+                      className="rounded-[24px] border border-line bg-mist/70 p-5 transition hover:-translate-y-0.5 hover:border-ink/20 hover:bg-mist"
+                    >
+                      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                        <div>
+                          <p className="text-2xl font-semibold text-ink">{apartment.name}</p>
+                          <p className="mt-1 text-sm text-steel">{apartment.rentalType ?? "Căn hộ"} • {apartment.status}</p>
+                        </div>
+                        <span className="inline-flex w-fit rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink">
+                          Xem chi tiết
+                        </span>
+                      </div>
+                      <div className="mt-5 grid gap-4 border-t border-line/80 pt-4 sm:grid-cols-2">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Giá</p>
+                          <p className="mt-1 font-semibold text-ink">{apartment.price}</p>
+                        </div>
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Diện tích</p>
+                          <p className="mt-1 font-semibold text-ink">{formatAreaValue(apartment.size ?? "Đang cập nhật")}</p>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
+              )}
+            </div>
+
+          </div>
+
+          <aside className="space-y-6">
+            <div className="rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Tiện ích nổi bật</h2>
               <div className="mt-6 flex flex-wrap gap-3">
                 {project.utilities.map((utility) => (
@@ -85,41 +126,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   </span>
                 ))}
               </div>
-            </div>
-
-          </div>
-
-          <aside className="space-y-6">
-            <div className="rounded-[32px] border border-line p-8">
-              <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
-              {project.apartments?.length ? (
-                <div className="mt-6 grid grid-cols-3 gap-4">
-                  {project.apartments.map((apartment) => (
-                    <Link
-                      key={apartment.id}
-                      href={`/can-ho/${apartment.slug}`}
-                      className="grid aspect-square min-h-0 grid-rows-[auto_1fr_1fr] overflow-hidden rounded-[24px] border border-line bg-mist p-4 transition hover:-translate-y-0.5 hover:border-ink/20"
-                    >
-                      <p className="text-3xl font-semibold leading-none text-ink">{apartment.name}</p>
-                      <div className="self-center text-sm">
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Giá</p>
-                          <p className="mt-1 font-semibold text-ink">{apartment.price}</p>
-                        </div>
-                      </div>
-                      <div className="self-end text-sm">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Diện tích</p>
-                        <p className="mt-1 break-words font-semibold leading-6 text-ink">{apartment.size ?? "Đang cập nhật"}</p>
-                      </div>
-                    </Link>
-                  ))}
-                  {Array.from({ length: Math.max(0, 3 - project.apartments.length) }).map((_, index) => (
-                    <div key={`placeholder-${index}`} aria-hidden="true" className="aspect-square rounded-[24px] border border-transparent opacity-0" />
-                  ))}
-                </div>
-              ) : (
-                <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
-              )}
             </div>
 
             <DetailGallery title={project.name} images={project.gallery.length ? project.gallery : [project.thumbnail]} />
