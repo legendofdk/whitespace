@@ -295,6 +295,18 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             <FieldLabel label="Quy mô" className={labelClassName} />
             <input value={form.scale} onChange={(e) => setForm((c) => ({ ...c, scale: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Quy mô" />
           </label>
+          <label className={fieldClassName}>
+            <FieldLabel label="Khởi công" className={labelClassName} />
+            <input value={form.startTime} onChange={(e) => setForm((c) => ({ ...c, startTime: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Ví dụ: Q3/2026" />
+          </label>
+          <label className={fieldClassName}>
+            <FieldLabel label="Bàn giao" className={labelClassName} />
+            <input value={form.handoverTime} onChange={(e) => setForm((c) => ({ ...c, handoverTime: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Ví dụ: Q4/2028" />
+          </label>
+          <label className={fieldClassName}>
+            <FieldLabel label="Pháp lý" className={labelClassName} />
+            <input value={form.ownership} onChange={(e) => setForm((c) => ({ ...c, ownership: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Ví dụ: Sở hữu lâu dài" />
+          </label>
           <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
             <input
               type="checkbox"

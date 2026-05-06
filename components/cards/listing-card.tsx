@@ -21,7 +21,7 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
       <div className="relative h-56">
         <Image src={image} alt={title} fill className="object-cover" />
       </div>
-      <div className="flex flex-1 flex-col gap-4 p-6">
+      <div className="flex flex-1 flex-col gap-3 p-6">
         <div className="flex items-center justify-between gap-4">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-steel">{badge ?? area}</span>
           <div className="rounded-xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.16)] ring-1 ring-[#e7c06d]">
@@ -31,14 +31,16 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
             <p className="mt-1 text-lg font-black leading-none text-[#8b5a16]">{price}</p>
           </div>
         </div>
-        <h3 className="min-h-[4rem] font-display text-2xl text-ink">{title}</h3>
-        <p className="min-h-[3.5rem] text-sm text-steel">{address}</p>
+        <h3 className="min-h-[3.5rem] font-display text-2xl leading-tight text-ink">{title}</h3>
+        <p className="min-h-[2.5rem] text-sm leading-6 text-steel">{address}</p>
         <p className="text-sm font-medium text-navy">{metric}</p>
         {description ? (
-          <HtmlContent
-            html={description}
-            className="prose prose-sm max-w-none overflow-hidden text-steel prose-p:my-0 prose-p:leading-7 prose-li:leading-7 prose-strong:text-ink [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3]"
-          />
+          <div className="min-h-[7.5rem] overflow-hidden">
+            <HtmlContent
+              html={description}
+              className="prose prose-sm max-w-none overflow-hidden text-steel prose-p:my-0 prose-p:leading-7 prose-li:leading-7 prose-strong:text-ink [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3]"
+            />
+          </div>
         ) : null}
         <div className="mt-auto pt-1">
           <span className="inline-flex rounded-full border border-ink px-5 py-3 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
