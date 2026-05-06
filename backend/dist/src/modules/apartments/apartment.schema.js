@@ -14,7 +14,6 @@ export const apartmentBodySchema = z.object({
     name: z.string().min(1),
     slug: z.string().min(1),
     projectSlug: z.string().min(1),
-    address: z.string().min(1),
     size: z.string().optional(),
     rentalType: z.string().optional(),
     price: z.string().min(1),

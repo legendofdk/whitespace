@@ -71,8 +71,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               <div className="mt-6 space-y-4 text-sm leading-8 text-steel">
                 <HtmlContent html={project.description} className="max-w-none" />
                 <p>Sản phẩm: {project.productTypes.join(", ")}.</p>
-                <p>Biệt thự: {project.villaInfo ?? "Đang cập nhật"}.</p>
-                <p>Shophouse: {project.shophouseInfo ?? "Đang cập nhật"}.</p>
+                {project.villaInfo ? <p>Biệt thự: {project.villaInfo}.</p> : null}
+                {project.shophouseInfo ? <p>Shophouse: {project.shophouseInfo}.</p> : null}
               </div>
             </div>
 

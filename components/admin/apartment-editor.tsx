@@ -21,7 +21,6 @@ const initialForm = {
   name: "",
   slug: "",
   projectSlug: "",
-  address: "",
   size: "",
   rentalType: "Căn hộ",
   price: "",
@@ -91,7 +90,6 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           name: string;
           slug: string;
           projectSlug?: string | null;
-          address: string;
           size?: string | null;
           rentalType?: string | null;
           price: string;
@@ -113,7 +111,6 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           name: item.name,
           slug: item.slug,
           projectSlug: item.projectSlug ?? "",
-          address: item.address,
           size: item.size ?? "",
           rentalType: item.rentalType ?? "Căn hộ",
           price: item.price,
@@ -240,16 +237,6 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
                 </option>
               ))}
             </select>
-          </label>
-          <label className={fieldClassName}>
-            <FieldLabel label="Địa chỉ" required className={labelClassName} />
-            <input
-              value={form.address}
-              onChange={(event) => setForm((current) => ({ ...current, address: event.target.value }))}
-              className="h-12 rounded-full border border-line px-5 text-sm outline-none"
-              placeholder="Địa chỉ"
-              required
-            />
           </label>
           <label className={fieldClassName}>
             <FieldLabel label="Giá" required className={labelClassName} />

@@ -53,7 +53,6 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               {[
                 ["Dự án", item.projectName ?? "Đang cập nhật"],
                 ["Khu vực", item.area],
-                ["Địa chỉ", item.address],
                 ["Diện tích", item.size],
                 ["Loại hình", item.rentalType ?? item.badge ?? "Căn hộ"],
                 ["Thông tin nhanh", item.cardMeta]

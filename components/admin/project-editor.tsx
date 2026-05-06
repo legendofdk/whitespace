@@ -11,6 +11,8 @@ import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
 
+const PRODUCT_TYPE_OPTIONS = ["Chung cư", "Biệt thự", "Shophouse", "Liền kề"] as const;
+
 const initialForm = {
   name: "",
   slug: "",
@@ -18,7 +20,7 @@ const initialForm = {
   areaSlug: "gia-lam",
   address: "",
   scale: "",
-  productTypes: "Biệt thự, Shophouse",
+  productTypes: ["Chung cư", "Biệt thự", "Shophouse", "Liền kề"],
   villaInfo: "",
   shophouseInfo: "",
   startTime: "",
@@ -58,6 +60,15 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";
   const labelClassName = "text-sm font-medium text-ink";
+
+  function toggleProductType(productType: (typeof PRODUCT_TYPE_OPTIONS)[number], checked: boolean) {
+    setForm((current) => ({
+      ...current,
+      productTypes: checked
+        ? [...current.productTypes, productType]
+        : current.productTypes.filter((item) => item !== productType)
+    }));
+  }
 
   useEffect(() => {
     async function loadAreas() {
@@ -127,7 +138,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           areaSlug: item.areaSlug,
           address: item.address,
           scale: item.scale ?? "",
-          productTypes: item.productTypes?.join(", ") ?? "",
+          productTypes: item.productTypes?.filter((type) => PRODUCT_TYPE_OPTIONS.includes(type as (typeof PRODUCT_TYPE_OPTIONS)[number])) ?? [],
           villaInfo: item.villaInfo ?? "",
           shophouseInfo: item.shophouseInfo ?? "",
           startTime: item.startTime ?? "",
@@ -168,7 +179,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
     try {
       const payload = {
         ...form,
-        productTypes: form.productTypes.split(",").map((item) => item.trim()).filter(Boolean),
+        productTypes: form.productTypes,
         gallery: form.gallery.split("\n").map((item) => item.trim()).filter(Boolean),
         utilities: form.utilities.split(",").map((item) => item.trim()).filter(Boolean),
         latitude: form.latitude || undefined,
@@ -318,7 +329,19 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
             <FieldLabel label="Loại sản phẩm" className={labelClassName} />
-            <input value={form.productTypes} onChange={(e) => setForm((c) => ({ ...c, productTypes: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại sản phẩm, cách nhau bằng dấu phẩy" />
+            <div className="grid gap-3 rounded-[24px] border border-line px-5 py-4 sm:grid-cols-2">
+              {PRODUCT_TYPE_OPTIONS.map((productType) => (
+                <label key={productType} className="flex items-center gap-3 text-sm font-medium text-ink">
+                  <input
+                    type="checkbox"
+                    checked={form.productTypes.includes(productType)}
+                    onChange={(event) => toggleProductType(productType, event.target.checked)}
+                    className="h-4 w-4 rounded border-line"
+                  />
+                  {productType}
+                </label>
+              ))}
+            </div>
           </label>
           <div className="xl:col-span-2">
             <ImageUploadField label="Ảnh đại diện" required value={form.thumbnail} folder="projects" description="Chọn một ảnh đại diện để hiển thị ở card và trang chi tiết." onUploaded={(url) => setForm((c) => ({ ...c, thumbnail: url }))} />
