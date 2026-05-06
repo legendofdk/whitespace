@@ -41,7 +41,6 @@ export function PostList() {
                   <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
                   <p className="mt-1 text-sm text-steel">{item.category}{item.publishedAt ? ` • ${new Date(item.publishedAt).toLocaleDateString("vi-VN")}` : ""}</p>
                 </div>
-                <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-ink">{item.status}</span>
               </div>
             </Link>
           ))}
