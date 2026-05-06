@@ -17,13 +17,14 @@ type ListingCardProps = {
 
 export function ListingCard({ href, title, address, area, metric, price, image, badge, description }: ListingCardProps) {
   const content = (
-    <article className="flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-white shadow-soft">
-      <div className="relative h-56">
-        <Image src={image} alt={title} fill className="object-cover" />
+    <article className="content-lift group flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-white shadow-soft transition duration-500 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)]">
+      <div className="relative h-56 overflow-hidden">
+        <Image src={image} alt={title} fill className="object-cover transition duration-700 group-hover:scale-[1.04]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_56%,rgba(8,18,37,0.18)_100%)] opacity-80" />
       </div>
-      <div className="flex flex-1 flex-col gap-2.5 p-6">
-        <div className="flex items-center justify-between gap-4">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-steel">{badge ?? area}</span>
+      <div className="flex flex-1 flex-col gap-3 p-6">
+        <div className="flex items-start justify-between gap-4">
+          <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-navy">{badge ?? area}</span>
           <div className="rounded-xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.16)] ring-1 ring-[#e7c06d]">
             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">
               {badge?.toLowerCase().includes("thuê") ? "Giá thuê" : "Giá bán"}
@@ -32,7 +33,7 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
           </div>
         </div>
         <h3 className="min-h-[3rem] font-display text-2xl leading-tight text-ink">{title}</h3>
-        <p className="min-h-[2rem] text-sm leading-6 text-steel">{address}</p>
+        <p className="min-h-[1.5rem] text-sm leading-4 text-steel">{address}</p>
         <p className="text-sm leading-6 font-medium text-navy">{metric}</p>
         {description ? (
           <div className="min-h-[6.5rem] overflow-hidden">
@@ -52,7 +53,7 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
   );
 
   return href ? (
-    <Link href={href} className="group block transition-transform hover:-translate-y-1">
+    <Link href={href} className="block">
       {content}
     </Link>
   ) : (

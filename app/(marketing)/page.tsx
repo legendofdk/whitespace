@@ -113,8 +113,8 @@ export default async function HomePage() {
                         <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-navy">
                           {cardItem.area}
                         </span>
-                        <h3 className="mt-4 font-display text-4xl leading-tight text-ink">{cardItem.name}</h3>
-                        <p className="mt-3 text-sm text-steel">{cardItem.address}</p>
+                        <h3 className="mt-2.5 font-display text-4xl leading-tight text-ink">{cardItem.name}</h3>
+                        <p className="mt-0.5 text-sm leading-4 text-steel">{cardItem.address}</p>
                       </div>
                       <div className="rounded-2xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-4 py-3 text-right shadow-[0_12px_24px_rgba(191,138,38,0.14)] ring-1 ring-[#e7c06d]">
                         <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">Giá bán</p>
@@ -174,7 +174,7 @@ export default async function HomePage() {
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Khu vực</p>
                       <p className="text-lg font-semibold text-ink">{item.name}</p>
                       <p className="mt-1 text-sm font-medium text-navy">{item.area}</p>
-                      <p className="mt-1 text-sm text-steel">{item.address}</p>
+                      <p className="mt-0.5 text-sm leading-5 text-steel">{item.address}</p>
                     </div>
                     <div>
                       <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Diện tích</p>

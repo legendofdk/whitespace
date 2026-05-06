@@ -43,34 +43,47 @@ export function FilterBar({
           ? "lg:grid-cols-[1fr_auto]"
           : "lg:grid-cols-[auto]";
 
+  const fieldClassName =
+    "relative flex h-14 items-center rounded-[22px] border border-line/80 bg-white/92 px-4 text-sm text-ink shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition focus-within:border-navy/60 focus-within:shadow-[0_14px_30px_rgba(15,23,42,0.08)]";
+
   return (
-    <form action={action} className="glass-card p-5">
+    <form action={action} className="glass-card p-5 sm:p-6">
       <div className={`grid gap-4 ${gridClass}`}>
         {showSearch ? (
-          <input
-            type="text"
-            name={searchName}
-            defaultValue={searchDefaultValue}
-            placeholder={searchPlaceholder}
-            className="h-12 rounded-full border border-line px-5 text-sm outline-none transition focus:border-navy"
-          />
+          <label className="grid gap-2">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel">Từ khóa</span>
+            <span className={fieldClassName}>
+              <span className="mr-3 text-base text-steel" aria-hidden="true">⌕</span>
+              <input
+                type="text"
+                name={searchName}
+                defaultValue={searchDefaultValue}
+                placeholder={searchPlaceholder}
+                className="h-full w-full bg-transparent text-sm outline-none placeholder:text-steel/70"
+              />
+            </span>
+          </label>
         ) : null}
         {filters.map((field) => (
-          <select
-            key={field.name}
-            name={field.name}
-            defaultValue={field.defaultValue ?? field.options[0]?.value ?? ""}
-            className="h-12 rounded-full border border-line bg-white px-5 text-sm outline-none transition focus:border-navy"
-            aria-label={field.label}
-          >
-            {field.options.map((option) => (
-              <option key={`${field.name}-${option.value}`} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <label key={field.name} className="grid gap-2">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel">{field.label}</span>
+            <span className={fieldClassName}>
+              <select
+                name={field.name}
+                defaultValue={field.defaultValue ?? field.options[0]?.value ?? ""}
+                className="h-full w-full appearance-none bg-transparent pr-2 text-sm outline-none"
+                aria-label={field.label}
+              >
+                {field.options.map((option) => (
+                  <option key={`${field.name}-${option.value}`} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </span>
+          </label>
         ))}
-        <button className="h-12 rounded-full bg-ink px-6 text-sm font-semibold text-white transition hover:bg-navy">
+        <button className="h-14 self-end rounded-full bg-ink px-6 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(8,18,37,0.18)] transition hover:bg-navy">
           Tìm kiếm
         </button>
       </div>
