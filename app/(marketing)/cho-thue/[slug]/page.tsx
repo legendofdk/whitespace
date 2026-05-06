@@ -38,7 +38,7 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
             <div className="section-reveal rounded-[30px] border border-[#f0c06f] bg-[linear-gradient(135deg,#fff2d6,#ffd996)] p-6 shadow-[0_18px_36px_rgba(215,142,22,0.16)]">
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#9f5e0d]">Giá thuê tham khảo</p>
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#9f6a13]">Giá thuê tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-[#8a4c09]">
                 {item.price}
               </p>

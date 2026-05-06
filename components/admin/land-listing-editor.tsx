@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 import { ImageUploadField } from "./image-upload-field";
+import { LocationAutocompleteInput } from "./location-autocomplete-input";
+import type { LocationSelection } from "./location-selection";
 import { FieldLabel } from "./field-label";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
@@ -48,6 +50,15 @@ export function LandListingEditor({ slug }: { slug?: string }) {
   const labelClassName = "text-sm font-medium text-ink";
   const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
   const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
+
+  function handleLocationSelect(location: LocationSelection) {
+    setForm((current) => ({
+      ...current,
+      address: location.address,
+      latitude: location.latitude,
+      longitude: location.longitude
+    }));
+  }
 
   useEffect(() => {
     async function loadAreas() {
@@ -154,7 +165,7 @@ export function LandListingEditor({ slug }: { slug?: string }) {
           <input type="hidden" value={form.slug} readOnly />
           <label className={fieldClassName}><FieldLabel label="Tên sản phẩm" required className={labelClassName} /><input value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value, slug: slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tên sản phẩm" required /></label>
           <label className={fieldClassName}><FieldLabel label="Khu vực" className={labelClassName} /><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
-          <label className={fieldClassName}><FieldLabel label="Địa chỉ" required className={labelClassName} /><input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Địa chỉ" required className={labelClassName} /><LocationAutocompleteInput value={form.address} onChange={(value) => setForm((c) => ({ ...c, address: value }))} onLocationSelect={handleLocationSelect} className="h-12 w-full rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required /></label>
           <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Link Google Map" className={labelClassName} /><input value={form.mapEmbedUrl} onChange={(e) => setForm((c) => ({ ...c, mapEmbedUrl: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Dán link Google Map hoặc link embed" /></label>
           <label className={fieldClassName}><FieldLabel label="Giá bán" required className={labelClassName} /><input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá bán" required /></label>
           <label className={fieldClassName}><FieldLabel label="Diện tích" className={labelClassName} /><input value={form.acreage} onChange={(e) => setForm((c) => ({ ...c, acreage: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Diện tích" /></label>

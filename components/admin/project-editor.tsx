@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
 import { ImageUploadField } from "./image-upload-field";
+import { LocationAutocompleteInput } from "./location-autocomplete-input";
+import type { LocationSelection } from "./location-selection";
 import { FieldLabel } from "./field-label";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
@@ -63,6 +65,15 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
   const labelClassName = "text-sm font-medium text-ink";
   const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
   const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
+
+  function handleLocationSelect(location: LocationSelection) {
+    setForm((current) => ({
+      ...current,
+      address: location.address,
+      latitude: location.latitude,
+      longitude: location.longitude
+    }));
+  }
 
   function toggleProductType(productType: (typeof PRODUCT_TYPE_OPTIONS)[number], checked: boolean) {
     setForm((current) => ({
@@ -284,7 +295,14 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
             <FieldLabel label="Địa chỉ" required className={labelClassName} />
-            <input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required />
+            <LocationAutocompleteInput
+              value={form.address}
+              onChange={(value) => setForm((current) => ({ ...current, address: value }))}
+              onLocationSelect={handleLocationSelect}
+              className="h-12 w-full rounded-full border border-line px-5 text-sm outline-none"
+              placeholder="Địa chỉ"
+              required
+            />
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
             <FieldLabel label="Link Google Map" className={labelClassName} />

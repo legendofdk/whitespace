@@ -19,7 +19,7 @@ export function FeaturedProjectCarousel({ projects }: { projects: Project[] }) {
         type="button"
         onClick={() => setStartIndex((current) => Math.max(0, current - 1))}
         disabled={startIndex === 0 || !canSlide}
-        className="absolute left-0 top-1/2 z-10 hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white text-xl text-ink shadow-soft transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-ink lg:inline-flex"
+        className="absolute left-0 top-1/2 z-10 hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#0066cc] bg-white text-xl text-[#0066cc] transition hover:bg-[#0066cc] hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-[#0066cc] lg:inline-flex"
         aria-label="Xem dự án trước"
       >
         ‹
@@ -29,7 +29,7 @@ export function FeaturedProjectCarousel({ projects }: { projects: Project[] }) {
         type="button"
         onClick={() => setStartIndex((current) => Math.min(maxStartIndex, current + 1))}
         disabled={startIndex >= maxStartIndex || !canSlide}
-        className="absolute right-0 top-1/2 z-10 hidden h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-white text-xl text-ink shadow-soft transition hover:bg-ink hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-ink lg:inline-flex"
+        className="absolute right-0 top-1/2 z-10 hidden h-12 w-12 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#0066cc] bg-white text-xl text-[#0066cc] transition hover:bg-[#0066cc] hover:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-[#0066cc] lg:inline-flex"
         aria-label="Xem dự án tiếp theo"
       >
         ›

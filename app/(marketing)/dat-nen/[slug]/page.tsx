@@ -39,7 +39,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
             <div className="section-reveal rounded-[30px] border border-[#d8c29e] bg-[linear-gradient(135deg,#f7f0e3,#efe3cf)] p-6 shadow-[0_18px_36px_rgba(98,72,36,0.12)]">
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#8b6430]">Giá bán tham khảo</p>
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#9f6a13]">Giá bán tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-[#5e4521]">
                 {item.price}
               </p>

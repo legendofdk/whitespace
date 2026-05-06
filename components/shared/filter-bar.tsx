@@ -83,7 +83,7 @@ export function FilterBar({
             </span>
           </label>
         ))}
-        <button className="h-14 self-end rounded-full bg-ink px-6 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(8,18,37,0.18)] transition hover:bg-navy">
+        <button className="h-14 self-end rounded-full bg-[#0066cc] px-6 text-sm font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
           Tìm kiếm
         </button>
       </div>

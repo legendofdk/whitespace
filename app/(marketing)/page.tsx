@@ -20,6 +20,14 @@ export default async function HomePage() {
   const latestPost = posts[0];
   const secondaryPosts = posts.slice(1, 5);
   const featuredRentals = rentals.slice(0, 10);
+  const sectionClassName = "py-20";
+  const sectionInnerClassName = "shell";
+  const primaryCtaClassName =
+    "inline-flex rounded-full bg-[#0066cc] px-6 py-3 text-sm font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]";
+  const secondaryCtaClassName =
+    "inline-flex rounded-full border border-[#0066cc] px-6 py-3 text-sm font-medium tracking-[-0.224px] text-[#0066cc] transition active:scale-95 hover:bg-[#0066cc] hover:text-white";
+  const cardCtaClassName =
+    "inline-flex rounded-full border border-[#0066cc] px-4 py-2.5 text-sm font-medium tracking-[-0.224px] text-[#0066cc] transition hover:bg-[#0066cc] hover:text-white";
 
   return (
     <main>
@@ -56,10 +64,10 @@ export default async function HomePage() {
               ))}
             </div>
             <div className="hero-animate hero-animate-delay-4 mt-10 flex flex-wrap gap-3">
-              <Link href="/du-an" className="rounded-full bg-[#0066cc] px-5 py-3 text-[14px] font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
+              <Link href="/du-an" className={primaryCtaClassName}>
                 Xem dự án
               </Link>
-              <Link href="/dat-nen" className="rounded-full border border-[#0066cc] px-5 py-3 text-[14px] font-medium tracking-[-0.224px] text-[#2997ff] transition active:scale-95 hover:bg-[#0066cc] hover:text-white">
+              <Link href="/dat-nen" className={secondaryCtaClassName}>
                 Xem chuyển nhượng
               </Link>
             </div>
@@ -87,15 +95,15 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-white py-20">
-        <div className="shell">
+      <section className={`bg-white ${sectionClassName}`}>
+        <div className={sectionInnerClassName}>
           <SectionHeading eyebrow="Dự án nổi bật" title="Những dự án đáng quan tâm tại khu Đông Hà Nội" />
           <FeaturedProjectCarousel projects={featuredProjects} />
         </div>
       </section>
 
-      <section className="bg-[#f5f5f7] py-20">
-        <div className="shell">
+      <section className={`bg-[#f5f5f7] ${sectionClassName}`}>
+        <div className={sectionInnerClassName}>
           <SectionHeading eyebrow="Chuyển nhượng hot" title="Sản phẩm nổi bật theo từng khu vực tiềm năng" />
           <div className="grid gap-5">
             {featuredLandListings.map((item) => {
@@ -105,7 +113,7 @@ export default async function HomePage() {
                 <Link
                   key={item.id}
                   href={cardItem.href}
-                  className="group grid gap-5 overflow-hidden rounded-[28px] border border-line bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:grid-cols-[260px_1fr]"
+                  className="group grid gap-5 overflow-hidden rounded-[28px] border border-line bg-white p-6 transition hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)] md:grid-cols-[260px_1fr]"
                 >
                   <div className="relative h-52 overflow-hidden rounded-[24px] bg-mist md:h-full">
                     <Image
@@ -121,17 +129,19 @@ export default async function HomePage() {
                         <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-navy">
                           {cardItem.area}
                         </span>
-                        <h3 className="mt-2.5 font-display text-4xl leading-tight text-ink">{cardItem.name}</h3>
-                        <p className="mt-0.5 text-sm leading-4 text-steel">{cardItem.address}</p>
+                        <h3 className="mt-3 font-display text-[34px] leading-[1.08] tracking-[-0.28px] text-ink">{cardItem.name}</h3>
+                        <p className="mt-1 text-sm leading-5 text-steel">{cardItem.address}</p>
                       </div>
-                      <div className="rounded-2xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-4 py-3 text-right shadow-[0_12px_24px_rgba(191,138,38,0.14)] ring-1 ring-[#e7c06d]">
+                      <div className="rounded-2xl bg-[linear-gradient(135deg,#fff5e1,#ffebbb)] px-4 py-3 text-right shadow-[0_12px_24px_rgba(191,138,38,0.12)] ring-1 ring-[#ecd39c]">
                         <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">Giá bán</p>
                         <p className="mt-1 text-2xl font-black leading-none text-[#8b5a16]">{cardItem.price}</p>
                       </div>
                     </div>
                     <p className="text-sm font-medium text-navy">{cardItem.cardMeta}</p>
-                    <p className="line-clamp-3 max-w-3xl text-sm leading-7 text-steel">{cardItem.description.replace(/<[^>]+>/g, " ")}</p>
-                    <span className="mt-auto inline-flex self-start rounded-full border border-ink px-4 py-2.5 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
+                    <p className="line-clamp-3 max-w-3xl text-[17px] leading-[1.47] tracking-[-0.374px] text-steel">
+                      {cardItem.description.replace(/<[^>]+>/g, " ")}
+                    </p>
+                    <span className={`mt-auto self-start ${cardCtaClassName}`}>
                       Xem chi tiết
                     </span>
                   </div>
@@ -140,18 +150,15 @@ export default async function HomePage() {
             })}
           </div>
           <div className="mt-8 flex justify-center">
-            <Link
-              href="/dat-nen"
-              className="inline-flex rounded-full border border-ink px-6 py-3 text-sm font-semibold text-ink transition hover:bg-ink hover:text-white"
-            >
+            <Link href="/dat-nen" className={secondaryCtaClassName}>
               Xem tất cả chuyển nhượng
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-20 text-ink">
-        <div className="shell">
+      <section className={`bg-white ${sectionClassName} text-ink`}>
+        <div className={sectionInnerClassName}>
           <SectionHeading eyebrow="Cho thuê nổi bật" title="Mặt bằng và shophouse phù hợp khai thác thương mại" />
           <div className="overflow-hidden rounded-[18px] border border-line bg-white">
             <div className="hidden grid-cols-[88px_1.1fr_0.95fr_0.9fr_0.8fr_0.7fr] gap-4 border-b border-line bg-[#fbfbfd] px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-steel lg:grid">
@@ -198,7 +205,7 @@ export default async function HomePage() {
                         <p className="text-lg font-semibold text-ink">{item.price}</p>
                       </div>
                       <div className="flex lg:justify-end">
-                        <span className="inline-flex rounded-full border border-[#0066cc] px-4 py-2 text-sm font-medium text-[#0066cc] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                        <span className={cardCtaClassName}>
                           Xem chi tiết
                         </span>
                       </div>
@@ -215,24 +222,21 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="mt-8 flex justify-center">
-            <Link
-              href="/cho-thue"
-              className="inline-flex rounded-full border border-[#0066cc] px-6 py-3 text-sm font-medium text-[#0066cc] transition active:scale-95 hover:bg-[#0066cc] hover:text-white"
-            >
+            <Link href="/cho-thue" className={secondaryCtaClassName}>
               Xem thêm
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#f5f5f7] py-20">
-        <div className="shell">
+      <section className={`bg-[#f5f5f7] ${sectionClassName}`}>
+        <div className={sectionInnerClassName}>
           <SectionHeading eyebrow="Tin tức thị trường" title="Góc nhìn thị trường và thông tin đáng chú ý" />
           {latestPost ? (
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
               <Link
                 href={`/tin-tuc/${latestPost.slug}`}
-                className="group relative block overflow-hidden rounded-[32px] bg-ink shadow-soft"
+                className="group relative block overflow-hidden rounded-[32px] bg-[#1d1d1f] transition hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]"
               >
                 <div className="relative min-h-[540px]">
                   <Image
@@ -251,6 +255,9 @@ export default async function HomePage() {
                       {latestPost.title}
                     </h3>
                     <p className="mt-4 max-w-2xl text-sm leading-8 text-slate-200">{latestPost.excerpt}</p>
+                    <span className="mt-6 inline-flex rounded-full border border-[#2997ff] px-5 py-3 text-sm font-medium tracking-[-0.224px] text-[#2997ff] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                      Xem chi tiết
+                    </span>
                   </div>
                 </div>
               </Link>
@@ -260,7 +267,7 @@ export default async function HomePage() {
                   <Link
                     key={post.id}
                     href={`/tin-tuc/${post.slug}`}
-                    className="group relative block overflow-hidden rounded-[28px] bg-ink shadow-soft"
+                    className="group relative block overflow-hidden rounded-[28px] bg-[#1d1d1f] transition hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]"
                   >
                     <div className="relative aspect-square">
                       <Image
@@ -273,6 +280,9 @@ export default async function HomePage() {
                       <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sand">{post.publishedAt}</p>
                         <h3 className="mt-3 font-display text-2xl leading-tight">{post.title}</h3>
+                        <span className="mt-4 inline-flex rounded-full border border-[#2997ff] px-4 py-2 text-sm font-medium tracking-[-0.224px] text-[#2997ff] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                          Xem chi tiết
+                        </span>
                       </div>
                     </div>
                   </Link>
@@ -283,18 +293,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section-gap bg-ink text-white">
-        <div className="shell">
-          <div className="rounded-[36px] border border-white/10 bg-white/5 p-10 sm:p-14">
-            <p className="eyebrow text-sand">Liên hệ nhanh</p>
+      <section className="bg-white py-20">
+        <div className={sectionInnerClassName}>
+          <div className="rounded-[32px] border border-line bg-[#f5f5f7] p-10 sm:p-14">
+            <p className="eyebrow">Liên hệ nhanh</p>
             <div className="mt-4 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
-                <h2 className="font-display text-5xl">Cần tư vấn nhanh về dự án phía Đông Hà Nội?</h2>
-                <p className="mt-4 text-base leading-8 text-slate-300">
+                <h2 className="font-display text-5xl text-ink">Cần tư vấn nhanh về dự án phía Đông Hà Nội?</h2>
+                <p className="mt-4 text-[17px] leading-[1.47] tracking-[-0.374px] text-steel">
                   Liên hệ ngay để nhận thông tin dự án, chuyển nhượng và sản phẩm cho thuê phù hợp với nhu cầu đầu tư hoặc khai thác thực tế.
                 </p>
               </div>
-              <Link href="/lien-he" className="cta-glow cta-glow-gold rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink">
+              <Link href="/lien-he" className={primaryCtaClassName}>
                 Liên hệ tư vấn ngay
               </Link>
             </div>

@@ -6,7 +6,7 @@ import { Project } from "@/types";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="content-lift group flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-white shadow-soft transition duration-500 hover:shadow-[0_24px_60px_rgba(15,23,42,0.14)]">
+    <article className="content-lift group flex h-full flex-col overflow-hidden rounded-[28px] border border-line bg-white transition duration-500 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
       <div className="relative h-56 overflow-hidden">
         <Image src={project.thumbnail} alt={project.name} fill className="object-cover transition duration-700 group-hover:scale-[1.04]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_56%,rgba(8,18,37,0.18)_100%)] opacity-80" />
@@ -16,7 +16,7 @@ export function ProjectCard({ project }: { project: Project }) {
           <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-navy">
             {project.area}
           </span>
-          <div className="rounded-xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.16)] ring-1 ring-[#e7c06d]">
+          <div className="rounded-xl bg-[linear-gradient(135deg,#fff5e1,#ffebbb)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.12)] ring-1 ring-[#ecd39c]">
             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">Giá bán</p>
             <p className="mt-1 text-lg font-black leading-none text-[#8b5a16]">{project.price}</p>
           </div>
@@ -34,7 +34,7 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
         <Link
           href={`/du-an/${project.slug}`}
-          className="mt-auto inline-flex self-start rounded-full border border-ink px-5 py-3 text-sm font-semibold text-ink transition hover:bg-ink hover:text-white"
+          className="mt-auto inline-flex self-start rounded-full border border-[#0066cc] px-5 py-3 text-sm font-medium tracking-[-0.224px] text-[#0066cc] transition hover:bg-[#0066cc] hover:text-white"
         >
           Xem chi tiết
         </Link>

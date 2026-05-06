@@ -25,7 +25,7 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
       <div className="flex flex-1 flex-col gap-3 p-6">
         <div className="flex items-start justify-between gap-4">
           <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-navy">{badge ?? area}</span>
-          <div className="rounded-xl bg-[linear-gradient(135deg,#fff3d6,#ffe7ad)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.16)] ring-1 ring-[#e7c06d]">
+          <div className="rounded-xl bg-[linear-gradient(135deg,#fff5e1,#ffebbb)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.12)] ring-1 ring-[#ecd39c]">
             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">
               {badge?.toLowerCase().includes("thuê") ? "Giá thuê" : "Giá bán"}
             </p>
