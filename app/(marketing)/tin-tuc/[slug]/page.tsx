@@ -22,17 +22,21 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
   return (
     <main className="bg-white">
       <section className="relative isolate overflow-hidden bg-ink py-20 text-white">
-        <div className="absolute inset-0 opacity-25">
+        <div className="absolute inset-0">
           <Image src={heroImage} alt={post.title} fill className="object-cover" />
         </div>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.52)_0%,rgba(8,18,37,0.68)_48%,rgba(8,18,37,0.84)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(8,18,37,0.12),transparent_32%)]" />
         <div className="shell relative z-10">
-          <p className="text-sm uppercase tracking-[0.22em] text-sand">
-            <Link href="/tin-tuc">Tin tức</Link> / {post.category}
-          </p>
-          <h1 className="mt-6 max-w-5xl font-display text-6xl">{post.title}</h1>
-          <div className="mt-6 flex flex-wrap gap-6 text-sm text-slate-300">
-            <span>{post.publishedAt}</span>
-            <span>{post.category}</span>
+          <div className="max-w-5xl rounded-[32px] bg-[linear-gradient(180deg,rgba(8,18,37,0.42),rgba(8,18,37,0.24))] p-6 shadow-[0_20px_50px_rgba(8,18,37,0.18)] backdrop-blur-[6px] sm:p-8">
+            <p className="text-sm uppercase tracking-[0.22em] text-sand">
+              <Link href="/tin-tuc">Tin tức</Link> / {post.category}
+            </p>
+            <h1 className="mt-6 max-w-5xl font-display text-5xl leading-[1.08] sm:text-6xl">{post.title}</h1>
+            <div className="mt-6 flex flex-wrap gap-6 text-sm text-slate-200">
+              <span>{post.publishedAt}</span>
+              <span>{post.category}</span>
+            </div>
           </div>
         </div>
       </section>
