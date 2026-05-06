@@ -111,6 +111,19 @@ body {
   margin: 0.25rem 0;
 }
 
+.hero-image-motion {
+  animation: hero-ambient-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+.hero-light-sweep {
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 233, 190, 0.08) 40%, transparent 100%);
+  filter: blur(8px);
+  animation: hero-light-sweep 18s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
 @keyframes contact-shake-spin {
   0% {
     transform: rotate(0deg) scale(1);
@@ -135,6 +148,29 @@ body {
   }
   100% {
     transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes hero-ambient-drift {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.06) translate3d(-0.8%, -1.2%, 0);
+  }
+  100% {
+    transform: scale(1.09) translate3d(0.6%, -0.6%, 0);
+  }
+}
+
+@keyframes hero-light-sweep {
+  0% {
+    opacity: 0.2;
+    transform: translate3d(6%, 0, 0);
+  }
+  100% {
+    opacity: 0.55;
+    transform: translate3d(-8%, 0, 0);
   }
 }
 

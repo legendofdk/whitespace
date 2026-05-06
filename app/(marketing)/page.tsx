@@ -31,11 +31,12 @@ export default async function HomePage() {
             alt="Toàn cảnh đô thị phía Đông Hà Nội"
             fill
             priority
-            className="object-cover object-center"
+            className="hero-image-motion object-cover object-center"
           />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,16,34,0.9)_0%,rgba(7,16,34,0.74)_42%,rgba(7,16,34,0.5)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(226,198,140,0.24),transparent_28%)]" />
+        <div className="hero-light-sweep absolute inset-y-0 right-0 w-[42vw]" />
         <div className="shell relative z-10 grid min-h-[calc(100vh-80px)] items-center gap-14 py-16 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="relative">
             <p className="eyebrow text-sand">Điểm nóng đầu tư</p>
