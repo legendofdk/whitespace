@@ -8,9 +8,21 @@ type DetailGalleryProps = {
   images: string[];
 };
 
+type SlideState =
+  | {
+      previousIndex: number;
+      nextIndex: number;
+      direction: 1 | -1;
+    }
+  | null;
+
+const SLIDE_DURATION_MS = 380;
+
 export function DetailGallery({ title, images }: DetailGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [slideState, setSlideState] = useState<SlideState>(null);
+  const [isSlideActive, setIsSlideActive] = useState(false);
 
   if (!images.length) {
     return null;
@@ -18,13 +30,60 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
 
   const currentImage = images[activeIndex] ?? images[0];
 
+  const startSlide = (nextIndex: number, direction: 1 | -1) => {
+    if (nextIndex === activeIndex || slideState) {
+      return;
+    }
+
+    setSlideState({
+      previousIndex: activeIndex,
+      nextIndex,
+      direction
+    });
+    setIsSlideActive(false);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsSlideActive(true);
+      });
+    });
+  };
+
+  const finishSlide = () => {
+    if (!slideState || !isSlideActive) {
+      return;
+    }
+
+    setActiveIndex(slideState.nextIndex);
+    setSlideState(null);
+    setIsSlideActive(false);
+  };
+
+  const goToIndex = (nextIndex: number) => {
+    if (nextIndex === activeIndex || slideState) {
+      return;
+    }
+
+    startSlide(nextIndex, nextIndex > activeIndex ? 1 : -1);
+  };
+
   const goToPrevious = () => {
-    setActiveIndex((current) => (current === 0 ? images.length - 1 : current - 1));
+    if (slideState) {
+      return;
+    }
+
+    startSlide(activeIndex === 0 ? images.length - 1 : activeIndex - 1, -1);
   };
 
   const goToNext = () => {
-    setActiveIndex((current) => (current === images.length - 1 ? 0 : current + 1));
+    if (slideState) {
+      return;
+    }
+
+    startSlide(activeIndex === images.length - 1 ? 0 : activeIndex + 1, 1);
   };
+
+  const displayedIndex = slideState?.nextIndex ?? activeIndex;
 
   return (
     <>
@@ -38,7 +97,47 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
               onClick={() => setActiveImage(currentImage)}
               className="relative block h-64 w-full overflow-hidden bg-mist text-left sm:h-80"
             >
-              <Image src={currentImage} alt={title} fill className="object-cover" />
+              <div className="absolute inset-0">
+                {slideState ? (
+                  <>
+                    <div
+                      className="absolute inset-0 will-change-transform"
+                      style={{
+                        transition: `transform ${SLIDE_DURATION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+                        transform: `translate3d(${
+                          isSlideActive ? (slideState.direction === 1 ? "-100%" : "100%") : "0%"
+                        }, 0, 0)`
+                      }}
+                    >
+                      <Image
+                        src={images[slideState.previousIndex] ?? images[0]}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div
+                      className="absolute inset-0 will-change-transform"
+                      style={{
+                        transition: `transform ${SLIDE_DURATION_MS}ms cubic-bezier(0.22, 1, 0.36, 1)`,
+                        transform: `translate3d(${
+                          isSlideActive ? "0%" : slideState.direction === 1 ? "100%" : "-100%"
+                        }, 0, 0)`
+                      }}
+                      onTransitionEnd={finishSlide}
+                    >
+                      <Image
+                        src={images[slideState.nextIndex] ?? images[0]}
+                        alt={title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <Image src={currentImage} alt={title} fill className="object-cover" />
+                )}
+              </div>
             </button>
 
             {images.length > 1 ? (
@@ -60,7 +159,7 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
                   ›
                 </button>
                 <div className="absolute bottom-4 right-4 rounded-full bg-black/45 px-3 py-1 text-xs font-medium text-white backdrop-blur">
-                  {activeIndex + 1}/{images.length}
+                  {displayedIndex + 1}/{images.length}
                 </div>
               </>
             ) : null}
@@ -72,9 +171,9 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
                 <button
                   key={`${image}-${index}`}
                   type="button"
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => goToIndex(index)}
                   className={`relative h-20 overflow-hidden rounded-[20px] border transition ${
-                    index === activeIndex
+                    index === displayedIndex
                       ? "border-ink shadow-[0_8px_20px_rgba(8,18,37,0.14)]"
                       : "border-line opacity-75 hover:opacity-100"
                   }`}

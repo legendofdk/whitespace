@@ -25,17 +25,17 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <Image src={project.bannerImage} alt={project.name} fill className="object-cover" />
         </div>
         <div className="shell relative z-10">
-          <p className="text-sm uppercase tracking-[0.22em] text-sand">
+          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-sand">
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
-          <h1 className="mt-6 max-w-4xl font-display text-6xl">{project.name}</h1>
+          <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl">{project.name}</h1>
         </div>
       </section>
 
       <section className="shell section-gap">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
-            <div className="rounded-[30px] border border-[#e4c58a] bg-[radial-gradient(circle_at_top_left,#fff8e8,transparent_45%),linear-gradient(135deg,#fff4dc,#ffe6aa)] p-6 shadow-[0_18px_36px_rgba(191,138,38,0.18)]">
+            <div className="section-reveal rounded-[30px] border border-[#e4c58a] bg-[radial-gradient(circle_at_top_left,#fff8e8,transparent_45%),linear-gradient(135deg,#fff4dc,#ffe6aa)] p-6 shadow-[0_18px_36px_rgba(191,138,38,0.18)]">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#a56a10]">Giá bán tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-[#7f4f10] drop-shadow-[0_8px_18px_rgba(191,138,38,0.18)]">
                 {project.price}
@@ -48,7 +48,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </p>
             </div>
 
-            <div className="rounded-[32px] border border-line bg-mist p-8">
+            <div className="section-reveal rounded-[32px] border border-line bg-mist p-8">
               <h2 className="font-display text-4xl text-ink">Tổng quan dự án</h2>
               <div className="mt-6 grid gap-5 sm:grid-cols-2">
                 {[
@@ -67,7 +67,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="rounded-[32px] border border-line p-8">
+            <div className="section-reveal rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
               <div className="mt-6 space-y-4 text-sm leading-8 text-steel">
                 <HtmlContent html={project.description} className="max-w-none" />
@@ -77,7 +77,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="rounded-[32px] border border-line p-8">
+            <div className="section-reveal rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
               {project.apartments?.length ? (
                 <div className="mt-6 grid gap-4">
@@ -85,7 +85,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                     <Link
                       key={apartment.id}
                       href={`/can-ho/${apartment.slug}`}
-                      className="rounded-[24px] border border-line bg-mist/70 p-5 transition hover:-translate-y-0.5 hover:border-ink/20 hover:bg-mist"
+                      className="content-lift rounded-[24px] border border-line bg-mist/70 p-5 transition hover:border-ink/20 hover:bg-mist"
                     >
                       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                         <div>
@@ -117,7 +117,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           </div>
 
           <aside className="space-y-6">
-            <div className="rounded-[32px] border border-line p-8">
+            <div className="section-reveal rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Tiện ích nổi bật</h2>
               <div className="mt-6 flex flex-wrap gap-3">
                 {project.utilities.map((utility) => (
@@ -128,15 +128,19 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <DetailGallery title={project.name} images={project.gallery.length ? project.gallery : [project.thumbnail]} />
+            <div className="section-reveal">
+              <DetailGallery title={project.name} images={project.gallery.length ? project.gallery : [project.thumbnail]} />
+            </div>
 
-            <MapNearbyPanel
-              area={project.area}
-              center={project.coordinates}
-              title={project.name}
-              defaultMapUrl={project.mapEmbedUrl}
-              hideNearbyPlaces
-            />
+            <div className="section-reveal">
+              <MapNearbyPanel
+                area={project.area}
+                center={project.coordinates}
+                title={project.name}
+                defaultMapUrl={project.mapEmbedUrl}
+                hideNearbyPlaces
+              />
+            </div>
           </aside>
         </div>
       </section>
