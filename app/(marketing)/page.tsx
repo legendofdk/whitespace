@@ -24,28 +24,39 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section className="overflow-hidden bg-ink text-white">
-        <div className="shell grid min-h-[calc(100vh-80px)] items-center gap-14 py-16 lg:grid-cols-[1.1fr_0.9fr]">
+      <section className="relative isolate overflow-hidden bg-ink text-white">
+        <div className="absolute inset-0">
+          <Image
+            src="/hero-hanoi.jpg"
+            alt="Toàn cảnh đô thị phía Đông Hà Nội"
+            fill
+            priority
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,16,34,0.9)_0%,rgba(7,16,34,0.74)_42%,rgba(7,16,34,0.5)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(226,198,140,0.24),transparent_28%)]" />
+        <div className="shell relative z-10 grid min-h-[calc(100vh-80px)] items-center gap-14 py-16 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="relative">
             <p className="eyebrow text-sand">Điểm nóng đầu tư</p>
             <h1 className="mt-6 max-w-4xl font-display text-6xl leading-none sm:text-7xl">
               Bất Động Sản Phía Đông Hà Nội
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300">
+            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200">
               Tập trung vào các dự án, chuyển nhượng và sản phẩm cho thuê tại Gia Lâm, Long Biên, Đông Anh và các khu vực hưởng lợi trực tiếp từ hạ tầng mới, cầu mới và trục phát triển đô thị.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link href="/du-an" className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink">
+              <Link href="/du-an" className="rounded-full bg-sand px-6 py-3 text-sm font-semibold text-ink shadow-[0_14px_30px_rgba(227,194,132,0.24)]">
                 Xem dự án nổi bật
               </Link>
-              <Link href="/lien-he" className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white">
+              <Link href="/lien-he" className="rounded-full border border-white/20 bg-white/8 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm">
                 Nhận tư vấn khu vực
               </Link>
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.14),rgba(255,255,255,0.05))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
-            <div className="rounded-[28px] border border-white/10 bg-[#dbe6ff0d] p-6">
+          <div className="relative overflow-hidden rounded-[32px] border border-white/15 bg-[linear-gradient(135deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06))] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+            <div className="rounded-[28px] border border-white/10 bg-[#dbe6ff14] p-6">
               <p className="text-sm uppercase tracking-[0.24em] text-sand">Bộ sưu tập nổi bật</p>
               <h2 className="mt-4 font-display text-5xl">Tâm điểm tăng trưởng mới</h2>
               <div className="mt-8 grid gap-4 sm:grid-cols-3">
