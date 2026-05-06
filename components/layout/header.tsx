@@ -52,8 +52,8 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
     <header className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-[0_14px_40px_rgba(15,23,42,0.1)]">
       <div className="absolute inset-x-0 bottom-0 h-px bg-[linear-gradient(90deg,transparent,rgba(148,163,184,0.45),transparent)]" />
       <div className="shell flex min-h-20 items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 text-ink">
-          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-0.5 shadow-[0_16px_34px_rgba(15,23,42,0.12)]">
+        <Link href="/" className="brand-link flex items-center gap-3 text-ink">
+          <div className="brand-mark flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-0.5 shadow-[0_16px_34px_rgba(15,23,42,0.12)]">
             <Image src="/favicon.jpeg" alt="Batdongsanphiadong" width={52} height={52} className="h-auto w-full object-contain" />
           </div>
           <div>
