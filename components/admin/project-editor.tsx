@@ -56,7 +56,6 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
     slug ? "loading" : "idle"
   );
   const [errorMessage, setErrorMessage] = useState("");
-  const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
@@ -252,6 +251,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
         {status === "success" ? <p className="mt-4 text-sm font-medium text-green-700">Lưu dữ liệu thành công.</p> : null}
 
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
+          <input type="hidden" value={form.slug} readOnly />
           <label className={fieldClassName}>
             <FieldLabel label="Tên dự án" required className={labelClassName} />
             <input
@@ -260,24 +260,11 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
                 setForm((current) => ({
                   ...current,
                   name: event.target.value,
-                  slug: slugTouched ? current.slug : slugify(event.target.value)
+                  slug: slugify(event.target.value)
                 }))
               }
               className="h-12 rounded-full border border-line px-5 text-sm outline-none"
               placeholder="Tên dự án"
-              required
-            />
-          </label>
-          <label className={fieldClassName}>
-            <FieldLabel label="Slug" required className={labelClassName} />
-            <input
-              value={form.slug}
-              onChange={(event) => {
-                setSlugTouched(true);
-                setForm((current) => ({ ...current, slug: slugify(event.target.value) }));
-              }}
-              className="h-12 rounded-full border border-line px-5 text-sm outline-none"
-              placeholder="Slug"
               required
             />
           </label>

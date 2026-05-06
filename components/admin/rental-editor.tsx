@@ -18,7 +18,6 @@ export function RentalEditor({ slug }: { slug?: string }) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<"idle" | "loading" | "submitting" | "success" | "error">(slug ? "loading" : "idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
@@ -91,8 +90,8 @@ export function RentalEditor({ slug }: { slug?: string }) {
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         {status === "success" ? <p className="mt-4 text-sm font-medium text-green-700">Lưu dữ liệu thành công.</p> : null}
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
-          <label className={fieldClassName}><FieldLabel label="Tên sản phẩm" required className={labelClassName} /><input value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value, slug: slugTouched ? c.slug : slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tên sản phẩm" required /></label>
-          <label className={fieldClassName}><FieldLabel label="Slug" required className={labelClassName} /><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
+          <input type="hidden" value={form.slug} readOnly />
+          <label className={fieldClassName}><FieldLabel label="Tên sản phẩm" required className={labelClassName} /><input value={form.name} onChange={(e) => setForm((c) => ({ ...c, name: e.target.value, slug: slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tên sản phẩm" required /></label>
           <label className={fieldClassName}><FieldLabel label="Khu vực" className={labelClassName} /><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
           <label className={fieldClassName}><FieldLabel label="Địa chỉ" required className={labelClassName} /><input value={form.address} onChange={(e) => setForm((c) => ({ ...c, address: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Địa chỉ" required /></label>
           <label className={fieldClassName}><FieldLabel label="Giá thuê" required className={labelClassName} /><input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá thuê" required /></label>

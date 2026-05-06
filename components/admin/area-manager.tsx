@@ -26,7 +26,6 @@ export function AreaManager() {
   const [items, setItems] = useState<AreaItem[]>([]);
   const [form, setForm] = useState(initialForm);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [slugTouched, setSlugTouched] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
@@ -57,7 +56,6 @@ export function AreaManager() {
     setForm(initialForm);
     setInitialSnapshot(JSON.stringify(initialForm));
     setEditingId(null);
-    setSlugTouched(false);
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -130,7 +128,6 @@ export function AreaManager() {
 
   function handleEdit(item: AreaItem) {
     setEditingId(item.id);
-    setSlugTouched(true);
     setForm({
       name: item.name,
       slug: item.slug,
@@ -162,6 +159,7 @@ export function AreaManager() {
           {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
 
           <form onSubmit={handleSubmit} className="mt-8 grid gap-4">
+            <input type="hidden" value={form.slug} readOnly />
             <label className="grid gap-2">
               <FieldLabel label="Tên khu vực" required />
               <input
@@ -170,25 +168,11 @@ export function AreaManager() {
                   setForm((current) => ({
                     ...current,
                     name: event.target.value,
-                    slug: slugTouched ? current.slug : slugify(event.target.value)
+                    slug: slugify(event.target.value)
                   }))
                 }
                 className="h-12 rounded-full border border-line px-5 text-sm outline-none"
                 placeholder="Ví dụ: Gia Lâm"
-                required
-              />
-            </label>
-
-            <label className="grid gap-2">
-              <FieldLabel label="Slug" required />
-              <input
-                value={form.slug}
-                onChange={(event) => {
-                  setSlugTouched(true);
-                  setForm((current) => ({ ...current, slug: slugify(event.target.value) }));
-                }}
-                className="h-12 rounded-full border border-line px-5 text-sm outline-none"
-                placeholder="gia-lam"
                 required
               />
             </label>

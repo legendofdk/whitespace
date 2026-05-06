@@ -18,7 +18,6 @@ export function PostEditor({ slug }: { slug?: string }) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState<"idle" | "loading" | "submitting" | "success" | "error">(slug ? "loading" : "idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
@@ -91,8 +90,8 @@ export function PostEditor({ slug }: { slug?: string }) {
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         {status === "success" ? <p className="mt-4 text-sm font-medium text-green-700">Lưu dữ liệu thành công.</p> : null}
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
-          <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Tiêu đề" required className={labelClassName} /><input value={form.title} onChange={(e) => setForm((c) => ({ ...c, title: e.target.value, slug: slugTouched ? c.slug : slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tiêu đề" required /></label>
-          <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Slug" required className={labelClassName} /><input value={form.slug} onChange={(e) => { setSlugTouched(true); setForm((c) => ({ ...c, slug: slugify(e.target.value) })); }} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Slug" required /></label>
+          <input type="hidden" value={form.slug} readOnly />
+          <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Tiêu đề" required className={labelClassName} /><input value={form.title} onChange={(e) => setForm((c) => ({ ...c, title: e.target.value, slug: slugify(e.target.value) }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Tiêu đề" required /></label>
           <div className="xl:col-span-2">
             <ImageUploadField
               label="Ảnh đại diện"
