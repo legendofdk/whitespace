@@ -196,15 +196,15 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
         mapEmbedUrl: form.mapEmbedUrl || undefined,
         seoTitle: form.seoTitle || undefined,
         seoDescription: form.seoDescription || undefined,
-        investor: form.investor || undefined,
-        scale: form.scale || undefined,
-        villaInfo: form.villaInfo || undefined,
-        shophouseInfo: form.shophouseInfo || undefined,
-        startTime: form.startTime || undefined,
-        handoverTime: form.handoverTime || undefined,
-        ownership: form.ownership || undefined,
-        badge: form.badge || undefined,
-        cardMeta: form.cardMeta || undefined
+        investor: form.investor.trim() || undefined,
+        scale: form.scale.trim() || undefined,
+        villaInfo: form.villaInfo.trim() || undefined,
+        shophouseInfo: form.shophouseInfo.trim() || undefined,
+        startTime: form.startTime.trim() || undefined,
+        handoverTime: form.handoverTime.trim() || undefined,
+        ownership: form.ownership.trim() || undefined,
+        badge: form.badge.trim() || undefined,
+        cardMeta: form.cardMeta.trim() || undefined
       };
 
       const response = await fetchAdminApi(isEditing ? `/api/projects/${slug}` : "/api/projects", {

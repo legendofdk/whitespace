@@ -138,6 +138,11 @@ function formatPublishedDate(value?: string | null) {
   return new Date(value).toLocaleDateString("vi-VN");
 }
 
+function normalizeOptionalText(value?: string | null) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+}
+
 function mapProject(item: BackendProject): Project {
   return {
     id: item.id,
@@ -156,15 +161,15 @@ function mapProject(item: BackendProject): Project {
     isFeatured: item.isFeatured,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
-    investor: item.investor ?? "Đang cập nhật",
+    investor: normalizeOptionalText(item.investor) ?? "Đang cập nhật",
     bannerImage: item.bannerImage ?? item.thumbnail,
-    scale: item.scale ?? "Đang cập nhật",
+    scale: normalizeOptionalText(item.scale) ?? "Đang cập nhật",
     productTypes: item.productTypes ?? [],
-    villaInfo: item.villaInfo ?? undefined,
-    shophouseInfo: item.shophouseInfo ?? undefined,
-    startTime: item.startTime ?? undefined,
-    handoverTime: item.handoverTime ?? undefined,
-    ownership: item.ownership ?? undefined,
+    villaInfo: normalizeOptionalText(item.villaInfo),
+    shophouseInfo: normalizeOptionalText(item.shophouseInfo),
+    startTime: normalizeOptionalText(item.startTime),
+    handoverTime: normalizeOptionalText(item.handoverTime),
+    ownership: normalizeOptionalText(item.ownership),
     utilities: item.utilities ?? [],
     apartments: (item.apartments ?? []).map((apartment) => ({
       id: apartment.id,
