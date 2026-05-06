@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { ChangeEvent, useMemo, useState } from "react";
 
+import { optimizeImageFile } from "@/lib/optimize-image-client";
+
 import { FieldLabel } from "./field-label";
 
 type ImageUploadFieldProps = {
@@ -49,8 +51,9 @@ export function ImageUploadField({
 
     try {
       for (const file of files) {
+        const optimizedFile = await optimizeImageFile(file);
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", optimizedFile);
 
         const response = await fetch(`/api/admin/media/upload?folder=${folder}`, {
           method: "POST",

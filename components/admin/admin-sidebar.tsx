@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { adminApiBaseUrl } from "./admin-api";
+import { useUnsavedChangesNavigation } from "./unsaved-changes-provider";
 
 const adminLinks = [
   { href: "/dashboard/areas", label: "Khu vực" },
@@ -19,8 +20,15 @@ const adminLinks = [
 export function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { confirmNavigation, allowNavigation } = useUnsavedChangesNavigation();
 
   async function handleLogout() {
+    if (!confirmNavigation()) {
+      return;
+    }
+
+    allowNavigation();
+
     await Promise.all([
       fetch("/api/admin-auth/logout", {
         method: "POST",

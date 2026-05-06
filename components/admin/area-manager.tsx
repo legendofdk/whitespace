@@ -5,6 +5,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { fetchAdminApi } from "./admin-api";
 import { FieldLabel } from "./field-label";
 import { slugify } from "./slug";
+import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
 
 type AreaItem = {
   id: string;
@@ -28,6 +29,9 @@ export function AreaManager() {
   const [slugTouched, setSlugTouched] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
+  const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
+  useUnsavedChangesRegistration(hasUnsavedChanges && !isSubmitting);
 
   async function loadItems() {
     setErrorMessage("");
@@ -51,6 +55,7 @@ export function AreaManager() {
 
   function resetForm() {
     setForm(initialForm);
+    setInitialSnapshot(JSON.stringify(initialForm));
     setEditingId(null);
     setSlugTouched(false);
   }
@@ -131,6 +136,13 @@ export function AreaManager() {
       slug: item.slug,
       description: item.description ?? ""
     });
+    setInitialSnapshot(
+      JSON.stringify({
+        name: item.name,
+        slug: item.slug,
+        description: item.description ?? ""
+      })
+    );
   }
 
   return (

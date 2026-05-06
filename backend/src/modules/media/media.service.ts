@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import sharp from "sharp";
 
 import type { Request } from "express";
 import multer from "multer";
@@ -11,6 +12,9 @@ const upload = multer({
     fileSize: 8 * 1024 * 1024
   }
 });
+const MAX_IMAGE_WIDTH = 2000;
+const MAX_IMAGE_HEIGHT = 2000;
+const WEBP_QUALITY = 82;
 
 cloudinary.config({
   cloud_name: env.CLOUDINARY_CLOUD_NAME,
@@ -24,6 +28,23 @@ function sanitizeFolder(folder: string) {
 
 function sanitizeFileName(fileName: string) {
   return fileName.replace(/[^a-z0-9.-_]/gi, "-").toLowerCase();
+}
+
+async function optimizeImageBuffer(fileBuffer: Buffer, mimeType: string) {
+  if (!["image/jpeg", "image/png", "image/webp"].includes(mimeType)) {
+    return fileBuffer;
+  }
+
+  return sharp(fileBuffer)
+    .rotate()
+    .resize({
+      width: MAX_IMAGE_WIDTH,
+      height: MAX_IMAGE_HEIGHT,
+      fit: "inside",
+      withoutEnlargement: true
+    })
+    .webp({ quality: WEBP_QUALITY })
+    .toBuffer();
 }
 
 function uploadToCloudinary(fileBuffer: Buffer, options: { folder: string; publicId: string }) {
@@ -72,7 +93,8 @@ export async function handleMediaUpload(request: Request) {
   const originalName = request.file.originalname.replace(/\.[^.]+$/, "");
   const baseName = sanitizeFileName(originalName);
   const publicId = `${Date.now()}-${baseName || "image"}`;
-  const result = await uploadToCloudinary(request.file.buffer, {
+  const optimizedBuffer = await optimizeImageBuffer(request.file.buffer, request.file.mimetype);
+  const result = await uploadToCloudinary(optimizedBuffer, {
     folder: `whitespace/${folder}`,
     publicId
   });

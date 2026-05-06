@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 
+import { optimizeImageFile } from "@/lib/optimize-image-client";
+
 import { FieldLabel } from "./field-label";
 
 type RichTextEditorProps = {
@@ -30,6 +32,7 @@ const EditorClient = dynamic(
 
       async upload() {
         const file = await this.loader.file;
+        const optimizedFile = await optimizeImageFile(file);
 
         return new Promise<{ default: string }>((resolve, reject) => {
           const xhr = new XMLHttpRequest();
@@ -61,7 +64,7 @@ const EditorClient = dynamic(
           });
 
           const data = new FormData();
-          data.append("file", file);
+          data.append("file", optimizedFile);
           xhr.send(data);
         });
       }

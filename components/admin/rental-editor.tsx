@@ -10,6 +10,7 @@ import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
+import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
 const initialForm = { name: "", slug: "", areaSlug: "gia-lam", address: "", size: "", rentalType: "Shophouse", price: "", hotline: "0377281119", thumbnail: "", bannerImage: "", gallery: "", description: "", isFeatured: true, seoTitle: "", seoDescription: "", status: "PUBLISHED", latitude: "", longitude: "", badge: "Cho thuê", cardMeta: "" };
 
 export function RentalEditor({ slug }: { slug?: string }) {
@@ -19,9 +20,12 @@ export function RentalEditor({ slug }: { slug?: string }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
+  const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";
   const labelClassName = "text-sm font-medium text-ink";
+  const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
+  const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
 
   useEffect(() => {
     async function loadAreas() {
@@ -44,7 +48,9 @@ export function RentalEditor({ slug }: { slug?: string }) {
         const response = await fetchAdminApi(`/api/rentals/${slug}`);
         if (!response.ok) throw new Error("LOAD_FAILED");
         const item = (await response.json()) as any;
-        setForm({ name: item.name, slug: item.slug, areaSlug: item.areaSlug, address: item.address, size: item.size ?? "", rentalType: item.rentalType ?? "", price: item.price, hotline: item.hotline, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", gallery: item.gallery?.join("\n") ?? "", description: item.description, isFeatured: item.isFeatured, seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", status: item.status, latitude: item.coordinates?.lat?.toString() ?? "", longitude: item.coordinates?.lng?.toString() ?? "", badge: item.badge ?? "Cho thuê", cardMeta: item.cardMeta ?? "" });
+        const nextForm = { name: item.name, slug: item.slug, areaSlug: item.areaSlug, address: item.address, size: item.size ?? "", rentalType: item.rentalType ?? "", price: item.price, hotline: item.hotline, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", gallery: item.gallery?.join("\n") ?? "", description: item.description, isFeatured: item.isFeatured, seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", status: item.status, latitude: item.coordinates?.lat?.toString() ?? "", longitude: item.coordinates?.lng?.toString() ?? "", badge: item.badge ?? "Cho thuê", cardMeta: item.cardMeta ?? "" };
+        setForm(nextForm);
+        setInitialSnapshot(JSON.stringify(nextForm));
         setStatus("idle");
       } catch {
         setStatus("error");
@@ -66,6 +72,7 @@ export function RentalEditor({ slug }: { slug?: string }) {
       });
       if (!response.ok) throw new Error("SAVE_FAILED");
       setStatus("success");
+      allowNavigation();
       router.push("/dashboard/rentals");
       router.refresh();
     } catch {

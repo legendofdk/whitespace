@@ -10,6 +10,7 @@ import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
+import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
 const initialForm = { title: "", slug: "", excerpt: "", content: "", category: "Thị trường", thumbnail: "", bannerImage: "", seoTitle: "", seoDescription: "", publishedAt: "", status: "PUBLISHED", relatedPostIds: "", areaSlug: "gia-lam" };
 
 export function PostEditor({ slug }: { slug?: string }) {
@@ -19,9 +20,12 @@ export function PostEditor({ slug }: { slug?: string }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
+  const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";
   const labelClassName = "text-sm font-medium text-ink";
+  const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
+  const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
 
   useEffect(() => {
     async function loadAreas() {
@@ -44,7 +48,9 @@ export function PostEditor({ slug }: { slug?: string }) {
         const response = await fetchAdminApi(`/api/posts/${slug}`);
         if (!response.ok) throw new Error("LOAD_FAILED");
         const item = (await response.json()) as any;
-        setForm({ title: item.title, slug: item.slug, excerpt: item.excerpt, content: item.content ?? "", category: item.category, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", publishedAt: item.publishedAt ? new Date(item.publishedAt).toISOString().slice(0, 16) : "", status: item.status, relatedPostIds: item.relatedPostIds?.join(", ") ?? "", areaSlug: item.area?.slug ?? "gia-lam" });
+        const nextForm = { title: item.title, slug: item.slug, excerpt: item.excerpt, content: item.content ?? "", category: item.category, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", publishedAt: item.publishedAt ? new Date(item.publishedAt).toISOString().slice(0, 16) : "", status: item.status, relatedPostIds: item.relatedPostIds?.join(", ") ?? "", areaSlug: item.area?.slug ?? "gia-lam" };
+        setForm(nextForm);
+        setInitialSnapshot(JSON.stringify(nextForm));
         setStatus("idle");
       } catch {
         setStatus("error");
@@ -66,6 +72,7 @@ export function PostEditor({ slug }: { slug?: string }) {
       });
       if (!response.ok) throw new Error("SAVE_FAILED");
       setStatus("success");
+      allowNavigation();
       router.push("/dashboard/posts");
       router.refresh();
     } catch {

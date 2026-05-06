@@ -10,6 +10,7 @@ import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
+import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
 
 const PRODUCT_TYPE_OPTIONS = ["Chung cư", "Biệt thự", "Shophouse", "Liền kề"] as const;
 
@@ -57,9 +58,12 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
   const [errorMessage, setErrorMessage] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
+  const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";
   const labelClassName = "text-sm font-medium text-ink";
+  const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
+  const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
 
   function toggleProductType(productType: (typeof PRODUCT_TYPE_OPTIONS)[number], checked: boolean) {
     setForm((current) => ({
@@ -131,7 +135,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           cardMeta?: string | null;
         };
 
-        setForm({
+        const nextForm = {
           name: item.name,
           slug: item.slug,
           investor: item.investor ?? "",
@@ -150,7 +154,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           bannerImage: item.bannerImage ?? "",
           gallery: item.gallery?.join("\n") ?? "",
           description: item.description,
-          utilities: item.utilities?.join(", ") ?? "",
+          utilities: item.utilities?.join("\n") ?? "",
           mapEmbedUrl: item.mapEmbedUrl ?? "",
           isFeatured: item.isFeatured,
           seoTitle: item.seoTitle ?? "",
@@ -160,7 +164,9 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           longitude: item.coordinates?.lng?.toString() ?? "",
           badge: item.badge ?? "",
           cardMeta: item.cardMeta ?? ""
-        });
+        };
+        setForm(nextForm);
+        setInitialSnapshot(JSON.stringify(nextForm));
         setStatus("idle");
       } catch {
         setStatus("error");
@@ -181,7 +187,10 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
         ...form,
         productTypes: form.productTypes,
         gallery: form.gallery.split("\n").map((item) => item.trim()).filter(Boolean),
-        utilities: form.utilities.split(",").map((item) => item.trim()).filter(Boolean),
+        utilities: form.utilities
+          .split("\n")
+          .map((item) => item.trim())
+          .filter(Boolean),
         latitude: form.latitude || undefined,
         longitude: form.longitude || undefined,
         bannerImage: form.bannerImage || undefined,
@@ -212,6 +221,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
       }
 
       setStatus("success");
+      allowNavigation();
       router.push("/dashboard/projects");
       router.refresh();
     } catch {
@@ -357,7 +367,12 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           </div>
           <label className={`${fieldClassName} xl:col-span-2`}>
             <FieldLabel label="Tiện ích" className={labelClassName} />
-            <textarea value={form.utilities} onChange={(e) => setForm((c) => ({ ...c, utilities: e.target.value }))} className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none" placeholder="Tiện ích, cách nhau bằng dấu phẩy" />
+            <textarea
+              value={form.utilities}
+              onChange={(e) => setForm((c) => ({ ...c, utilities: e.target.value }))}
+              className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none"
+              placeholder={"Mỗi tiện ích một dòng\nVí dụ:\nBể bơi\nCông viên, đường dạo bộ"}
+            />
           </label>
           <div className="xl:col-span-2">
             <ImageUploadField

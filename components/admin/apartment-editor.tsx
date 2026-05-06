@@ -9,6 +9,7 @@ import { FieldLabel } from "./field-label";
 import { ImageUploadField } from "./image-upload-field";
 import { RichTextEditor } from "./rich-text-editor";
 import { slugify } from "./slug";
+import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
 
 type ProjectOption = {
   id: string;
@@ -45,9 +46,12 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
   const [projectOptions, setProjectOptions] = useState<ProjectOption[]>([]);
+  const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
   const fieldClassName = "grid gap-2";
   const labelClassName = "text-sm font-medium text-ink";
+  const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
+  const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
 
   useEffect(() => {
     async function loadProjects() {
@@ -62,10 +66,19 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
         };
 
         setProjectOptions(data.items);
-        setForm((current) => ({
-          ...current,
-          projectSlug: current.projectSlug || data.items[0]?.slug || ""
-        }));
+        setForm((current) => {
+          if (current.projectSlug || !data.items[0]?.slug) {
+            return current;
+          }
+
+          const nextForm = {
+            ...current,
+            projectSlug: data.items[0].slug
+          };
+
+          setInitialSnapshot(JSON.stringify(nextForm));
+          return nextForm;
+        });
       } catch {
         setProjectOptions([]);
       }
@@ -107,7 +120,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           cardMeta?: string | null;
         };
 
-        setForm({
+        const nextForm = {
           name: item.name,
           slug: item.slug,
           projectSlug: item.projectSlug ?? "",
@@ -126,7 +139,9 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           longitude: item.coordinates?.lng?.toString() ?? "",
           badge: item.badge ?? "Căn hộ",
           cardMeta: item.cardMeta ?? ""
-        });
+        };
+        setForm(nextForm);
+        setInitialSnapshot(JSON.stringify(nextForm));
         setStatus("idle");
       } catch {
         setStatus("error");
@@ -166,6 +181,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
       }
 
       setStatus("success");
+      allowNavigation();
       router.push("/dashboard/apartments");
       router.refresh();
     } catch {
