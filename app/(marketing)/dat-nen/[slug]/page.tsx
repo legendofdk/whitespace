@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
@@ -7,8 +8,31 @@ import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicLandListingBySlug } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await getPublicLandListingBySlug(slug);
+
+  if (!item) {
+    return buildMetadata({
+      title: "Sản phẩm không tồn tại",
+      description: "Không tìm thấy sản phẩm chuyển nhượng bạn đang quan tâm.",
+      path: `/dat-nen/${slug}`
+    });
+  }
+
+  return buildMetadata({
+    title: item.seoTitle ?? item.name,
+    description:
+      item.seoDescription ??
+      `${item.name} tại ${item.area}. Giá ${item.price}, pháp lý ${item.legal}. Xem chi tiết vị trí, diện tích và thông tin chuyển nhượng.`,
+    path: `/dat-nen/${item.slug}`,
+    image: item.bannerImage ?? item.thumbnail
+  });
+}
 
 export default async function LandDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

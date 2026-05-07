@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
@@ -7,8 +8,31 @@ import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicProjectBySlug } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getPublicProjectBySlug(slug);
+
+  if (!project) {
+    return buildMetadata({
+      title: "Dự án không tồn tại",
+      description: "Không tìm thấy dự án bạn đang quan tâm.",
+      path: `/du-an/${slug}`
+    });
+  }
+
+  return buildMetadata({
+    title: project.seoTitle ?? project.name,
+    description:
+      project.seoDescription ??
+      `${project.name} tại ${project.area}. Giá tham khảo ${project.price}. Xem chi tiết vị trí, tiện ích, pháp lý và danh sách căn hộ.`,
+    path: `/du-an/${project.slug}`,
+    image: project.bannerImage ?? project.thumbnail
+  });
+}
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

@@ -1,13 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
 import { FeaturedProjectCarousel } from "@/components/shared/featured-project-carousel";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicLandListings, getPublicPosts, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = buildMetadata({
+  title: "Bất động sản phía Đông Hà Nội",
+  description: "Khám phá dự án, chuyển nhượng, cho thuê và tin tức thị trường bất động sản phía Đông Hà Nội.",
+  path: "/",
+  keywords: ["bất động sản phía đông hà nội", "dự án gia lâm", "đất nền long biên", "cho thuê shophouse"]
+});
 
 export default async function HomePage() {
   const [featuredProjects, landListings, rentals, posts] = await Promise.all([

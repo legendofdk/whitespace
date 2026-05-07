@@ -52,12 +52,16 @@ export type LandListing = RealEstateBase & {
   acreage: string;
   legal: string;
   bannerImage?: string;
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 export type RentalListing = RealEstateBase & {
   size: string;
   rentalType?: string;
   bannerImage?: string;
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 export type ApartmentListing = RealEstateBase & {
@@ -66,6 +70,8 @@ export type ApartmentListing = RealEstateBase & {
   bannerImage?: string;
   projectName?: string;
   projectSlug?: string;
+  seoTitle?: string;
+  seoDescription?: string;
 };
 
 export type Post = {

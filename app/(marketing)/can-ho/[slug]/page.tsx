@@ -1,13 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicApartmentBySlug } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await getPublicApartmentBySlug(slug);
+
+  if (!item) {
+    return buildMetadata({
+      title: "Căn hộ không tồn tại",
+      description: "Không tìm thấy căn hộ bạn đang quan tâm.",
+      path: `/can-ho/${slug}`
+    });
+  }
+
+  return buildMetadata({
+    title: item.seoTitle ?? item.name,
+    description:
+      item.seoDescription ??
+      `${item.name}${item.projectName ? ` thuộc ${item.projectName}` : ""}. Giá ${item.price}, diện tích ${item.size}. Xem chi tiết vị trí và thông tin căn hộ.`,
+    path: `/can-ho/${item.slug}`,
+    image: item.bannerImage ?? item.thumbnail
+  });
+}
 
 export default async function ApartmentDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

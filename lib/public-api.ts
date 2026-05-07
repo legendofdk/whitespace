@@ -207,7 +207,9 @@ function mapLandListing(item: BackendLandListing): LandListing {
     cardMeta: item.cardMeta ?? "",
     acreage: item.acreage ?? "Đang cập nhật",
     legal: item.legal ?? "Đang cập nhật",
-    bannerImage: item.bannerImage ?? item.thumbnail
+    bannerImage: item.bannerImage ?? item.thumbnail,
+    seoTitle: item.seoTitle ?? undefined,
+    seoDescription: item.seoDescription ?? undefined
   };
 }
 
@@ -231,7 +233,9 @@ function mapRental(item: BackendRental): RentalListing {
     cardMeta: item.cardMeta ?? "",
     size: item.size ?? "Đang cập nhật",
     rentalType: item.rentalType ?? undefined,
-    bannerImage: item.bannerImage ?? item.thumbnail
+    bannerImage: item.bannerImage ?? item.thumbnail,
+    seoTitle: item.seoTitle ?? undefined,
+    seoDescription: item.seoDescription ?? undefined
   };
 }
 
@@ -257,7 +261,9 @@ function mapApartment(item: BackendApartment): ApartmentListing {
     rentalType: item.rentalType ?? undefined,
     bannerImage: item.bannerImage ?? item.thumbnail,
     projectName: item.projectName ?? undefined,
-    projectSlug: item.projectSlug ?? undefined
+    projectSlug: item.projectSlug ?? undefined,
+    seoTitle: item.seoTitle ?? undefined,
+    seoDescription: item.seoDescription ?? undefined
   };
 }
 

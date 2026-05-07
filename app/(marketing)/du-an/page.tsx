@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
+
 import { ProjectCard } from "@/components/cards/project-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicProjects } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = buildMetadata({
+  title: "Danh sách dự án",
+  description: "Danh sách dự án bất động sản đáng chú ý tại khu Đông Hà Nội, cập nhật theo khu vực và mức độ nổi bật.",
+  path: "/du-an"
+});
 
 export default async function ProjectsPage({
   searchParams

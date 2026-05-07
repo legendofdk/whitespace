@@ -1,13 +1,37 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicRentalBySlug } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await getPublicRentalBySlug(slug);
+
+  if (!item) {
+    return buildMetadata({
+      title: "Sản phẩm không tồn tại",
+      description: "Không tìm thấy sản phẩm cho thuê bạn đang quan tâm.",
+      path: `/cho-thue/${slug}`
+    });
+  }
+
+  return buildMetadata({
+    title: item.seoTitle ?? item.name,
+    description:
+      item.seoDescription ??
+      `${item.name} tại ${item.area}. Giá thuê ${item.price}, diện tích ${item.size}. Xem chi tiết vị trí và khả năng khai thác.`,
+    path: `/cho-thue/${item.slug}`,
+    image: item.bannerImage ?? item.thumbnail
+  });
+}
 
 export default async function RentalDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

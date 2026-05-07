@@ -1,12 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PostCard } from "@/components/cards/post-card";
 import { HtmlContent } from "@/components/shared/html-content";
 import { getPublicPostBySlug, getPublicPosts } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPublicPostBySlug(slug);
+
+  if (!post) {
+    return buildMetadata({
+      title: "Bài viết không tồn tại",
+      description: "Không tìm thấy bài viết bạn đang quan tâm.",
+      path: `/tin-tuc/${slug}`
+    });
+  }
+
+  return buildMetadata({
+    title: post.seoTitle ?? post.title,
+    description: post.seoDescription ?? post.excerpt,
+    path: `/tin-tuc/${post.slug}`,
+    image: post.bannerImage ?? post.thumbnail,
+    type: "article"
+  });
+}
 
 export default async function NewsDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
