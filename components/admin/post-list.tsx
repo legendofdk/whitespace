@@ -10,6 +10,8 @@ type Item = { id: string; title: string; slug: string; category: string; status:
 export function PostList() {
   const [items, setItems] = useState<Item[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
   async function loadItems() {
     setErrorMessage("");
     try {
@@ -22,6 +24,35 @@ export function PostList() {
     }
   }
   useEffect(() => { void loadItems(); }, []);
+
+  async function handleDelete(item: Item) {
+    const confirmed = window.confirm(`Xóa bài viết "${item.title}"?`);
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(item.id);
+    setErrorMessage("");
+
+    try {
+      const response = await fetchAdminApi(`/api/posts/${item.slug}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        const errorData = (await response.json().catch(() => null)) as { message?: string } | null;
+        throw new Error(errorData?.message || "DELETE_FAILED");
+      }
+
+      await loadItems();
+    } catch {
+      setErrorMessage("Chưa thể xóa bài viết.");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   return (
     <main className="py-4">
       <div className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
@@ -35,14 +66,24 @@ export function PostList() {
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         <div className="mt-6 grid gap-4">
           {items.map((item) => (
-            <Link key={item.id} href={`/dashboard/posts/${item.slug}`} className="block rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
+            <div key={item.id} className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
+                  <Link href={`/dashboard/posts/${item.slug}`} className="text-lg font-semibold text-ink hover:underline">
+                    {item.title}
+                  </Link>
                   <p className="mt-1 text-sm text-steel">{item.category}{item.publishedAt ? ` • ${new Date(item.publishedAt).toLocaleDateString("vi-VN")}` : ""}</p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => void handleDelete(item)}
+                  disabled={deletingId === item.id}
+                  className="rounded-full border border-red-200 bg-white px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-60"
+                >
+                  {deletingId === item.id ? "Đang xóa..." : "Xóa"}
+                </button>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
