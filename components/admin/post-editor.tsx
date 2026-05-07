@@ -121,6 +121,7 @@ export function PostEditor({ slug }: { slug?: string }) {
             />
           </div>
           <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Tóm tắt" required className={labelClassName} /><textarea value={form.excerpt} onChange={(e) => setForm((c) => ({ ...c, excerpt: e.target.value }))} className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none" placeholder="Tóm tắt" required /></label>
+          <label className={fieldClassName}><FieldLabel label="Chuyên mục" required className={labelClassName} /><input value={form.category} onChange={(e) => setForm((c) => ({ ...c, category: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Ví dụ: Thị trường" required /></label>
           <label className={fieldClassName}><FieldLabel label="Khu vực" className={labelClassName} /><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
           <label className={fieldClassName}><FieldLabel label="Ngày đăng" className={labelClassName} /><input type="datetime-local" value={form.publishedAt} onChange={(e) => setForm((c) => ({ ...c, publishedAt: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" /></label>
           <div className="xl:col-span-2">
