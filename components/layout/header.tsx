@@ -112,9 +112,10 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
           ))}
           <a
             href="tel:0377281119"
-            className="hotline-pulse rounded-full border border-[#0066cc] bg-[#0066cc] px-5 py-3 text-sm font-medium tracking-[-0.224px] text-white transition hover:bg-[#0071e3]"
+            className="hotline-pulse inline-flex min-h-12 flex-col items-start justify-center rounded-full border border-[#0066cc] bg-[#0066cc] px-5 py-2.5 text-white transition hover:bg-[#0071e3]"
           >
-            Hotline 24/7
+            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/80">Hotline 24/7</span>
+            <span className="text-sm font-semibold tracking-[-0.224px] text-white">0377 281 119</span>
           </a>
         </nav>
 
@@ -131,6 +132,13 @@ export function Header({ featuredProjects, areas }: HeaderProps) {
       {open ? (
         <div className="border-t border-line bg-white md:hidden">
           <div className="shell flex flex-col py-4">
+            <a
+              href="tel:0377281119"
+              className="mb-4 inline-flex w-fit flex-col rounded-[20px] border border-[#0066cc] bg-[#0066cc] px-5 py-3 text-white"
+            >
+              <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/80">Hotline 24/7</span>
+              <span className="mt-1 text-sm font-semibold tracking-[-0.224px]">0377 281 119</span>
+            </a>
             {navItems.map((item) => (
               <div key={item.href} className="border-b border-line py-4">
                 <Link href={item.href} onClick={() => setOpen(false)} className="text-sm text-ink">
