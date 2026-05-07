@@ -115,6 +115,7 @@ type BackendPost = {
   content: string;
   relatedPostIds?: string[];
   publishedAt?: string | null;
+  createdAt?: string;
   seoTitle?: string | null;
   seoDescription?: string | null;
 };
@@ -261,12 +262,14 @@ function mapApartment(item: BackendApartment): ApartmentListing {
 }
 
 function mapPost(item: BackendPost): Post {
+  const publishedDate = item.publishedAt ?? item.createdAt;
+
   return {
     id: item.id,
     slug: item.slug,
     title: item.title,
     category: item.category,
-    publishedAt: formatPublishedDate(item.publishedAt),
+    publishedAt: formatPublishedDate(publishedDate),
     excerpt: item.excerpt,
     thumbnail: item.thumbnail,
     bannerImage: item.bannerImage ?? item.thumbnail,

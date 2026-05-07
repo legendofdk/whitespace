@@ -11,7 +11,12 @@ import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
 import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
-const initialForm = { title: "", slug: "", excerpt: "", content: "", category: "Thị trường", thumbnail: "", bannerImage: "", seoTitle: "", seoDescription: "", publishedAt: "", status: "PUBLISHED", relatedPostIds: "", areaSlug: "gia-lam" };
+
+function getDefaultPublishedAtValue() {
+  return new Date().toISOString().slice(0, 16);
+}
+
+const initialForm = { title: "", slug: "", excerpt: "", content: "", category: "Thị trường", thumbnail: "", bannerImage: "", seoTitle: "", seoDescription: "", publishedAt: getDefaultPublishedAtValue(), status: "PUBLISHED", relatedPostIds: "", areaSlug: "gia-lam" };
 
 export function PostEditor({ slug }: { slug?: string }) {
   const router = useRouter();
@@ -64,10 +69,12 @@ export function PostEditor({ slug }: { slug?: string }) {
     setStatus("submitting");
     setErrorMessage("");
     try {
+      const normalizedPublishedAt = form.publishedAt ? new Date(form.publishedAt).toISOString() : new Date().toISOString();
+
       const response = await fetchAdminApi(isEditing ? `/api/posts/${slug}` : "/api/posts", {
         method: isEditing ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, relatedPostIds: form.relatedPostIds.split(",").map((item) => item.trim()).filter(Boolean), bannerImage: form.bannerImage || undefined, seoTitle: form.seoTitle || undefined, seoDescription: form.seoDescription || undefined, publishedAt: form.publishedAt ? new Date(form.publishedAt).toISOString() : undefined, areaSlug: form.areaSlug || undefined })
+        body: JSON.stringify({ ...form, relatedPostIds: form.relatedPostIds.split(",").map((item) => item.trim()).filter(Boolean), bannerImage: form.bannerImage || undefined, seoTitle: form.seoTitle || undefined, seoDescription: form.seoDescription || undefined, publishedAt: normalizedPublishedAt, areaSlug: form.areaSlug || undefined })
       });
       if (!response.ok) throw new Error("SAVE_FAILED");
       setStatus("success");
@@ -115,6 +122,7 @@ export function PostEditor({ slug }: { slug?: string }) {
           </div>
           <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Tóm tắt" required className={labelClassName} /><textarea value={form.excerpt} onChange={(e) => setForm((c) => ({ ...c, excerpt: e.target.value }))} className="min-h-24 rounded-[24px] border border-line px-5 py-4 text-sm outline-none" placeholder="Tóm tắt" required /></label>
           <label className={fieldClassName}><FieldLabel label="Khu vực" className={labelClassName} /><select value={form.areaSlug} onChange={(e) => setForm((c) => ({ ...c, areaSlug: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none">{areaOptions.map((area) => (<option key={area.id} value={area.slug}>{area.name}</option>))}</select></label>
+          <label className={fieldClassName}><FieldLabel label="Ngày đăng" className={labelClassName} /><input type="datetime-local" value={form.publishedAt} onChange={(e) => setForm((c) => ({ ...c, publishedAt: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" /></label>
           <div className="xl:col-span-2">
             <RichTextEditor
               label="Nội dung"

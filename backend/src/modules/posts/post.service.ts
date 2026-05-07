@@ -119,7 +119,7 @@ export async function createPost(input: PostBodyInput) {
       bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
       seoTitle: input.seoTitle,
       seoDescription: input.seoDescription,
-      publishedAt: input.publishedAt ? new Date(input.publishedAt) : undefined,
+      publishedAt: input.publishedAt ? new Date(input.publishedAt) : new Date(),
       status: input.status,
       relatedPostIds: input.relatedPostIds,
       areaId
@@ -163,7 +163,7 @@ export async function updatePost(slug: string, input: PostBodyInput) {
       bannerImagePublicId: getCloudinaryPublicIdFromUrl(input.bannerImage),
       seoTitle: input.seoTitle,
       seoDescription: input.seoDescription,
-      publishedAt: input.publishedAt ? new Date(input.publishedAt) : null,
+      publishedAt: input.publishedAt ? new Date(input.publishedAt) : new Date(),
       status: input.status,
       relatedPostIds: input.relatedPostIds,
       areaId
