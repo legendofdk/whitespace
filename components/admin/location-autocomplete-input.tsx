@@ -34,8 +34,9 @@ export function LocationAutocompleteInput({
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const trimmedValue = value.trim();
-  const shouldSearch = trimmedValue.length >= 2;
+  const shouldSearch = hasUserInteracted && trimmedValue.length >= 2;
   const normalizedClassName = useMemo(
     () => className ?? "h-12 rounded-full border border-line px-5 text-sm outline-none",
     [className]
@@ -174,11 +175,12 @@ export function LocationAutocompleteInput({
         id={inputId}
         value={value}
         onChange={(event) => {
+          setHasUserInteracted(true);
           onChange(event.target.value);
           setIsOpen(true);
         }}
         onFocus={() => {
-          if (suggestions.length) {
+          if (hasUserInteracted && suggestions.length) {
             setIsOpen(true);
           }
         }}
