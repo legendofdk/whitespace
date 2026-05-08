@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/shared/json-ld";
 import { getSiteUrl } from "@/lib/seo";
+import { buildLocalBusinessSchema, buildOrganizationSchema, buildWebSiteSchema } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -46,7 +48,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="vi">
-      <body>{children}</body>
+      <body>
+        <JsonLd data={[buildWebSiteSchema(), buildOrganizationSchema(), buildLocalBusinessSchema()]} />
+        {children}
+      </body>
     </html>
   );
 }

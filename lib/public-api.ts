@@ -276,6 +276,7 @@ function mapPost(item: BackendPost): Post {
     title: item.title,
     category: item.category,
     publishedAt: formatPublishedDate(publishedDate),
+    publishedAtIso: publishedDate ?? undefined,
     excerpt: item.excerpt,
     thumbnail: item.thumbnail,
     bannerImage: item.bannerImage ?? item.thumbnail,

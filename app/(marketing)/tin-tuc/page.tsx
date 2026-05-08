@@ -1,9 +1,18 @@
+import type { Metadata } from "next";
+
 import { PostCard } from "@/components/cards/post-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicPosts } from "@/lib/public-api";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = buildMetadata({
+  title: "Tin tức bất động sản phía Đông Hà Nội",
+  description: "Cập nhật tin tức thị trường, kinh nghiệm đầu tư và phân tích dự án tại khu Đông Hà Nội.",
+  path: "/tin-tuc",
+  keywords: ["tin tức bất động sản hà nội", "thị trường gia lâm", "phân tích long biên"]
+});
 
 export default async function NewsPage({
   searchParams

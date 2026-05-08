@@ -3,10 +3,11 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/shared/json-ld";
 import { PostCard } from "@/components/cards/post-card";
 import { HtmlContent } from "@/components/shared/html-content";
 import { getPublicPostBySlug, getPublicPosts } from "@/lib/public-api";
-import { buildMetadata } from "@/lib/seo";
+import { buildArticleSchema, buildBreadcrumbSchema, buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +45,24 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <main className="bg-white">
+      <JsonLd
+        data={[
+          buildBreadcrumbSchema([
+            { name: "Trang chủ", path: "/" },
+            { name: "Tin tức", path: "/tin-tuc" },
+            { name: post.title, path: `/tin-tuc/${post.slug}` }
+          ]),
+          buildArticleSchema({
+            title: post.seoTitle ?? post.title,
+            description: post.seoDescription ?? post.excerpt,
+            path: `/tin-tuc/${post.slug}`,
+            image: post.bannerImage ?? post.thumbnail,
+            publishedAt: post.publishedAtIso,
+            modifiedAt: post.publishedAtIso,
+            section: post.category
+          })
+        ]}
+      />
       <section className="relative isolate overflow-hidden bg-ink py-20 text-white">
         <div className="absolute inset-0">
           <Image src={heroImage} alt={post.title} fill className="object-cover" />

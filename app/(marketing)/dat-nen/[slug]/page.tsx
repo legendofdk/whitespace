@@ -3,12 +3,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/shared/json-ld";
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicLandListingBySlug } from "@/lib/public-api";
-import { buildMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildMetadata, buildRealEstateWebPageSchema } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -46,6 +47,27 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
 
   return (
     <main className="bg-[#fcfaf4]">
+      <JsonLd
+        data={[
+          buildBreadcrumbSchema([
+            { name: "Trang chủ", path: "/" },
+            { name: "Chuyển nhượng", path: "/dat-nen" },
+            { name: item.name, path: `/dat-nen/${item.slug}` }
+          ]),
+          buildRealEstateWebPageSchema({
+            title: item.seoTitle ?? item.name,
+            description:
+              item.seoDescription ??
+              `${item.name} tại ${item.area}. Giá ${item.price}, pháp lý ${item.legal}. Xem chi tiết vị trí, diện tích và thông tin chuyển nhượng.`,
+            path: `/dat-nen/${item.slug}`,
+            image: item.bannerImage ?? item.thumbnail,
+            price: item.price,
+            address: item.address,
+            area: item.area,
+            hotline: item.hotline
+          })
+        ]}
+      />
       <section className="relative isolate overflow-hidden bg-[#3e3125] py-20 text-white">
         <div className="absolute inset-0 opacity-20">
           <Image src={heroImage} alt={item.name} fill className="object-cover" />

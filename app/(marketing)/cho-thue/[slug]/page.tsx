@@ -3,11 +3,12 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/shared/json-ld";
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicRentalBySlug } from "@/lib/public-api";
-import { buildMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildMetadata, buildRealEstateWebPageSchema } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +46,27 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
 
   return (
     <main className="bg-[#fffaf2]">
+      <JsonLd
+        data={[
+          buildBreadcrumbSchema([
+            { name: "Trang chủ", path: "/" },
+            { name: "Cho thuê", path: "/cho-thue" },
+            { name: item.name, path: `/cho-thue/${item.slug}` }
+          ]),
+          buildRealEstateWebPageSchema({
+            title: item.seoTitle ?? item.name,
+            description:
+              item.seoDescription ??
+              `${item.name} tại ${item.area}. Giá thuê ${item.price}, diện tích ${item.size}. Xem chi tiết vị trí và khả năng khai thác.`,
+            path: `/cho-thue/${item.slug}`,
+            image: item.bannerImage ?? item.thumbnail,
+            price: item.price,
+            address: item.address,
+            area: item.area,
+            hotline: item.hotline
+          })
+        ]}
+      />
       <section className="relative isolate overflow-hidden bg-[#1f2d3d] py-20 text-white">
         <div className="absolute inset-0 opacity-20">
           <Image src={heroImage} alt={item.name} fill className="object-cover" />

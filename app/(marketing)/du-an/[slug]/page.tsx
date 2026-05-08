@@ -3,12 +3,13 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { JsonLd } from "@/components/shared/json-ld";
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicProjectBySlug } from "@/lib/public-api";
-import { buildMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildMetadata, buildRealEstateWebPageSchema } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +45,27 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
   return (
     <main className="bg-white">
+      <JsonLd
+        data={[
+          buildBreadcrumbSchema([
+            { name: "Trang chủ", path: "/" },
+            { name: "Dự án", path: "/du-an" },
+            { name: project.name, path: `/du-an/${project.slug}` }
+          ]),
+          buildRealEstateWebPageSchema({
+            title: project.seoTitle ?? project.name,
+            description:
+              project.seoDescription ??
+              `${project.name} tại ${project.area}. Giá tham khảo ${project.price}. Xem chi tiết vị trí, tiện ích, pháp lý và danh sách căn hộ.`,
+            path: `/du-an/${project.slug}`,
+            image: project.bannerImage ?? project.thumbnail,
+            price: project.price,
+            address: project.address,
+            area: project.area,
+            hotline: project.hotline
+          })
+        ]}
+      />
       <section className="relative isolate overflow-hidden bg-ink py-20 text-white">
         <div className="absolute inset-0 opacity-25">
           <Image src={project.bannerImage} alt={project.name} fill className="object-cover" />

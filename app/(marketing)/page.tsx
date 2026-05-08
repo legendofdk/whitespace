@@ -2,12 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/shared/json-ld";
 import { FeaturedProjectCarousel } from "@/components/shared/featured-project-carousel";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { formatAreaValue } from "@/lib/format-area";
 import { getPublicLandListings, getPublicPosts, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
-import { buildMetadata } from "@/lib/seo";
+import { buildBreadcrumbSchema, buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = buildMetadata({
@@ -39,6 +40,9 @@ export default async function HomePage() {
 
   return (
     <main>
+      <JsonLd
+        data={buildBreadcrumbSchema([{ name: "Trang chủ", path: "/" }])}
+      />
       <section className="relative isolate overflow-hidden bg-black text-white">
         <div className="absolute inset-0">
           <Image

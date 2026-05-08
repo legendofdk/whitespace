@@ -17,6 +17,10 @@ type ContactItem = {
 export function ContactManager() {
   const [items, setItems] = useState<ContactItem[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [settingsMessage, setSettingsMessage] = useState("");
+  const [settingsErrorMessage, setSettingsErrorMessage] = useState("");
+  const [notificationEmail, setNotificationEmail] = useState("");
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -36,7 +40,52 @@ export function ContactManager() {
     }
   }
 
-  useEffect(() => { void loadItems(); }, []);
+  async function loadSettings() {
+    setSettingsErrorMessage("");
+    try {
+      const response = await fetchAdminApi("/api/contacts/settings");
+      if (!response.ok) throw new Error("LOAD_SETTINGS_FAILED");
+      const data = (await response.json()) as { notificationEmail?: string | null };
+      setNotificationEmail(data.notificationEmail ?? "");
+    } catch {
+      setSettingsErrorMessage("Chưa thể tải email nhận thông báo.");
+    }
+  }
+
+  useEffect(() => {
+    void loadItems();
+    void loadSettings();
+  }, []);
+
+  async function handleSaveSettings() {
+    setIsSavingSettings(true);
+    setSettingsMessage("");
+    setSettingsErrorMessage("");
+
+    try {
+      const response = await fetchAdminApi("/api/contacts/settings", {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          notificationEmail
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("SAVE_SETTINGS_FAILED");
+      }
+
+      const data = (await response.json()) as { notificationEmail?: string | null };
+      setNotificationEmail(data.notificationEmail ?? "");
+      setSettingsMessage("Đã lưu email nhận thông báo thành công.");
+    } catch {
+      setSettingsErrorMessage("Chưa thể lưu email nhận thông báo.");
+    } finally {
+      setIsSavingSettings(false);
+    }
+  }
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -139,6 +188,41 @@ export function ContactManager() {
 
   return (
     <section className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
+      <div className="mb-6 rounded-[24px] border border-line bg-mist/60 p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-steel">Cấu hình thông báo</p>
+            <h3 className="mt-2 font-display text-2xl text-ink">Email nhận khách hàng mới</h3>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-steel">
+              Mỗi khi khách gửi form liên hệ trên website, hệ thống sẽ gửi email thông báo đến địa chỉ này.
+            </p>
+          </div>
+        </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
+          <label className="grid gap-2 text-sm font-medium text-ink">
+            Email nhận thông báo
+            <input
+              type="email"
+              value={notificationEmail}
+              onChange={(event) => setNotificationEmail(event.target.value)}
+              className="h-11 rounded-full border border-line bg-white px-4 text-sm outline-none"
+              placeholder="vi-du@domain.com"
+            />
+          </label>
+          <div className="flex items-end">
+            <button
+              type="button"
+              onClick={() => void handleSaveSettings()}
+              disabled={isSavingSettings}
+              className="h-11 rounded-full bg-ink px-5 text-sm font-semibold text-white disabled:opacity-60"
+            >
+              {isSavingSettings ? "Đang lưu..." : "Lưu cấu hình"}
+            </button>
+          </div>
+        </div>
+        {settingsMessage ? <p className="mt-3 text-sm font-medium text-emerald-700">{settingsMessage}</p> : null}
+        {settingsErrorMessage ? <p className="mt-3 text-sm font-medium text-red-600">{settingsErrorMessage}</p> : null}
+      </div>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-steel">Yêu cầu liên hệ</p>

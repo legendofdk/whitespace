@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...posts.map((item) => ({
       url: absoluteUrl(`/tin-tuc/${item.slug}`),
-      lastModified: now,
+      lastModified: item.publishedAtIso ? new Date(item.publishedAtIso) : now,
       changeFrequency: "monthly" as const,
       priority: 0.75
     }))

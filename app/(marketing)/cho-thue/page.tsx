@@ -1,10 +1,19 @@
+import type { Metadata } from "next";
+
 import { ListingCard } from "@/components/cards/listing-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicRentals } from "@/lib/public-api";
 import { toRentalCardItem } from "@/lib/real-estate";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = buildMetadata({
+  title: "Mặt bằng và shophouse cho thuê phía Đông Hà Nội",
+  description: "Khám phá mặt bằng, shophouse và sản phẩm cho thuê tại Long Biên, Gia Lâm, Đông Anh với thông tin diện tích và khả năng khai thác.",
+  path: "/cho-thue",
+  keywords: ["cho thuê shophouse long biên", "mặt bằng gia lâm", "cho thuê bất động sản phía đông hà nội"]
+});
 
 export default async function RentalPage({
   searchParams

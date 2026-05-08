@@ -80,6 +80,7 @@ export type Post = {
   title: string;
   category: string;
   publishedAt: string;
+  publishedAtIso?: string;
   excerpt: string;
   thumbnail: string;
   bannerImage?: string;

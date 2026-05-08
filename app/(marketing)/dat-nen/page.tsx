@@ -1,10 +1,19 @@
+import type { Metadata } from "next";
+
 import { ListingCard } from "@/components/cards/listing-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicLandListings } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
+import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = buildMetadata({
+  title: "Chuyển nhượng đất nền và nhà phố phía Đông Hà Nội",
+  description: "Tổng hợp sản phẩm chuyển nhượng tại Long Biên, Gia Lâm, Đông Anh với thông tin vị trí, pháp lý và mức giá tham khảo.",
+  path: "/dat-nen",
+  keywords: ["chuyển nhượng đất nền gia lâm", "đất nền long biên", "nhà phố phía đông hà nội"]
+});
 
 export default async function LandPage({
   searchParams

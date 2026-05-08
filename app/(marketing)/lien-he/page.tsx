@@ -1,8 +1,20 @@
+import type { Metadata } from "next";
+
+import { JsonLd } from "@/components/shared/json-ld";
 import { ContactForm } from "@/components/shared/contact-form";
+import { buildContactPageSchema, buildLocalBusinessSchema, buildMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Liên hệ tư vấn bất động sản phía Đông Hà Nội",
+  description: "Liên hệ Batdongsanphiadong để nhận tư vấn nhanh về dự án, chuyển nhượng, cho thuê và thông tin thị trường phía Đông Hà Nội.",
+  path: "/lien-he",
+  keywords: ["liên hệ bất động sản phía đông hà nội", "tư vấn dự án gia lâm", "hotline bất động sản long biên"]
+});
 
 export default function ContactPage() {
   return (
     <main className="shell section-gap">
+      <JsonLd data={[buildContactPageSchema(), buildLocalBusinessSchema()]} />
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="eyebrow">Liên hệ</p>
