@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 
 import { env } from "../../config/env.js";
+import type { ContactBodyInput } from "./contact.schema.js";
 
 type ContactNotificationPayload = {
   id: string;

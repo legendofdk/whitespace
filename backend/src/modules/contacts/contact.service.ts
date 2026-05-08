@@ -1,6 +1,4 @@
 import { prisma } from "../../lib/prisma.js";
-import { sendContactNotificationEmail } from "./contact-mailer.service.js";
-import { CONTACT_NOTIFICATION_EMAIL_KEY } from "./contact.constants.js";
 import type { ContactBodyInput } from "./contact.schema.js";
 
 export async function getContactList() {
@@ -11,35 +9,8 @@ export async function getContactList() {
   });
 }
 
-export async function getContactNotificationEmail() {
-  const setting = await prisma.appSetting.findUnique({
-    where: {
-      key: CONTACT_NOTIFICATION_EMAIL_KEY
-    }
-  });
-
-  return setting?.value ?? null;
-}
-
-export async function updateContactNotificationEmail(value: string | null) {
-  const setting = await prisma.appSetting.upsert({
-    where: {
-      key: CONTACT_NOTIFICATION_EMAIL_KEY
-    },
-    update: {
-      value
-    },
-    create: {
-      key: CONTACT_NOTIFICATION_EMAIL_KEY,
-      value
-    }
-  });
-
-  return setting.value ?? null;
-}
-
 export async function createContact(input: ContactBodyInput) {
-  const item = await prisma.contactSubmission.create({
+  return prisma.contactSubmission.create({
     data: {
       name: input.name,
       phone: input.phone,
@@ -48,22 +19,4 @@ export async function createContact(input: ContactBodyInput) {
       source: input.source
     }
   });
-
-  try {
-    const notificationEmail = await getContactNotificationEmail();
-
-    await sendContactNotificationEmail(notificationEmail, {
-      id: item.id,
-      createdAt: item.createdAt,
-      name: item.name,
-      phone: item.phone,
-      email: item.email,
-      message: item.message,
-      source: item.source
-    });
-  } catch (error) {
-    console.error("Failed to send contact notification email", error);
-  }
-
-  return item;
 }
