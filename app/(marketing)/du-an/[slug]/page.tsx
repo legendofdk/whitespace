@@ -91,9 +91,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-line bg-mist p-8">
-              <h2 className="font-display text-4xl text-ink">Tổng quan dự án</h2>
-              <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <div className="section-reveal rounded-[28px] border border-line bg-mist px-6 py-6">
+              <h2 className="font-display text-[2rem] text-ink sm:text-[2.2rem]">Tổng quan dự án</h2>
+              <div className="mt-5 grid gap-x-5 gap-y-4 sm:grid-cols-2">
                 {[
                   ["Chủ đầu tư", project.investor],
                   ["Địa chỉ", project.address],
@@ -102,9 +102,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   ["Bàn giao", project.handoverTime ?? "Đang cập nhật"],
                   ["Pháp lý", project.ownership ?? "Đang cập nhật"]
                 ].map(([label, value]) => (
-                  <div key={label} className="border-b border-line/80 pb-4 last:border-b-0 last:pb-0">
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-steel">{label}</p>
-                    <p className="mt-2 text-lg font-semibold text-ink">{value}</p>
+                  <div key={label} className="border-b border-line/70 pb-3 last:border-b-0 last:pb-0">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-steel">{label}</p>
+                    <p className="mt-1.5 text-[15px] font-semibold leading-6 text-ink">{value}</p>
                   </div>
                 ))}
               </div>
