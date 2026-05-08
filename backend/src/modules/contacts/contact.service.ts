@@ -49,8 +49,21 @@ export async function createContact(input: ContactBodyInput) {
     }
   });
 
+  console.info("[contact] created", {
+    contactId: item.id,
+    source: item.source ?? "website",
+    hasEmail: Boolean(item.email),
+    hasMessage: Boolean(item.message)
+  });
+
   try {
     const notificationEmail = await getContactNotificationEmail();
+
+    console.info("[contact] notification target loaded", {
+      contactId: item.id,
+      hasNotificationEmail: Boolean(notificationEmail),
+      notificationEmail: notificationEmail ?? null
+    });
 
     await sendContactNotificationEmail(notificationEmail, {
       id: item.id,
@@ -62,7 +75,10 @@ export async function createContact(input: ContactBodyInput) {
       source: item.source
     });
   } catch (error) {
-    console.error("Failed to send contact notification email", error);
+    console.error("[contact] failed to send notification email", {
+      contactId: item.id,
+      error
+    });
   }
 
   return item;

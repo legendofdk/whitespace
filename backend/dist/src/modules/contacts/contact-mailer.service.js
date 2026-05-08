@@ -104,13 +104,29 @@ function createTransporter() {
 }
 export async function sendContactNotificationEmail(notificationEmail, payload) {
     if (!notificationEmail) {
+        console.info("[contact-email] skipped: notification email is empty", {
+            contactId: payload.id
+        });
         return;
     }
     const transporter = createTransporter();
     if (!transporter) {
-        console.warn("Contact notification email skipped because SMTP is not configured.");
+        console.warn("[contact-email] skipped: SMTP is not configured", {
+            contactId: payload.id,
+            hasHost: Boolean(env.SMTP_HOST),
+            hasPort: Boolean(env.SMTP_PORT),
+            hasUser: Boolean(env.SMTP_USER),
+            hasPass: Boolean(env.SMTP_PASS),
+            hasFromEmail: Boolean(env.SMTP_FROM_EMAIL)
+        });
         return;
     }
+    console.info("[contact-email] sending", {
+        contactId: payload.id,
+        to: notificationEmail,
+        from: env.SMTP_FROM_EMAIL,
+        replyTo: payload.email ?? null
+    });
     await transporter.sendMail({
         to: notificationEmail,
         from: env.SMTP_FROM_NAME
@@ -120,5 +136,9 @@ export async function sendContactNotificationEmail(notificationEmail, payload) {
         subject: createEmailSubject(payload),
         text: createEmailText(payload),
         html: createEmailHtml(payload)
+    });
+    console.info("[contact-email] sent", {
+        contactId: payload.id,
+        to: notificationEmail
     });
 }
