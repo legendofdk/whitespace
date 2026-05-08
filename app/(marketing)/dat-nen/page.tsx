@@ -64,7 +64,7 @@ export default async function LandPage({
 
       <section className="shell pt-16">
         <SectionHeading eyebrow="Chuyển nhượng hot" title="Các sản phẩm nổi bật theo từng khu vực tiềm năng" />
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredLandListings.map((item) => {
             const cardItem = toLandCardItem(item);
 

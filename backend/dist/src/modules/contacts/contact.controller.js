@@ -1,7 +1,10 @@
 import { ZodError } from "zod";
 import { contactNotificationSettingsSchema } from "./contact-notification.schema.js";
-import { createContact, getContactList, getContactNotificationEmail, updateContactNotificationEmail } from "./contact.service.js";
+import { createContact, deleteContact, getContactList, getContactNotificationEmail, updateContactNotificationEmail } from "./contact.service.js";
 import { contactBodySchema } from "./contact.schema.js";
+function getIdParam(request) {
+    return Array.isArray(request.params.id) ? request.params.id[0] : request.params.id;
+}
 export async function listContacts(_request, response) {
     const items = await getContactList();
     response.json({
@@ -47,4 +50,13 @@ export async function createContactHandler(request, response) {
         }
         throw error;
     }
+}
+export async function deleteContactHandler(request, response) {
+    const deleted = await deleteContact(getIdParam(request));
+    if (!deleted) {
+        return response.status(404).json({
+            message: "Không tìm thấy liên hệ"
+        });
+    }
+    response.status(204).send();
 }

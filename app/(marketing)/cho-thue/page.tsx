@@ -64,7 +64,7 @@ export default async function RentalPage({
 
       <section className="shell pt-16">
         <SectionHeading eyebrow="Cho thuê nổi bật" title="Các vị trí phù hợp kinh doanh và vận hành thực tế" />
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {filteredRentals.map((item) => {
             const cardItem = toRentalCardItem(item);
 

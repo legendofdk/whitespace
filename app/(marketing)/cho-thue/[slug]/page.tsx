@@ -83,20 +83,17 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
       <section className="shell section-gap">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
-            <div className="section-reveal rounded-[30px] border border-[#f0c06f] bg-[linear-gradient(135deg,#fff2d6,#ffd996)] p-6 shadow-[0_18px_36px_rgba(215,142,22,0.16)]">
-              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#9f6a13]">Giá thuê tham khảo</p>
-              <p className="mt-3 font-display text-5xl leading-none text-[#8a4c09]">
+            <div className="section-reveal rounded-[26px] border border-[#efc06b] bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.45),transparent_34%),linear-gradient(135deg,#fff5e3,#ffd892)] px-5 py-5 shadow-[0_18px_34px_rgba(215,142,22,0.14)]">
+              <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-[#a56a10]">Giá thuê tham khảo</p>
+              <p className="mt-2.5 font-display text-[2.6rem] leading-[0.95] text-[#8a4c09] sm:text-[2.9rem]">
                 {item.price}
               </p>
-              <div className="mt-3 inline-flex rounded-full bg-white/70 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#9a5b0b] ring-1 ring-[#f2bf66]">
+              <div className="mt-3 inline-flex rounded-full bg-white/78 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#9a5b0b] ring-1 ring-[#efbf66]">
                 Điều kiện thuê linh hoạt
               </div>
-              <p className="mt-3 text-sm leading-7 text-[#7b561c]">
-                Mức giá đang chào thuê theo vị trí và diện tích, liên hệ để nhận điều kiện thuê chi tiết.
-              </p>
             </div>
 
-            <div className="section-reveal grid gap-4 sm:grid-cols-2">
+            <div className="section-reveal grid gap-3 sm:grid-cols-2">
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
@@ -104,9 +101,9 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
                 ["Loại hình", item.rentalType ?? item.badge ?? "Cho thuê"],
                 ["Hình thức", item.cardMeta]
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[28px] border border-[#f0dcc0] bg-white p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#9b7a49]">{label}</p>
-                  <p className="mt-3 text-lg font-semibold text-[#1f2d3d]">{value}</p>
+                <div key={label} className="rounded-[22px] border border-[#f0dcc0] bg-white px-4 py-3.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#9b7a49]">{label}</p>
+                  <p className="mt-1.5 text-[15px] font-semibold leading-6 text-[#1f2d3d]">{value}</p>
                 </div>
               ))}
             </div>
@@ -122,10 +119,10 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
           </div>
 
           <aside className="space-y-6">
-            <div className="section-reveal rounded-[32px] border border-[#34475b] bg-[#213143] p-8 text-white">
-              <p className="text-sm uppercase tracking-[0.22em] text-[#ffd08a]">Hotline / Zalo</p>
-              <p className="mt-3 text-4xl font-semibold">{item.hotline}</p>
-              <p className="mt-4 text-sm leading-7 text-[#dae4ef]">
+            <div className="section-reveal rounded-[26px] border border-[#34475b] bg-[#213143] px-5 py-5 text-white">
+              <p className="text-xs uppercase tracking-[0.2em] text-[#ffd08a]">Hotline / Zalo</p>
+              <p className="mt-2.5 text-[2rem] font-semibold leading-none">{item.hotline}</p>
+              <p className="mt-3 text-sm leading-6 text-[#dae4ef]">
                 Liên hệ ngay để nhận mặt bằng phù hợp, điều kiện thuê và thông tin khai thác chi tiết.
               </p>
             </div>

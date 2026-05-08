@@ -21,6 +21,7 @@ export function ContactManager() {
   const [settingsErrorMessage, setSettingsErrorMessage] = useState("");
   const [notificationEmail, setNotificationEmail] = useState("");
   const [isSavingSettings, setIsSavingSettings] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -85,6 +86,36 @@ export function ContactManager() {
       setSettingsErrorMessage("Chưa thể lưu email nhận thông báo.");
     } finally {
       setIsSavingSettings(false);
+    }
+  }
+
+  async function handleDeleteContact(item: ContactItem) {
+    const confirmed = window.confirm(`Xóa liên hệ của "${item.name}"? Hành động này không thể hoàn tác.`);
+
+    if (!confirmed) {
+      return;
+    }
+
+    setDeletingId(item.id);
+    setErrorMessage("");
+
+    try {
+      const response = await fetchAdminApi(`/api/contacts/${item.id}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        throw new Error("DELETE_FAILED");
+      }
+
+      setItems((current) => current.filter((contact) => contact.id !== item.id));
+      if (selectedMessage?.name === item.name && selectedMessage.message === (item.message ?? "")) {
+        setSelectedMessage(null);
+      }
+    } catch {
+      setErrorMessage("Chưa thể xóa liên hệ này.");
+    } finally {
+      setDeletingId(null);
     }
   }
 
@@ -324,6 +355,7 @@ export function ContactManager() {
                 <th className="px-4 py-4 font-semibold">Nguồn</th>
                 <th className="px-4 py-4 font-semibold">Thời gian</th>
                 <th className="px-4 py-4 font-semibold">Nội dung</th>
+                <th className="px-4 py-4 font-semibold text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody className="bg-white">
@@ -353,11 +385,21 @@ export function ContactManager() {
                         "-"
                       )}
                     </td>
+                    <td className="px-4 py-4 text-right">
+                      <button
+                        type="button"
+                        onClick={() => void handleDeleteContact(item)}
+                        disabled={deletingId === item.id}
+                        className="rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 disabled:opacity-60"
+                      >
+                        {deletingId === item.id ? "Đang xóa..." : "Xóa"}
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-steel">
+                  <td colSpan={7} className="px-4 py-10 text-center text-sm text-steel">
                     Không có khách hàng nào phù hợp bộ lọc hiện tại.
                   </td>
                 </tr>

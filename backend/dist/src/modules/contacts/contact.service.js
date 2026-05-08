@@ -72,3 +72,22 @@ export async function createContact(input) {
     }
     return item;
 }
+export async function deleteContact(id) {
+    const item = await prisma.contactSubmission.findUnique({
+        where: {
+            id
+        }
+    });
+    if (!item) {
+        return null;
+    }
+    await prisma.contactSubmission.delete({
+        where: {
+            id
+        }
+    });
+    console.info("[contact] deleted", {
+        contactId: id
+    });
+    return item;
+}

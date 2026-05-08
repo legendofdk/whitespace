@@ -97,7 +97,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
               </p>
             </div>
 
-            <div className="section-reveal grid gap-4 sm:grid-cols-2">
+            <div className="section-reveal grid gap-3 sm:grid-cols-2">
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
@@ -105,9 +105,9 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
                 ["Pháp lý", item.legal],
                 ["Loại hình", item.badge ?? "Chuyển nhượng"]
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[28px] border border-[#e5d8c5] bg-white/80 p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8d7656]">{label}</p>
-                  <p className="mt-3 text-lg font-semibold text-[#2f2418]">{value}</p>
+                <div key={label} className="rounded-[22px] border border-[#e5d8c5] bg-white/80 px-4 py-3.5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#8d7656]">{label}</p>
+                  <p className="mt-1.5 text-[15px] font-semibold leading-6 text-[#2f2418]">{value}</p>
                 </div>
               ))}
             </div>
