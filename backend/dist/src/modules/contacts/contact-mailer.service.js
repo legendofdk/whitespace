@@ -90,13 +90,15 @@ function createTransporter() {
     if (!env.SMTP_HOST || !env.SMTP_PORT || !env.SMTP_USER || !env.SMTP_PASS || !env.SMTP_FROM_EMAIL) {
         return null;
     }
+    const smtpUser = env.SMTP_USER.trim();
+    const smtpPass = env.SMTP_PASS.replace(/\s+/g, "");
     return nodemailer.createTransport({
         host: env.SMTP_HOST,
         port: env.SMTP_PORT,
         secure: env.SMTP_SECURE ?? env.SMTP_PORT === 465,
         auth: {
-            user: env.SMTP_USER,
-            pass: env.SMTP_PASS
+            user: smtpUser,
+            pass: smtpPass
         }
     });
 }

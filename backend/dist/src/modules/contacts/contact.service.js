@@ -1,6 +1,6 @@
 import { prisma } from "../../lib/prisma.js";
-import { sendContactNotificationEmail } from "./contact-mailer.service.js";
 import { CONTACT_NOTIFICATION_EMAIL_KEY } from "./contact.constants.js";
+import { sendContactNotificationEmail } from "./contact-mailer.service.js";
 export async function getContactList() {
     return prisma.contactSubmission.findMany({
         orderBy: {
