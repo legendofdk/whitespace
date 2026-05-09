@@ -49,6 +49,7 @@ type BackendProject = {
   }[];
   seoTitle?: string | null;
   seoDescription?: string | null;
+  updatedAt?: string;
 };
 
 type BackendLandListing = {
@@ -73,6 +74,7 @@ type BackendLandListing = {
   coordinates?: BackendCoordinates;
   seoTitle?: string | null;
   seoDescription?: string | null;
+  updatedAt?: string;
 };
 
 type BackendRental = {
@@ -97,6 +99,7 @@ type BackendRental = {
   coordinates?: BackendCoordinates;
   seoTitle?: string | null;
   seoDescription?: string | null;
+  updatedAt?: string;
 };
 
 type BackendApartment = BackendRental & {
@@ -116,6 +119,7 @@ type BackendPost = {
   relatedPostIds?: string[];
   publishedAt?: string | null;
   createdAt?: string;
+  updatedAt?: string;
   seoTitle?: string | null;
   seoDescription?: string | null;
 };
@@ -162,6 +166,7 @@ function mapProject(item: BackendProject): Project {
     isFeatured: item.isFeatured,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
+    updatedAt: item.updatedAt ?? undefined,
     investor: normalizeOptionalText(item.investor) ?? "Đang cập nhật",
     bannerImage: item.bannerImage ?? item.thumbnail,
     scale: normalizeOptionalText(item.scale) ?? "Đang cập nhật",
@@ -205,6 +210,7 @@ function mapLandListing(item: BackendLandListing): LandListing {
     isFeatured: item.isFeatured,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
+    updatedAt: item.updatedAt ?? undefined,
     acreage: item.acreage ?? "Đang cập nhật",
     legal: item.legal ?? "Đang cập nhật",
     bannerImage: item.bannerImage ?? item.thumbnail,
@@ -231,6 +237,7 @@ function mapRental(item: BackendRental): RentalListing {
     isFeatured: item.isFeatured,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
+    updatedAt: item.updatedAt ?? undefined,
     size: item.size ?? "Đang cập nhật",
     rentalType: item.rentalType ?? undefined,
     bannerImage: item.bannerImage ?? item.thumbnail,
@@ -257,6 +264,7 @@ function mapApartment(item: BackendApartment): ApartmentListing {
     isFeatured: item.isFeatured,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
+    updatedAt: item.updatedAt ?? undefined,
     size: item.size ?? "Đang cập nhật",
     rentalType: item.rentalType ?? undefined,
     bannerImage: item.bannerImage ?? item.thumbnail,
@@ -269,6 +277,7 @@ function mapApartment(item: BackendApartment): ApartmentListing {
 
 function mapPost(item: BackendPost): Post {
   const publishedDate = item.publishedAt ?? item.createdAt;
+  const updatedDate = item.updatedAt ?? publishedDate;
 
   return {
     id: item.id,
@@ -277,6 +286,7 @@ function mapPost(item: BackendPost): Post {
     category: item.category,
     publishedAt: formatPublishedDate(publishedDate),
     publishedAtIso: publishedDate ?? undefined,
+    updatedAtIso: updatedDate ?? undefined,
     excerpt: item.excerpt,
     thumbnail: item.thumbnail,
     bannerImage: item.bannerImage ?? item.thumbnail,

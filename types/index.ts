@@ -20,6 +20,7 @@ export type RealEstateBase = {
   isFeatured: boolean;
   badge?: string;
   cardMeta: string;
+  updatedAt?: string;
 };
 
 export type Project = RealEstateBase & {
@@ -81,6 +82,7 @@ export type Post = {
   category: string;
   publishedAt: string;
   publishedAtIso?: string;
+  updatedAtIso?: string;
   excerpt: string;
   thumbnail: string;
   bannerImage?: string;

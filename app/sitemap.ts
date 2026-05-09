@@ -22,31 +22,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl("/lien-he"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     ...projects.map((item) => ({
       url: absoluteUrl(`/du-an/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: "weekly" as const,
       priority: 0.9
     })),
     ...landListings.map((item) => ({
       url: absoluteUrl(`/dat-nen/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: "weekly" as const,
       priority: 0.85
     })),
     ...rentals.map((item) => ({
       url: absoluteUrl(`/cho-thue/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: "weekly" as const,
       priority: 0.85
     })),
     ...apartments.map((item) => ({
       url: absoluteUrl(`/can-ho/${item.slug}`),
-      lastModified: now,
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
       changeFrequency: "weekly" as const,
       priority: 0.8
     })),
     ...posts.map((item) => ({
       url: absoluteUrl(`/tin-tuc/${item.slug}`),
-      lastModified: item.publishedAtIso ? new Date(item.publishedAtIso) : now,
+      lastModified: item.updatedAtIso ? new Date(item.updatedAtIso) : item.publishedAtIso ? new Date(item.publishedAtIso) : now,
       changeFrequency: "monthly" as const,
       priority: 0.75
     }))
