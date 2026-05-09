@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -66,17 +65,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden bg-ink py-24 text-white lg:py-32">
-        <div className="absolute inset-0 opacity-45">
-          <Image src={project.bannerImage} alt={project.name} fill className="object-cover object-center" priority />
-        </div>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,17,31,0.3)_0%,rgba(6,17,31,0.58)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,232,184,0.18),transparent_35%)]" />
+      <section className="border-b border-line bg-white py-14">
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-sand">
+          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-steel">
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
-          <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl">{project.name}</h1>
+          <h1 className="hero-animate hero-animate-delay-2 mt-4 max-w-4xl font-display text-5xl text-ink sm:text-6xl">{project.name}</h1>
         </div>
       </section>
 

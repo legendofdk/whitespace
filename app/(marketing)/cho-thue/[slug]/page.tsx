@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -41,9 +40,6 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
   if (!item) {
     notFound();
   }
-
-  const heroImage = item.bannerImage ?? item.thumbnail;
-
   return (
     <main className="bg-[#fffaf2]">
       <JsonLd
@@ -67,17 +63,12 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden bg-[#1f2d3d] py-24 text-white lg:py-28">
-        <div className="absolute inset-0 opacity-42">
-          <Image src={heroImage} alt={item.name} fill className="object-cover object-center" priority />
-        </div>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,20,36,0.18)_0%,rgba(8,20,36,0.48)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.1),transparent_40%)]" />
+      <section className="border-b border-line bg-white py-14">
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-[#dbe4ef]">
+          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-steel">
             <Link href="/cho-thue">Cho thuê</Link> / {item.name}
           </p>
-          <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl">{item.name}</h1>
+          <h1 className="hero-animate hero-animate-delay-2 mt-4 max-w-4xl font-display text-5xl text-ink sm:text-6xl">{item.name}</h1>
         </div>
       </section>
 
