@@ -16,16 +16,15 @@ type ProjectOption = {
   name: string;
   slug: string;
   area: string;
+  productTypes: string[];
 };
-
-const APARTMENT_TYPE_OPTIONS = ["Chung cư", "Biệt thự", "Shophouse", "Liền kề"] as const;
 
 const initialForm = {
   name: "",
   slug: "",
   projectSlug: "",
   size: "",
-  rentalType: "Chung cư",
+  rentalType: "",
   price: "",
   hotline: "0377281119",
   thumbnail: "",
@@ -53,6 +52,8 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
   const labelClassName = "text-sm font-medium text-ink";
   const hasUnsavedChanges = JSON.stringify(form) !== initialSnapshot;
   const allowNavigation = useUnsavedChangesRegistration(hasUnsavedChanges && status !== "submitting" && status !== "loading");
+  const selectedProject = projectOptions.find((project) => project.slug === form.projectSlug);
+  const availableProductTypes = selectedProject?.productTypes ?? [];
 
   useEffect(() => {
     async function loadProjects() {
@@ -63,18 +64,25 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
         }
 
         const data = (await response.json()) as {
-          items: { id: string; name: string; slug: string; area: string }[];
+          items: { id: string; name: string; slug: string; area: string; productTypes?: string[] }[];
         };
 
-        setProjectOptions(data.items);
+        const normalizedProjects: ProjectOption[] = data.items.map((item) => ({
+          ...item,
+          productTypes: item.productTypes ?? []
+        }));
+
+        setProjectOptions(normalizedProjects);
         setForm((current) => {
-          if (current.projectSlug || !data.items[0]?.slug) {
+          if (current.projectSlug || !normalizedProjects[0]?.slug) {
             return current;
           }
 
+          const defaultProductType = normalizedProjects[0].productTypes[0] ?? "";
           const nextForm = {
             ...current,
-            projectSlug: data.items[0].slug
+            projectSlug: normalizedProjects[0].slug,
+            rentalType: defaultProductType
           };
 
           setInitialSnapshot(JSON.stringify(nextForm));
@@ -126,9 +134,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           slug: item.slug,
           projectSlug: item.projectSlug ?? "",
           size: item.size ?? "",
-          rentalType: APARTMENT_TYPE_OPTIONS.includes((item.rentalType ?? "") as (typeof APARTMENT_TYPE_OPTIONS)[number])
-            ? (item.rentalType as (typeof APARTMENT_TYPE_OPTIONS)[number])
-            : "Chung cư",
+          rentalType: item.rentalType ?? "",
           price: item.price,
           hotline: item.hotline,
           thumbnail: item.thumbnail,
@@ -154,6 +160,26 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
 
     void loadItem();
   }, [slug]);
+
+  useEffect(() => {
+    if (!projectOptions.length || !form.projectSlug) {
+      return;
+    }
+
+    const selectedProject = projectOptions.find((project) => project.slug === form.projectSlug);
+    const availableProductTypes = selectedProject?.productTypes ?? [];
+
+    if (!availableProductTypes.length) {
+      return;
+    }
+
+    if (!availableProductTypes.includes(form.rentalType)) {
+      setForm((current) => ({
+        ...current,
+        rentalType: availableProductTypes[0]
+      }));
+    }
+  }, [form.projectSlug, form.rentalType, projectOptions]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -208,7 +234,6 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
 
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
         {status === "success" ? <p className="mt-4 text-sm font-medium text-green-700">Lưu dữ liệu thành công.</p> : null}
-
         <form onSubmit={handleSubmit} className="mt-8 grid gap-4 xl:grid-cols-2">
           <input type="hidden" value={form.slug} readOnly />
           <label className={fieldClassName}>
@@ -259,8 +284,9 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
               value={form.rentalType}
               onChange={(event) => setForm((current) => ({ ...current, rentalType: event.target.value }))}
               className="h-12 rounded-full border border-line px-5 text-sm outline-none"
+              disabled={!availableProductTypes.length}
             >
-              {APARTMENT_TYPE_OPTIONS.map((option) => (
+              {availableProductTypes.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>
