@@ -1,6 +1,8 @@
 import { ContentStatus } from "@prisma/client";
 import { z } from "zod";
 
+const apartmentTypeSchema = z.enum(["Chung cư", "Biệt thự", "Shophouse", "Liền kề"]);
+
 export const listApartmentsQuerySchema = z.object({
   search: z.string().trim().optional(),
   area: z.string().trim().optional(),
@@ -17,7 +19,7 @@ export const apartmentBodySchema = z.object({
   slug: z.string().min(1),
   projectSlug: z.string().min(1),
   size: z.string().optional(),
-  rentalType: z.string().optional(),
+  rentalType: apartmentTypeSchema.optional(),
   price: z.string().min(1),
   hotline: z.string().min(1),
   thumbnail: z.string().url(),

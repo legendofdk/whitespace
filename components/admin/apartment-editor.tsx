@@ -18,12 +18,14 @@ type ProjectOption = {
   area: string;
 };
 
+const APARTMENT_TYPE_OPTIONS = ["Chung cư", "Biệt thự", "Shophouse", "Liền kề"] as const;
+
 const initialForm = {
   name: "",
   slug: "",
   projectSlug: "",
   size: "",
-  rentalType: "Căn hộ",
+  rentalType: "Chung cư",
   price: "",
   hotline: "0377281119",
   thumbnail: "",
@@ -124,7 +126,9 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           slug: item.slug,
           projectSlug: item.projectSlug ?? "",
           size: item.size ?? "",
-          rentalType: item.rentalType ?? "Căn hộ",
+          rentalType: APARTMENT_TYPE_OPTIONS.includes((item.rentalType ?? "") as (typeof APARTMENT_TYPE_OPTIONS)[number])
+            ? (item.rentalType as (typeof APARTMENT_TYPE_OPTIONS)[number])
+            : "Chung cư",
           price: item.price,
           hotline: item.hotline,
           thumbnail: item.thumbnail,
@@ -251,7 +255,17 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           </label>
           <label className={fieldClassName}>
             <FieldLabel label="Loại hình" className={labelClassName} />
-            <input value={form.rentalType} onChange={(event) => setForm((current) => ({ ...current, rentalType: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại hình" />
+            <select
+              value={form.rentalType}
+              onChange={(event) => setForm((current) => ({ ...current, rentalType: event.target.value }))}
+              className="h-12 rounded-full border border-line px-5 text-sm outline-none"
+            >
+              {APARTMENT_TYPE_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </label>
           <label className={fieldClassName}>
             <FieldLabel label="Hotline" required className={labelClassName} />
