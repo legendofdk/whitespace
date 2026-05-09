@@ -16,7 +16,7 @@ export const projectBodySchema = z.object({
     areaSlug: z.string().min(1),
     address: z.string().min(1),
     scale: z.string().optional(),
-    productTypes: z.array(z.string().min(1)).default([]),
+    productTypes: z.array(z.string().min(1)).min(1, "Vui lòng chọn ít nhất 1 loại sản phẩm"),
     villaInfo: z.string().optional(),
     shophouseInfo: z.string().optional(),
     startTime: z.string().optional(),

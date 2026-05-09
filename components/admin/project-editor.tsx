@@ -58,6 +58,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
     slug ? "loading" : "idle"
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [productTypesError, setProductTypesError] = useState("");
   const [areaOptions, setAreaOptions] = useState<AreaOption[]>([]);
   const [initialSnapshot, setInitialSnapshot] = useState(() => JSON.stringify(initialForm));
   const isEditing = Boolean(slug);
@@ -82,6 +83,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
         ? [...current.productTypes, productType]
         : current.productTypes.filter((item) => item !== productType)
     }));
+    setProductTypesError("");
   }
 
   useEffect(() => {
@@ -191,6 +193,13 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
     event.preventDefault();
     setStatus("submitting");
     setErrorMessage("");
+    setProductTypesError("");
+
+    if (!form.productTypes.length) {
+      setStatus("error");
+      setProductTypesError("Vui lòng chọn ít nhất 1 loại sản phẩm.");
+      return;
+    }
 
     try {
       const payload = {
@@ -343,7 +352,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
             Dự án nổi bật
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
-            <FieldLabel label="Loại sản phẩm" className={labelClassName} />
+            <FieldLabel label="Loại sản phẩm" required className={labelClassName} />
             <div className="grid gap-3 rounded-[24px] border border-line px-5 py-4 sm:grid-cols-2">
               {PRODUCT_TYPE_OPTIONS.map((productType) => (
                 <label key={productType} className="flex items-center gap-3 text-sm font-medium text-ink">
@@ -357,6 +366,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
                 </label>
               ))}
             </div>
+            {productTypesError ? <p className="text-sm font-medium text-red-600">{productTypesError}</p> : null}
           </label>
           <div className="xl:col-span-2">
             <ImageUploadField label="Ảnh đại diện" required value={form.thumbnail} folder="projects" description="Chọn một ảnh đại diện để hiển thị ở card và trang chi tiết." onUploaded={(url) => setForm((c) => ({ ...c, thumbnail: url }))} />
