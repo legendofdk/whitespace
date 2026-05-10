@@ -141,6 +141,11 @@ export default async function HomePage() {
                         <span className="rounded-full bg-mist px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-navy">
                           {cardItem.area}
                         </span>
+                        {item.isSold ? (
+                          <span className="ml-2 inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-red-700">
+                            Đã bán
+                          </span>
+                        ) : null}
                         <h3 className="mt-3 font-display text-[34px] leading-[1.08] tracking-[-0.28px] text-ink">{cardItem.name}</h3>
                         <p className="mt-1 text-sm leading-5 text-steel">{cardItem.address}</p>
                       </div>
@@ -203,6 +208,11 @@ export default async function HomePage() {
                         <p className="text-lg font-semibold text-ink">{item.name}</p>
                         <p className="mt-1 text-sm font-medium text-[#2997ff]">{item.area}</p>
                         <p className="mt-0.5 text-sm leading-5 text-steel">{item.address}</p>
+                        {item.isSold ? (
+                          <span className="mt-2 inline-flex rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-red-700">
+                            Đã bán
+                          </span>
+                        ) : null}
                       </div>
                       <div>
                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel lg:hidden">Diện tích</p>

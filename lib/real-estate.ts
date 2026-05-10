@@ -10,6 +10,7 @@ export type RealEstateCardItem = {
   price: string;
   thumbnail: string;
   badge?: string;
+  isSold?: boolean;
   cardMeta: string;
   description: string;
   href: string;
@@ -43,6 +44,7 @@ export function toLandCardItem(item: LandListing): RealEstateCardItem {
     price: item.price,
     thumbnail: item.thumbnail,
     badge: item.badge,
+    isSold: item.isSold,
     cardMeta: item.cardMeta,
     description: item.description,
     href: `/dat-nen/${item.slug}`
@@ -60,6 +62,7 @@ export function toRentalCardItem(item: RentalListing): RealEstateCardItem {
     price: item.price,
     thumbnail: item.thumbnail,
     badge: item.badge,
+    isSold: item.isSold,
     cardMeta: item.cardMeta,
     description: item.description,
     href: `/cho-thue/${item.slug}`

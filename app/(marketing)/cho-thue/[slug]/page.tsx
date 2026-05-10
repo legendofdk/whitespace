@@ -68,6 +68,11 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
           <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-steel">
             <Link href="/cho-thue">Cho thuê</Link> / {item.name}
           </p>
+          {item.isSold ? (
+            <span className="hero-animate hero-animate-delay-1 mt-5 inline-flex rounded-full bg-red-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-red-700">
+              Đã bán
+            </span>
+          ) : null}
           <h1 className="hero-animate hero-animate-delay-2 mt-4 max-w-4xl font-display text-5xl text-ink sm:text-6xl">{item.name}</h1>
         </div>
       </section>
@@ -91,6 +96,7 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
                 ["Địa chỉ", item.address],
                 ["Diện tích", formatAreaValue(item.size)],
                 ["Loại hình", item.rentalType ?? item.badge ?? "Cho thuê"],
+                ["Tình trạng", item.isSold ? "Đã bán" : "Còn hàng"],
                 ["Hình thức", item.cardMeta]
               ].map(([label, value]) => (
                 <div key={label} className="rounded-[22px] border border-line bg-white px-4 py-3.5">

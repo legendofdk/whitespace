@@ -53,6 +53,7 @@ export type Project = RealEstateBase & {
 export type LandListing = RealEstateBase & {
   acreage: string;
   legal: string;
+  isSold: boolean;
   bannerImage?: string;
   seoTitle?: string;
   seoDescription?: string;
@@ -61,6 +62,7 @@ export type LandListing = RealEstateBase & {
 export type RentalListing = RealEstateBase & {
   size: string;
   rentalType?: string;
+  isSold: boolean;
   bannerImage?: string;
   seoTitle?: string;
   seoDescription?: string;

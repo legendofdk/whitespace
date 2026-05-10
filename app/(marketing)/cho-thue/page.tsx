@@ -76,6 +76,7 @@ export default async function RentalPage({
                 address={cardItem.address}
                 area={cardItem.area}
                 badge={cardItem.badge}
+                isSold={cardItem.isSold}
                 metric={cardItem.cardMeta}
                 price={cardItem.price}
                 image={cardItem.thumbnail}

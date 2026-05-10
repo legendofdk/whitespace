@@ -15,6 +15,7 @@ type Item = {
   price: string;
   status: string;
   isFeatured: boolean;
+  isSold: boolean;
   acreage?: string | null;
 };
 
@@ -93,6 +94,7 @@ export function LandListingList() {
                 </div>
                 <div className="flex items-center gap-2">
                   {item.isFeatured ? <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-ink">Nổi bật</span> : null}
+                  {item.isSold ? <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">Đã bán</span> : null}
                   <button
                     type="button"
                     onClick={() => void handleDelete(item)}

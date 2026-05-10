@@ -29,6 +29,7 @@ const initialForm = {
   description: "",
   mapEmbedUrl: "",
   isFeatured: true,
+  isSold: false,
   seoTitle: "",
   seoDescription: "",
   status: "PUBLISHED",
@@ -96,6 +97,7 @@ export function LandListingEditor({ slug }: { slug?: string }) {
           description: item.description,
           mapEmbedUrl: item.mapEmbedUrl ?? "",
           isFeatured: item.isFeatured,
+          isSold: item.isSold ?? false,
           seoTitle: item.seoTitle ?? "",
           seoDescription: item.seoDescription ?? "",
           status: item.status,
@@ -177,6 +179,15 @@ export function LandListingEditor({ slug }: { slug?: string }) {
               className="h-4 w-4 rounded border-line"
             />
             Chuyển nhượng nổi bật
+          </label>
+          <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
+            <input
+              type="checkbox"
+              checked={form.isSold}
+              onChange={(e) => setForm((c) => ({ ...c, isSold: e.target.checked }))}
+              className="h-4 w-4 rounded border-line"
+            />
+            Đã bán
           </label>
           <label className={fieldClassName}><FieldLabel label="Pháp lý" className={labelClassName} /><input value={form.legal} onChange={(e) => setForm((c) => ({ ...c, legal: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Pháp lý" /></label>
           <div className="xl:col-span-2">

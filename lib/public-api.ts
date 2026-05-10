@@ -70,6 +70,7 @@ type BackendLandListing = {
   description: string;
   mapEmbedUrl?: string | null;
   isFeatured: boolean;
+  isSold: boolean;
   badge?: string | null;
   cardMeta?: string | null;
   coordinates?: BackendCoordinates;
@@ -95,6 +96,7 @@ type BackendRental = {
   description: string;
   mapEmbedUrl?: string | null;
   isFeatured: boolean;
+  isSold: boolean;
   badge?: string | null;
   cardMeta?: string | null;
   coordinates?: BackendCoordinates;
@@ -166,6 +168,7 @@ function mapProject(item: BackendProject): Project {
     description: item.description,
     mapEmbedUrl: item.mapEmbedUrl ?? undefined,
     isFeatured: item.isFeatured,
+    isSold: item.isSold,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
     updatedAt: item.updatedAt ?? undefined,
@@ -211,6 +214,7 @@ function mapLandListing(item: BackendLandListing): LandListing {
     description: item.description,
     mapEmbedUrl: item.mapEmbedUrl ?? undefined,
     isFeatured: item.isFeatured,
+    isSold: item.isSold,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
     updatedAt: item.updatedAt ?? undefined,
