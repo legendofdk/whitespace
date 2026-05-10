@@ -1,6 +1,6 @@
 const contactItems = [
   {
-    href: "https://www.facebook.com/chucucls.chucucls",
+    href: "https://www.facebook.com/profile.php?id=61585071675406",
     label: "Facebook",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
