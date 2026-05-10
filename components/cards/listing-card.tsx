@@ -38,7 +38,14 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
             <p className="mt-1 text-base font-black leading-none text-[#8b5a16]">{price}</p>
           </div>
         </div>
-        <h3 className="min-h-[3.5rem] font-display text-[1.35rem] leading-tight text-ink">{title}</h3>
+        <div className="flex min-h-[3.5rem] flex-wrap items-start gap-2">
+          <h3 className="font-display text-[1.35rem] leading-tight text-ink">{title}</h3>
+          {isSold ? (
+            <span className="inline-flex rounded-full bg-red-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-red-700">
+              Đã bán
+            </span>
+          ) : null}
+        </div>
         <p className="min-h-[2.5rem] text-sm leading-5 text-steel">{address}</p>
         <p className="text-sm leading-6 font-medium text-navy">{metric}</p>
         {description ? (
