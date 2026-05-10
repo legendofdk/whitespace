@@ -31,6 +31,7 @@ export function ApartmentList() {
   const [items, setItems] = useState<ApartmentItem[]>([]);
   const [projectOptions, setProjectOptions] = useState<ProjectOption[]>([]);
   const [selectedProjectSlug, setSelectedProjectSlug] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -100,6 +101,17 @@ export function ApartmentList() {
     }
   }
 
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => {
+    if (!normalizedSearchTerm) {
+      return true;
+    }
+
+    return [item.name, item.slug, item.projectName ?? "", item.area, item.price, item.rentalType ?? "", item.status].some((value) =>
+      value.toLowerCase().includes(normalizedSearchTerm)
+    );
+  });
+
   return (
     <main className="py-4">
       <div className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
@@ -132,8 +144,18 @@ export function ApartmentList() {
 
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
 
+        <div className="mt-6">
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Tìm theo tên, mã căn, dự án, khu vực, giá hoặc trạng thái"
+            className="h-11 w-full rounded-full border border-line bg-white px-4 text-sm text-ink outline-none transition focus:border-ink"
+          />
+        </div>
+
         <div className="mt-6 grid gap-4">
-          {items.map((item) => (
+          {filteredItems.map((item) => (
             <div key={item.id} className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
@@ -160,6 +182,12 @@ export function ApartmentList() {
               </div>
             </div>
           ))}
+
+          {!filteredItems.length ? (
+            <div className="rounded-[24px] border border-dashed border-line bg-mist p-5 text-sm text-steel">
+              {items.length ? "Không tìm thấy căn hộ phù hợp." : "Chưa có căn hộ nào."}
+            </div>
+          ) : null}
         </div>
       </div>
     </main>

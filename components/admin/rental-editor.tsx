@@ -13,7 +13,7 @@ import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
 import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
-const initialForm = { name: "", slug: "", areaSlug: "gia-lam", address: "", size: "", rentalType: "Shophouse", price: "", hotline: "0377281119", thumbnail: "", bannerImage: "", gallery: "", description: "", isFeatured: true, seoTitle: "", seoDescription: "", status: "PUBLISHED", latitude: "", longitude: "", badge: "Cho thuê", cardMeta: "" };
+const initialForm = { name: "", slug: "", areaSlug: "gia-lam", address: "", size: "", rentalType: "Shophouse", price: "", hotline: "0377281119", thumbnail: "", bannerImage: "", gallery: "", description: "", isFeatured: true, isSold: false, seoTitle: "", seoDescription: "", status: "PUBLISHED", latitude: "", longitude: "", badge: "Cho thuê", cardMeta: "" };
 
 export function RentalEditor({ slug }: { slug?: string }) {
   const router = useRouter();
@@ -58,7 +58,7 @@ export function RentalEditor({ slug }: { slug?: string }) {
         const response = await fetchAdminApi(`/api/rentals/${slug}`);
         if (!response.ok) throw new Error("LOAD_FAILED");
         const item = (await response.json()) as any;
-        const nextForm = { name: item.name, slug: item.slug, areaSlug: item.areaSlug, address: item.address, size: item.size ?? "", rentalType: item.rentalType ?? "", price: item.price, hotline: item.hotline, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", gallery: item.gallery?.join("\n") ?? "", description: item.description, isFeatured: item.isFeatured, seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", status: item.status, latitude: item.coordinates?.lat?.toString() ?? "", longitude: item.coordinates?.lng?.toString() ?? "", badge: item.badge ?? "Cho thuê", cardMeta: item.cardMeta ?? "" };
+        const nextForm = { name: item.name, slug: item.slug, areaSlug: item.areaSlug, address: item.address, size: item.size ?? "", rentalType: item.rentalType ?? "", price: item.price, hotline: item.hotline, thumbnail: item.thumbnail, bannerImage: item.bannerImage ?? "", gallery: item.gallery?.join("\n") ?? "", description: item.description, isFeatured: item.isFeatured, isSold: item.isSold ?? false, seoTitle: item.seoTitle ?? "", seoDescription: item.seoDescription ?? "", status: item.status, latitude: item.coordinates?.lat?.toString() ?? "", longitude: item.coordinates?.lng?.toString() ?? "", badge: item.badge ?? "Cho thuê", cardMeta: item.cardMeta ?? "" };
         setForm(nextForm);
         setInitialSnapshot(JSON.stringify(nextForm));
         setStatus("idle");
@@ -115,6 +115,15 @@ export function RentalEditor({ slug }: { slug?: string }) {
               className="h-4 w-4 rounded border-line"
             />
             Sản phẩm nổi bật
+          </label>
+          <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
+            <input
+              type="checkbox"
+              checked={form.isSold}
+              onChange={(e) => setForm((c) => ({ ...c, isSold: e.target.checked }))}
+              className="h-4 w-4 rounded border-line"
+            />
+            Đã bán
           </label>
           <label className={fieldClassName}><FieldLabel label="Loại hình" className={labelClassName} /><input value={form.rentalType} onChange={(e) => setForm((c) => ({ ...c, rentalType: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Loại hình" /></label>
           <div className="xl:col-span-2">
