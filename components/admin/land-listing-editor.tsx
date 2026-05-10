@@ -171,24 +171,29 @@ export function LandListingEditor({ slug }: { slug?: string }) {
           <label className={`${fieldClassName} xl:col-span-2`}><FieldLabel label="Link Google Map" className={labelClassName} /><input value={form.mapEmbedUrl} onChange={(e) => setForm((c) => ({ ...c, mapEmbedUrl: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Dán link Google Map hoặc link embed" /></label>
           <label className={fieldClassName}><FieldLabel label="Giá bán" required className={labelClassName} /><input value={form.price} onChange={(e) => setForm((c) => ({ ...c, price: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Giá bán" required /></label>
           <label className={fieldClassName}><FieldLabel label="Diện tích" className={labelClassName} /><input value={form.acreage} onChange={(e) => setForm((c) => ({ ...c, acreage: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Diện tích" /></label>
-          <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
-            <input
-              type="checkbox"
-              checked={form.isFeatured}
-              onChange={(e) => setForm((c) => ({ ...c, isFeatured: e.target.checked }))}
-              className="h-4 w-4 rounded border-line"
-            />
-            Chuyển nhượng nổi bật
-          </label>
-          <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
-            <input
-              type="checkbox"
-              checked={form.isSold}
-              onChange={(e) => setForm((c) => ({ ...c, isSold: e.target.checked }))}
-              className="h-4 w-4 rounded border-line"
-            />
-            Đã bán
-          </label>
+          <div className="grid gap-2 xl:col-span-2">
+            <FieldLabel label="Trạng thái hiển thị" className={labelClassName} />
+            <div className="grid gap-3 md:grid-cols-2">
+              <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
+                <input
+                  type="checkbox"
+                  checked={form.isFeatured}
+                  onChange={(e) => setForm((c) => ({ ...c, isFeatured: e.target.checked }))}
+                  className="h-4 w-4 rounded border-line"
+                />
+                Chuyển nhượng nổi bật
+              </label>
+              <label className="flex items-center gap-3 rounded-[20px] border border-line px-5 py-3 text-sm font-medium text-ink">
+                <input
+                  type="checkbox"
+                  checked={form.isSold}
+                  onChange={(e) => setForm((c) => ({ ...c, isSold: e.target.checked }))}
+                  className="h-4 w-4 rounded border-line"
+                />
+                Đã bán
+              </label>
+            </div>
+          </div>
           <label className={fieldClassName}><FieldLabel label="Pháp lý" className={labelClassName} /><input value={form.legal} onChange={(e) => setForm((c) => ({ ...c, legal: e.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Pháp lý" /></label>
           <div className="xl:col-span-2">
             <ImageUploadField

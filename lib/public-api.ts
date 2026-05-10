@@ -242,6 +242,7 @@ function mapRental(item: BackendRental): RentalListing {
     description: item.description,
     mapEmbedUrl: item.mapEmbedUrl ?? undefined,
     isFeatured: item.isFeatured,
+    isSold: item.isSold,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
     updatedAt: item.updatedAt ?? undefined,
