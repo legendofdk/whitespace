@@ -114,7 +114,8 @@ export const landListings: LandListing[] = [
     gallery: [],
     description: "Vị trí gần trục Cổ Linh, thuận tiện di chuyển sang nội đô và khu vực cầu Vĩnh Tuy.",
     mapEmbedUrl: "https://maps.google.com/maps?q=phuc%20dong%20long%20bien%20ha%20noi&t=&z=13&ie=UTF8&iwloc=&output=embed",
-    isFeatured: true
+    isFeatured: true,
+    isSold: false
   },
   {
     id: "l2",
@@ -135,7 +136,8 @@ export const landListings: LandListing[] = [
     gallery: [],
     description: "Tiềm năng tăng giá theo tiến độ hạ tầng, quy hoạch lên quận và nhu cầu ở thực tăng cao.",
     mapEmbedUrl: "https://maps.google.com/maps?q=trau%20quy%20gia%20lam%20ha%20noi&t=&z=13&ie=UTF8&iwloc=&output=embed",
-    isFeatured: true
+    isFeatured: true,
+    isSold: false
   }
 ];
 
@@ -159,6 +161,7 @@ export const rentals: RentalListing[] = [
     description: "Phù hợp showroom, cafe, văn phòng giao dịch hoặc mô hình kinh doanh dịch vụ.",
     mapEmbedUrl: "https://maps.google.com/maps?q=vinhomes%20ocean%20park%20gia%20lam&t=&z=13&ie=UTF8&iwloc=&output=embed",
     isFeatured: true,
+    isSold: false,
     rentalType: "Shophouse"
   },
   {
@@ -180,6 +183,7 @@ export const rentals: RentalListing[] = [
     description: "Mặt bằng góc 2 mặt tiền, lưu lượng phương tiện cao, phù hợp thương hiệu bán lẻ.",
     mapEmbedUrl: "https://maps.google.com/maps?q=nguyen%20van%20linh%20long%20bien%20ha%20noi&t=&z=13&ie=UTF8&iwloc=&output=embed",
     isFeatured: true,
+    isSold: false,
     rentalType: "Mặt bằng"
   }
 ];
