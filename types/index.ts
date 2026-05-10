@@ -43,6 +43,7 @@ export type Project = RealEstateBase & {
     rentalType?: string;
     status: string;
     isFeatured: boolean;
+    isSold: boolean;
   }[];
   floorPlanImages?: string[];
   seoTitle?: string;
@@ -71,6 +72,7 @@ export type ApartmentListing = RealEstateBase & {
   bannerImage?: string;
   projectName?: string;
   projectSlug?: string;
+  isSold: boolean;
   seoTitle?: string;
   seoDescription?: string;
 };

@@ -46,6 +46,7 @@ type BackendProject = {
     rentalType?: string | null;
     status: string;
     isFeatured: boolean;
+    isSold: boolean;
   }[];
   seoTitle?: string | null;
   seoDescription?: string | null;
@@ -105,6 +106,7 @@ type BackendRental = {
 type BackendApartment = BackendRental & {
   projectName?: string | null;
   projectSlug?: string | null;
+  isSold: boolean;
 };
 
 type BackendPost = {
@@ -185,7 +187,8 @@ function mapProject(item: BackendProject): Project {
       size: apartment.size ?? undefined,
       rentalType: apartment.rentalType ?? undefined,
       status: apartment.status,
-      isFeatured: apartment.isFeatured
+      isFeatured: apartment.isFeatured,
+      isSold: apartment.isSold
     })),
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined
@@ -270,6 +273,7 @@ function mapApartment(item: BackendApartment): ApartmentListing {
     bannerImage: item.bannerImage ?? item.thumbnail,
     projectName: item.projectName ?? undefined,
     projectSlug: item.projectSlug ?? undefined,
+    isSold: item.isSold,
     seoTitle: item.seoTitle ?? undefined,
     seoDescription: item.seoDescription ?? undefined
   };

@@ -17,6 +17,7 @@ type ProjectItem = {
 
 export function ProjectList() {
   const [items, setItems] = useState<ProjectItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -66,6 +67,17 @@ export function ProjectList() {
     }
   }
 
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  const filteredItems = items.filter((item) => {
+    if (!normalizedSearchTerm) {
+      return true;
+    }
+
+    return [item.name, item.slug, item.area, item.status].some((value) =>
+      value.toLowerCase().includes(normalizedSearchTerm)
+    );
+  });
+
   return (
     <main className="py-4">
       <div className="rounded-[28px] border border-line bg-white p-6 shadow-soft">
@@ -87,8 +99,18 @@ export function ProjectList() {
 
         {errorMessage ? <p className="mt-4 text-sm font-medium text-red-600">{errorMessage}</p> : null}
 
+        <div className="mt-6">
+          <input
+            type="search"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder="Tìm theo tên, slug, khu vực hoặc trạng thái"
+            className="h-11 w-full rounded-full border border-line bg-white px-4 text-sm text-ink outline-none transition focus:border-ink"
+          />
+        </div>
+
         <div className="mt-6 grid gap-4">
-          {items.map((item) => (
+          {filteredItems.map((item) => (
             <div key={item.id} className="rounded-[24px] border border-line bg-mist p-5 transition hover:-translate-y-0.5">
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
@@ -113,6 +135,12 @@ export function ProjectList() {
               </div>
             </div>
           ))}
+
+          {!filteredItems.length ? (
+            <div className="rounded-[24px] border border-dashed border-line bg-mist p-5 text-sm text-steel">
+              {items.length ? "Không tìm thấy dự án phù hợp." : "Chưa có dự án nào."}
+            </div>
+          ) : null}
         </div>
       </div>
     </main>

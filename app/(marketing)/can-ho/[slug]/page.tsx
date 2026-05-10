@@ -76,6 +76,11 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
           <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-[#b8cdf4]">
             {item.projectSlug ? <Link href={`/du-an/${item.projectSlug}`}>{item.projectName ?? "Dự án"}</Link> : <span>Căn hộ</span>} / {item.name}
           </p>
+          {item.isSold ? (
+            <span className="hero-animate hero-animate-delay-1 mt-5 inline-flex rounded-full bg-[#ffe0dc] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8f2d1f]">
+              Đã bán
+            </span>
+          ) : null}
           <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl">{item.name}</h1>
         </div>
       </section>
@@ -102,6 +107,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
                 ["Khu vực", item.area],
                 ["Diện tích", formatAreaValue(item.size)],
                 ["Loại hình", item.rentalType ?? item.badge ?? "Căn hộ"],
+                ["Tình trạng bán", item.isSold ? "Đã bán" : "Còn hàng"],
                 ["Thông tin nhanh", item.cardMeta]
               ].map(([label, value]) => (
                 <div key={label} className="rounded-[28px] border border-[#d8e2f2] bg-white p-6">

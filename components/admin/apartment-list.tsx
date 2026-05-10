@@ -16,6 +16,7 @@ type ApartmentItem = {
   projectSlug: string | null;
   price: string;
   status: string;
+  isSold: boolean;
   size?: string | null;
   rentalType?: string | null;
 };
@@ -146,6 +147,7 @@ export function ApartmentList() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
+                  {item.isSold ? <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">Đã bán</span> : null}
                   <button
                     type="button"
                     onClick={() => void handleDelete(item)}

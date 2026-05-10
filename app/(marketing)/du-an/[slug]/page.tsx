@@ -128,7 +128,14 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                     >
                       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                         <div>
-                          <p className="text-2xl font-semibold text-ink">{apartment.name}</p>
+                          <div className="flex flex-wrap items-center gap-3">
+                            <p className="text-2xl font-semibold text-ink">{apartment.name}</p>
+                            {apartment.isSold ? (
+                              <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-red-700">
+                                Đã bán
+                              </span>
+                            ) : null}
+                          </div>
                           <p className="mt-1 text-sm text-steel">{apartment.rentalType ?? "Căn hộ"} • {apartment.status}</p>
                         </div>
                         <span className="inline-flex w-fit rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink">

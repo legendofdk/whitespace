@@ -31,6 +31,7 @@ const initialForm = {
   bannerImage: "",
   gallery: "",
   description: "",
+  isSold: false,
   seoTitle: "",
   seoDescription: "",
   status: "PUBLISHED",
@@ -120,6 +121,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           bannerImage?: string | null;
           gallery?: string[];
           description: string;
+          isSold: boolean;
           isFeatured: boolean;
           seoTitle?: string | null;
           seoDescription?: string | null;
@@ -141,6 +143,7 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           bannerImage: item.bannerImage ?? "",
           gallery: item.gallery?.join("\n") ?? "",
           description: item.description,
+          isSold: item.isSold,
           seoTitle: item.seoTitle ?? "",
           seoDescription: item.seoDescription ?? "",
           status: item.status,
@@ -296,6 +299,15 @@ export function ApartmentEditor({ slug }: { slug?: string }) {
           <label className={fieldClassName}>
             <FieldLabel label="Hotline" required className={labelClassName} />
             <input value={form.hotline} onChange={(event) => setForm((current) => ({ ...current, hotline: event.target.value }))} className="h-12 rounded-full border border-line px-5 text-sm outline-none" placeholder="Hotline" required />
+          </label>
+          <label className="flex items-center gap-3 rounded-[24px] border border-line bg-mist/50 px-5 py-4 text-sm font-medium text-ink">
+            <input
+              type="checkbox"
+              checked={form.isSold}
+              onChange={(event) => setForm((current) => ({ ...current, isSold: event.target.checked }))}
+              className="h-4 w-4 rounded border-line text-ink"
+            />
+            Đã bán
           </label>
           <div className="xl:col-span-2">
             <ImageUploadField

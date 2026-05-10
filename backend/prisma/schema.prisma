@@ -66,6 +66,7 @@ model Property {
   legal            String?
   size             String?
   rentalType       String?
+  isSold           Boolean        @default(false)
   latitude         Decimal?       @db.Decimal(10, 7)
   longitude        Decimal?       @db.Decimal(10, 7)
   parentProjectId  String?

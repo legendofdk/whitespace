@@ -55,7 +55,8 @@ function mapProject(item: Prisma.PropertyGetPayload<{ include: typeof projectInc
       size: apartment.size,
       rentalType: apartment.rentalType,
       status: apartment.status,
-      isFeatured: apartment.isFeatured
+      isFeatured: apartment.isFeatured,
+      isSold: apartment.isSold
     })),
     thumbnail: item.thumbnail,
     bannerImage: item.bannerImage,
