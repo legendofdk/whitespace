@@ -1,9 +1,13 @@
 import { ContentStatus } from "@prisma/client";
 import { z } from "zod";
 
+const listSortSchema = z.enum(["latest", "price_desc", "price_asc"]);
+
 export const listRentalsQuerySchema = z.object({
   search: z.string().trim().optional(),
   area: z.string().trim().optional(),
+  propertyType: z.string().trim().optional(),
+  sort: listSortSchema.optional(),
   featured: z
     .string()
     .optional()

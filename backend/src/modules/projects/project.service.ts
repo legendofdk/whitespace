@@ -26,6 +26,11 @@ const projectInclude = {
   }
 };
 
+function parsePriceValue(price: string) {
+  const digits = price.replace(/[^\d]/g, "");
+  return digits ? Number(digits) : null;
+}
+
 function mapProject(item: Prisma.PropertyGetPayload<{ include: typeof projectInclude }>) {
   return {
     id: item.id,
@@ -121,6 +126,12 @@ export async function getProjectList(query: ListProjectsQueryInput = {}) {
     };
   }
 
+  if (query.propertyType) {
+    where.productTypes = {
+      has: query.propertyType
+    };
+  }
+
   if (typeof query.featured === "boolean") {
     where.isFeatured = query.featured;
   }
@@ -132,10 +143,26 @@ export async function getProjectList(query: ListProjectsQueryInput = {}) {
   const items = await prisma.property.findMany({
     where,
     include: projectInclude,
-    orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }]
+    orderBy: [{ createdAt: "desc" }]
   });
 
-  return items.map(mapProject);
+  const mappedItems = items.map(mapProject);
+
+  if (query.sort === "price_desc" || query.sort === "price_asc") {
+    const direction = query.sort === "price_desc" ? -1 : 1;
+
+    return mappedItems.sort((a, b) => {
+      const aPrice = parsePriceValue(a.price);
+      const bPrice = parsePriceValue(b.price);
+
+      if (aPrice === null && bPrice === null) return 0;
+      if (aPrice === null) return 1;
+      if (bPrice === null) return -1;
+      return (aPrice - bPrice) * direction;
+    });
+  }
+
+  return mappedItems;
 }
 
 export async function getProjectBySlug(slug: string) {

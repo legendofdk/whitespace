@@ -13,6 +13,11 @@ const rentalInclude = {
   }
 };
 
+function parsePriceValue(price: string) {
+  const digits = price.replace(/[^\d]/g, "");
+  return digits ? Number(digits) : null;
+}
+
 function mapRental(item: Prisma.PropertyGetPayload<{ include: typeof rentalInclude }>) {
   return {
     id: item.id,
@@ -90,6 +95,24 @@ export async function getRentalList(query: ListRentalsQueryInput = {}) {
     };
   }
 
+  if (query.propertyType) {
+    where.OR = [
+      ...(where.OR ?? []),
+      {
+        rentalType: {
+          equals: query.propertyType,
+          mode: "insensitive"
+        }
+      },
+      {
+        badge: {
+          equals: query.propertyType,
+          mode: "insensitive"
+        }
+      }
+    ];
+  }
+
   if (typeof query.featured === "boolean") {
     where.isFeatured = query.featured;
   }
@@ -101,10 +124,26 @@ export async function getRentalList(query: ListRentalsQueryInput = {}) {
   const items = await prisma.property.findMany({
     where,
     include: rentalInclude,
-    orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }]
+    orderBy: [{ createdAt: "desc" }]
   });
 
-  return items.map(mapRental);
+  const mappedItems = items.map(mapRental);
+
+  if (query.sort === "price_desc" || query.sort === "price_asc") {
+    const direction = query.sort === "price_desc" ? -1 : 1;
+
+    return mappedItems.sort((a, b) => {
+      const aPrice = parsePriceValue(a.price);
+      const bPrice = parsePriceValue(b.price);
+
+      if (aPrice === null && bPrice === null) return 0;
+      if (aPrice === null) return 1;
+      if (bPrice === null) return -1;
+      return (aPrice - bPrice) * direction;
+    });
+  }
+
+  return mappedItems;
 }
 
 export async function getRentalBySlug(slug: string) {

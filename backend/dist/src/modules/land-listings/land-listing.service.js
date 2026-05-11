@@ -9,6 +9,10 @@ const landListingInclude = {
         }
     }
 };
+function parsePriceValue(price) {
+    const digits = price.replace(/[^\d]/g, "");
+    return digits ? Number(digits) : null;
+}
 function mapLandListing(item) {
     return {
         id: item.id,
@@ -78,6 +82,12 @@ export async function getLandListingList(query = {}) {
             slug: query.area
         };
     }
+    if (query.propertyType) {
+        where.badge = {
+            equals: query.propertyType,
+            mode: "insensitive"
+        };
+    }
     if (typeof query.featured === "boolean") {
         where.isFeatured = query.featured;
     }
@@ -87,9 +97,24 @@ export async function getLandListingList(query = {}) {
     const items = await prisma.property.findMany({
         where,
         include: landListingInclude,
-        orderBy: [{ isFeatured: "desc" }, { createdAt: "desc" }]
+        orderBy: [{ createdAt: "desc" }]
     });
-    return items.map(mapLandListing);
+    const mappedItems = items.map(mapLandListing);
+    if (query.sort === "price_desc" || query.sort === "price_asc") {
+        const direction = query.sort === "price_desc" ? -1 : 1;
+        return mappedItems.sort((a, b) => {
+            const aPrice = parsePriceValue(a.price);
+            const bPrice = parsePriceValue(b.price);
+            if (aPrice === null && bPrice === null)
+                return 0;
+            if (aPrice === null)
+                return 1;
+            if (bPrice === null)
+                return -1;
+            return (aPrice - bPrice) * direction;
+        });
+    }
+    return mappedItems;
 }
 export async function getLandListingBySlug(slug) {
     const item = await prisma.property.findFirst({

@@ -16,14 +16,16 @@ export const metadata: Metadata = buildMetadata({
 export default async function ProjectsPage({
   searchParams
 }: {
-  searchParams: Promise<{ featured?: string; area?: string }>;
+  searchParams: Promise<{ featured?: string; area?: string; propertyType?: string; sort?: string }>;
 }) {
   const params = await searchParams;
   const [featuredProjects, filteredProjects] = await Promise.all([
     getPublicProjects({ featured: true }),
     getPublicProjects({
       featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
-      area: params.area || undefined
+      area: params.area || undefined,
+      propertyType: params.propertyType || undefined,
+      sort: params.sort || undefined
     })
   ]);
 
@@ -59,9 +61,34 @@ export default async function ProjectsPage({
                 { label: "Tất cả dự án", value: "" },
                 { label: "Dự án nổi bật", value: "true" }
               ]
+            },
+            {
+              name: "propertyType",
+              label: "Loại hình",
+              defaultValue: params.propertyType ?? "",
+              options: [
+                { label: "Tất cả loại hình", value: "" },
+                { label: "Chung cư", value: "Chung cư" },
+                { label: "Biệt thự", value: "Biệt thự" },
+                { label: "Shophouse", value: "Shophouse" },
+                { label: "Liền kề", value: "Liền kề" }
+              ]
+            },
+            {
+              name: "sort",
+              label: "Sắp xếp",
+              defaultValue: params.sort ?? "latest",
+              options: [
+                { label: "Mới nhất", value: "latest" },
+                { label: "Giá cao nhất", value: "price_desc" },
+                { label: "Giá thấp nhất", value: "price_asc" }
+              ]
             }
           ]}
         />
+        <p className="mt-3 text-sm font-medium text-steel">
+          Hiện đang có {filteredProjects.length.toLocaleString("vi-VN")} dự án
+        </p>
       </section>
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">

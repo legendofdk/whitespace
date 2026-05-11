@@ -337,6 +337,8 @@ async function fetchList<T>(path: string) {
 export async function getPublicProjects(params?: {
   featured?: boolean;
   area?: string;
+  propertyType?: string;
+  sort?: string;
   search?: string;
 }) {
   const searchParams = new URLSearchParams();
@@ -347,6 +349,14 @@ export async function getPublicProjects(params?: {
 
   if (params?.area) {
     searchParams.set("area", params.area);
+  }
+
+  if (params?.propertyType) {
+    searchParams.set("propertyType", params.propertyType);
+  }
+
+  if (params?.sort) {
+    searchParams.set("sort", params.sort);
   }
 
   if (params?.search) {
@@ -366,6 +376,8 @@ export async function getPublicProjectBySlug(slug: string) {
 export async function getPublicLandListings(params?: {
   area?: string;
   featured?: boolean;
+  propertyType?: string;
+  sort?: string;
   search?: string;
 }) {
   const searchParams = new URLSearchParams();
@@ -376,6 +388,14 @@ export async function getPublicLandListings(params?: {
 
   if (typeof params?.featured === "boolean") {
     searchParams.set("featured", String(params.featured));
+  }
+
+  if (params?.propertyType) {
+    searchParams.set("propertyType", params.propertyType);
+  }
+
+  if (params?.sort) {
+    searchParams.set("sort", params.sort);
   }
 
   if (params?.search) {
@@ -395,6 +415,8 @@ export async function getPublicLandListingBySlug(slug: string) {
 export async function getPublicRentals(params?: {
   area?: string;
   featured?: boolean;
+  propertyType?: string;
+  sort?: string;
   search?: string;
 }) {
   const searchParams = new URLSearchParams();
@@ -405,6 +427,14 @@ export async function getPublicRentals(params?: {
 
   if (typeof params?.featured === "boolean") {
     searchParams.set("featured", String(params.featured));
+  }
+
+  if (params?.propertyType) {
+    searchParams.set("propertyType", params.propertyType);
+  }
+
+  if (params?.sort) {
+    searchParams.set("sort", params.sort);
   }
 
   if (params?.search) {

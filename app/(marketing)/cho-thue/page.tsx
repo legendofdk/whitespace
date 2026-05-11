@@ -17,12 +17,14 @@ export const metadata: Metadata = buildMetadata({
 export default async function RentalPage({
   searchParams
 }: {
-  searchParams: Promise<{ area?: string; featured?: string }>;
+  searchParams: Promise<{ area?: string; featured?: string; propertyType?: string; sort?: string }>;
 }) {
   const params = await searchParams;
   const filteredRentals = await getPublicRentals({
     area: params.area,
-    featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined
+    featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
+    propertyType: params.propertyType || undefined,
+    sort: params.sort || undefined
   });
 
   return (
@@ -51,9 +53,34 @@ export default async function RentalPage({
                 { label: "Tất cả sản phẩm", value: "" },
                 { label: "Cho thuê nổi bật", value: "true" }
               ]
+            },
+            {
+              name: "propertyType",
+              label: "Loại hình",
+              defaultValue: params.propertyType ?? "",
+              options: [
+                { label: "Tất cả loại hình", value: "" },
+                { label: "Shophouse", value: "Shophouse" },
+                { label: "Mặt bằng", value: "Mặt bằng" },
+                { label: "Văn phòng", value: "Văn phòng" },
+                { label: "Cho thuê", value: "Cho thuê" }
+              ]
+            },
+            {
+              name: "sort",
+              label: "Sắp xếp",
+              defaultValue: params.sort ?? "latest",
+              options: [
+                { label: "Mới nhất", value: "latest" },
+                { label: "Giá cao nhất", value: "price_desc" },
+                { label: "Giá thấp nhất", value: "price_asc" }
+              ]
             }
           ]}
         />
+        <p className="mt-3 text-sm font-medium text-steel">
+          Hiện đang có {filteredRentals.length.toLocaleString("vi-VN")} sản phẩm cho thuê
+        </p>
       </section>
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
