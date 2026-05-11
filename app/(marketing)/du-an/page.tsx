@@ -30,7 +30,7 @@ export default async function ProjectsPage({
   return (
     <main className="bg-mist pb-16">
       {featuredProjects.length ? (
-        <section className="pt-4 sm:pt-5">
+        <section>
           <FeaturedProjectHeroCarousel projects={featuredProjects} />
         </section>
       ) : null}

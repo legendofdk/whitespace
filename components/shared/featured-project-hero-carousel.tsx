@@ -32,7 +32,7 @@ export function FeaturedProjectHeroCarousel({ projects }: { projects: Project[] 
           className="object-cover"
         />
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,18,37,0.28)_0%,rgba(8,18,37,0.14)_42%,rgba(8,18,37,0.24)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.04)_0%,rgba(8,18,37,0.08)_55%,rgba(8,18,37,0.28)_100%)]" />
 
       <div className="relative z-10 flex min-h-[420px] flex-col justify-end p-6 text-white sm:min-h-[500px] sm:p-8 lg:p-10">
         <div className="max-w-3xl">
