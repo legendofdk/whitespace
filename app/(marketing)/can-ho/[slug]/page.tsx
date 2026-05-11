@@ -67,12 +67,12 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#d7dfeb] bg-[linear-gradient(135deg,#eef3fa_0%,#f6f9fd_50%,#e8f0fb_100%)] py-10 sm:py-12">
+      <section className="relative isolate overflow-hidden border-b border-[#c9d8ea] bg-[linear-gradient(135deg,#dce8f6_0%,#edf4fc_50%,#d2e3f5_100%)] py-10 sm:py-12">
         <div className="absolute inset-0 opacity-[0.1]">
           <Image src={heroImage} alt={item.name} fill className="object-cover" />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(174,198,234,0.32),transparent_38%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.7),transparent_42%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(139,174,218,0.36),transparent_36%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.62),transparent_40%)]" />
         <div className="shell relative z-10">
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6b7e99] sm:text-xs">
             {item.projectSlug ? <Link href={`/du-an/${item.projectSlug}`}>{item.projectName ?? "Dự án"}</Link> : <span>Căn hộ</span>} / {item.name}
@@ -88,9 +88,9 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
         </div>
       </section>
 
-      <section className="shell pb-[var(--space-section-y)] pt-8 sm:pt-10">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-8">
+      <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
+        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
             <div className="section-reveal rounded-[30px] border border-[#d8e2f2] bg-[linear-gradient(135deg,#ffffff,#e9f0fb)] p-6 shadow-[0_18px_36px_rgba(60,91,145,0.12)]">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#4c6790]">Giá tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-[#21314a]">
@@ -104,7 +104,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               </p>
             </div>
 
-            <div className="section-reveal grid gap-4 sm:grid-cols-2">
+            <div className="section-reveal grid gap-3 sm:grid-cols-2">
               {[
                 ["Dự án", item.projectName ?? "Đang cập nhật"],
                 ["Khu vực", item.area],
@@ -113,27 +113,27 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
                 ["Tình trạng bán", item.isSold ? "Đã bán" : "Còn hàng"],
                 ["Thông tin nhanh", item.cardMeta]
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[28px] border border-[#d8e2f2] bg-white p-6">
+                <div key={label} className="rounded-[24px] border border-[#d8e2f2] bg-white p-5">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6881a8]">{label}</p>
-                  <p className="mt-3 text-lg font-semibold text-[#21314a]">{value}</p>
+                  <p className="mt-2 text-lg font-semibold text-[#21314a]">{value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-[#d8e2f2] bg-white p-8">
+            <div className="section-reveal rounded-[32px] border border-[#d8e2f2] bg-white p-6">
               <h2 className="font-display text-4xl text-[#21314a]">Thông tin chi tiết</h2>
-              <div className="mt-6 space-y-4 text-sm leading-8 text-[#60758f]">
+              <div className="mt-5 space-y-3 text-sm leading-7 text-[#60758f]">
                 <HtmlContent html={item.description} className="max-w-none" />
                 <p>Thông tin nhanh: {item.cardMeta}.</p>
               </div>
             </div>
           </div>
 
-          <aside className="space-y-6">
-            <div className="section-reveal rounded-[32px] border border-[#314662] bg-[#23344c] p-8 text-white">
+          <aside className="space-y-5">
+            <div className="section-reveal rounded-[32px] border border-[#314662] bg-[#23344c] p-6 text-white">
               <p className="text-sm uppercase tracking-[0.22em] text-[#b8cdf4]">Hotline / Zalo</p>
               <p className="mt-3 text-4xl font-semibold">{item.hotline}</p>
-              <p className="mt-4 text-sm leading-7 text-[#d9e4f2]">Liên hệ để nhận thông tin căn hộ chi tiết và lịch xem thực tế.</p>
+              <p className="mt-3 text-sm leading-6 text-[#d9e4f2]">Liên hệ để nhận thông tin căn hộ chi tiết và lịch xem thực tế.</p>
             </div>
 
             <div className="section-reveal">

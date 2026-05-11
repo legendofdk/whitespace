@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { ProjectCard } from "@/components/cards/project-card";
 import { FilterBar } from "@/components/shared/filter-bar";
-import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicProjects } from "@/lib/public-api";
 import { buildMetadata } from "@/lib/seo";
 
@@ -26,12 +25,7 @@ export default async function ProjectsPage({
 
   return (
     <main className="bg-mist pb-16">
-      <section className="shell py-16">
-        <p className="eyebrow">Danh sách dự án</p>
-        <h1 className="mt-4 font-display text-6xl text-ink">Không gian đầu tư và an cư được tuyển chọn</h1>
-      </section>
-
-      <section className="shell">
+      <section className="shell pt-8 sm:pt-10">
         <FilterBar
           action="/du-an"
           showSearch={false}
@@ -60,9 +54,8 @@ export default async function ProjectsPage({
         />
       </section>
 
-      <section className="shell pt-16">
-        <SectionHeading eyebrow="Toàn bộ dự án" title="Danh sách dự án đáng chú ý tại khu Đông Hà Nội" />
-        <div className="grid gap-6 lg:grid-cols-3">
+      <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
+        <div className="grid gap-5 lg:grid-cols-3">
           {filteredProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

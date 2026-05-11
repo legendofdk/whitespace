@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { ListingCard } from "@/components/cards/listing-card";
 import { FilterBar } from "@/components/shared/filter-bar";
-import { SectionHeading } from "@/components/shared/section-heading";
 import { getPublicLandListings } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
 import { buildMetadata } from "@/lib/seo";
@@ -28,12 +27,7 @@ export default async function LandPage({
 
   return (
     <main className="bg-mist pb-16">
-      <section className="shell py-16">
-        <p className="eyebrow">Chuyển nhượng</p>
-        <h1 className="mt-4 font-display text-6xl text-ink">Những vị trí đáng chú ý tại phía Đông Hà Nội</h1>
-      </section>
-
-      <section className="shell">
+      <section className="shell pt-8 sm:pt-10">
         <FilterBar
           action="/dat-nen"
           showSearch={false}
@@ -62,9 +56,8 @@ export default async function LandPage({
         />
       </section>
 
-      <section className="shell pt-16">
-        <SectionHeading eyebrow="Chuyển nhượng hot" title="Các sản phẩm nổi bật theo từng khu vực tiềm năng" />
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filteredLandListings.map((item) => {
             const cardItem = toLandCardItem(item);
 

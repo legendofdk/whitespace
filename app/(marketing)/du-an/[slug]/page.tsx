@@ -65,9 +65,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#d7dfeb] bg-[linear-gradient(135deg,#f7f2e8_0%,#f8fbff_52%,#eef4fb_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_42%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(212,225,242,0.55),transparent_36%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#cedaeb] bg-[linear-gradient(135deg,#f4e4c7_0%,#f2f7ff_46%,#dce9f7_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,248,235,0.88),transparent_40%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(181,204,232,0.52),transparent_34%)]" />
         <div className="shell relative z-10">
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/du-an">Dự án</Link> / {project.name}
@@ -78,9 +78,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         </div>
       </section>
 
-      <section className="shell pb-[var(--space-section-y)] pt-8 sm:pt-10">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-8">
+      <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
+        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
             <div className="section-reveal rounded-[24px] border border-[#e4c58a] bg-[radial-gradient(circle_at_top_left,#fff8e8,transparent_45%),linear-gradient(135deg,#fff4dc,#ffe6aa)] px-5 py-4 shadow-[0_16px_28px_rgba(191,138,38,0.14)]">
               <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9f6a13]">Giá bán tham khảo</p>
               <p className="mt-2 font-display text-[2.35rem] leading-[0.95] text-[#7f4f10] drop-shadow-[0_8px_18px_rgba(191,138,38,0.14)] sm:text-[2.6rem]">
@@ -91,9 +91,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="section-reveal rounded-[28px] border border-line bg-mist px-6 py-6">
+            <div className="section-reveal rounded-[28px] border border-line bg-mist px-5 py-5">
               <h2 className="font-display text-[2rem] text-ink sm:text-[2.2rem]">Tổng quan dự án</h2>
-              <div className="mt-5 grid gap-x-5 gap-y-4 sm:grid-cols-2">
+              <div className="mt-4 grid gap-x-4 gap-y-3 sm:grid-cols-2">
                 {[
                   ["Chủ đầu tư", project.investor],
                   ["Địa chỉ", project.address],
@@ -110,9 +110,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-line p-8">
+            <div className="section-reveal rounded-[32px] border border-line p-6">
               <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
-              <div className="mt-6 space-y-4 text-sm leading-8 text-steel">
+              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
                 <HtmlContent html={project.description} className="max-w-none" />
                 <p>Sản phẩm: {project.productTypes.join(", ")}.</p>
                 {project.villaInfo ? <p>Biệt thự: {project.villaInfo}.</p> : null}
@@ -120,7 +120,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-line p-8">
+            <div className="section-reveal rounded-[32px] border border-line p-6">
               <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
               {project.apartments?.length ? (
                 <ProjectApartmentList apartments={project.apartments} />
@@ -131,12 +131,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
           </div>
 
-          <aside className="space-y-6">
-            <div className="section-reveal rounded-[32px] border border-line p-8">
+          <aside className="space-y-5">
+            <div className="section-reveal rounded-[32px] border border-line p-6">
               <h2 className="font-display text-4xl text-ink">Tiện ích nổi bật</h2>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-5 flex flex-wrap gap-2.5">
                 {project.utilities.map((utility) => (
-                  <span key={utility} className="rounded-full bg-mist px-4 py-2 text-sm font-medium text-navy">
+                  <span key={utility} className="rounded-full bg-mist px-3.5 py-1.5 text-sm font-medium text-navy">
                     {utility}
                   </span>
                 ))}

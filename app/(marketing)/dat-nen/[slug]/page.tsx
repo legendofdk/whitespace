@@ -64,9 +64,9 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#d7dfeb] bg-[linear-gradient(135deg,#f9f4ea_0%,#fbfdff_52%,#eef4fb_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.84),transparent_42%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(215,225,238,0.5),transparent_36%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#cedaeb] bg-[linear-gradient(135deg,#f3e2c2_0%,#f6faff_46%,#dde9f7_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,247,230,0.9),transparent_40%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(184,205,231,0.5),transparent_34%)]" />
         <div className="shell relative z-10">
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/dat-nen">Chuyển nhượng</Link> / {item.name}
@@ -82,9 +82,9 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      <section className="shell pb-[var(--space-section-y)] pt-8 sm:pt-10">
-        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-8">
+      <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
+        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
             <div className="section-reveal rounded-[30px] border border-line bg-[linear-gradient(135deg,#ffffff,#f4f7fb)] p-6 shadow-[0_18px_36px_rgba(24,39,75,0.08)]">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-navy">Giá bán tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-ink">
@@ -98,7 +98,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
               </p>
             </div>
 
-            <div className="section-reveal grid gap-3 sm:grid-cols-2">
+            <div className="section-reveal grid gap-2.5 sm:grid-cols-2">
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
@@ -107,16 +107,16 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
                 ["Tình trạng", item.isSold ? "Đã bán" : "Còn hàng"],
                 ["Loại hình", item.badge ?? "Chuyển nhượng"]
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[22px] border border-line bg-white/90 px-4 py-3.5">
+                <div key={label} className="rounded-[20px] border border-line bg-white/90 px-4 py-3">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-steel">{label}</p>
                   <p className="mt-1.5 text-[15px] font-semibold leading-6 text-ink">{value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-line bg-white p-8">
+            <div className="section-reveal rounded-[32px] border border-line bg-white p-6">
               <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
-              <div className="mt-6 space-y-4 text-sm leading-8 text-steel">
+              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
                 <HtmlContent html={item.description} className="max-w-none" />
                 <p>Thông tin nhanh: {item.cardMeta}.</p>
                 <p>Khu vực quan tâm: {item.area}, phù hợp nhu cầu giữ tài sản và theo dõi hạ tầng khu Đông Hà Nội.</p>
@@ -124,11 +124,11 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
             </div>
           </div>
 
-          <aside className="space-y-6">
-            <div className="section-reveal rounded-[32px] border border-[#30465d] bg-[#233449] p-8 text-white">
+          <aside className="space-y-5">
+            <div className="section-reveal rounded-[32px] border border-[#30465d] bg-[#233449] p-6 text-white">
               <p className="text-sm uppercase tracking-[0.22em] text-[#dbe4ef]">Hotline / Zalo</p>
               <p className="mt-3 text-4xl font-semibold">{item.hotline}</p>
-              <p className="mt-4 text-sm leading-7 text-[#dbe4ef]">
+              <p className="mt-3 text-sm leading-6 text-[#dbe4ef]">
                 Liên hệ để nhận vị trí chi tiết, pháp lý và tư vấn phù hợp với nhu cầu đầu tư hoặc giữ tài sản.
               </p>
             </div>
