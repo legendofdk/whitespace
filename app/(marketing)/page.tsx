@@ -277,7 +277,7 @@ export default async function HomePage() {
                       {latestPost.title}
                     </h3>
                     <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-200">{latestPost.excerpt}</p>
-                    <span className="mt-5 inline-flex rounded-full border border-[#2997ff] px-5 py-3 text-sm font-medium tracking-[-0.224px] text-[#2997ff] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                    <span className="mt-5 inline-flex rounded-[8px] border border-[#2997ff] px-5 py-3 text-sm font-medium tracking-[-0.224px] text-[#2997ff] transition group-hover:bg-[#0066cc] group-hover:text-white">
                       Xem chi tiết
                     </span>
                   </div>
@@ -302,7 +302,7 @@ export default async function HomePage() {
                       <div className="absolute inset-x-0 bottom-0 p-4 text-white">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-sand">{post.publishedAt}</p>
                         <h3 className="mt-2.5 font-display text-2xl leading-tight">{post.title}</h3>
-                        <span className="mt-3 inline-flex rounded-full border border-[#2997ff] px-4 py-2 text-sm font-medium tracking-[-0.224px] text-[#2997ff] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                        <span className="mt-3 inline-flex rounded-[8px] border border-[#2997ff] px-4 py-2 text-sm font-medium tracking-[-0.224px] text-[#2997ff] transition group-hover:bg-[#0066cc] group-hover:text-white">
                           Xem chi tiết
                         </span>
                       </div>

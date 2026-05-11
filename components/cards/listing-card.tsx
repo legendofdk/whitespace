@@ -52,7 +52,7 @@ export function ListingCard({ href, title, address, area, metric, price, image, 
           </div>
         ) : null}
         <div className="mt-auto pt-0.5">
-          <span className="inline-flex rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
+          <span className="inline-flex rounded-[8px] border border-ink px-4 py-2 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
             Xem chi tiết
           </span>
         </div>

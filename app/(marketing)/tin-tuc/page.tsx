@@ -78,7 +78,7 @@ export default async function NewsPage({
                   <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-200 sm:text-[15px]">
                     {latestPost.excerpt}
                   </p>
-                  <span className="mt-5 inline-flex rounded-full border border-[#2997ff] px-5 py-2.5 text-sm font-medium text-[#d8ebff] transition group-hover:bg-[#0066cc] group-hover:text-white">
+                  <span className="mt-5 inline-flex rounded-[8px] border border-[#2997ff] px-5 py-2.5 text-sm font-medium text-[#d8ebff] transition group-hover:bg-[#0066cc] group-hover:text-white">
                     Xem chi tiết
                   </span>
                 </div>
@@ -122,7 +122,7 @@ export default async function NewsPage({
                           </span>
                         </div>
                         <div className="flex lg:justify-end">
-                          <span className="inline-flex rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
+                          <span className="inline-flex rounded-[8px] border border-ink px-4 py-2 text-sm font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
                             Xem chi tiết
                           </span>
                         </div>
