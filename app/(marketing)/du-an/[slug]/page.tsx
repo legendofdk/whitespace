@@ -6,7 +6,7 @@ import { JsonLd } from "@/components/shared/json-ld";
 import { DetailGallery } from "@/components/shared/detail-gallery";
 import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
-import { formatAreaValue } from "@/lib/format-area";
+import { ProjectApartmentList } from "@/components/shared/project-apartment-list";
 import { getPublicProjectBySlug } from "@/lib/public-api";
 import { buildBreadcrumbSchema, buildMetadata, buildRealEstateWebPageSchema } from "@/lib/seo";
 
@@ -65,12 +65,14 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           })
         ]}
       />
-      <section className="border-b border-line bg-white py-14">
+      <section className="border-b border-line bg-white py-8 sm:py-10">
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-steel">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-steel sm:text-xs">
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
-          <h1 className="hero-animate hero-animate-delay-2 mt-4 max-w-4xl font-display text-5xl text-ink sm:text-6xl">{project.name}</h1>
+          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.5rem] leading-none text-ink sm:text-[3.25rem]">
+            {project.name}
+          </h1>
         </div>
       </section>
 
@@ -119,42 +121,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <div className="section-reveal rounded-[32px] border border-line p-8">
               <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
               {project.apartments?.length ? (
-                <div className="mt-6 grid gap-4">
-                  {project.apartments.map((apartment) => (
-                    <Link
-                      key={apartment.id}
-                      href={`/can-ho/${apartment.slug}`}
-                      className="content-lift rounded-[24px] border border-line bg-mist/70 p-5 transition hover:border-ink/20 hover:bg-mist"
-                    >
-                      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                        <div>
-                          <div className="flex flex-wrap items-center gap-3">
-                            <p className="text-2xl font-semibold text-ink">{apartment.name}</p>
-                            {apartment.isSold ? (
-                              <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-red-700">
-                                Đã bán
-                              </span>
-                            ) : null}
-                          </div>
-                          <p className="mt-1 text-sm text-steel">{apartment.rentalType ?? "Căn hộ"} • {apartment.status}</p>
-                        </div>
-                        <span className="inline-flex w-fit rounded-full border border-ink px-4 py-2 text-sm font-semibold text-ink">
-                          Xem chi tiết
-                        </span>
-                      </div>
-                      <div className="mt-5 grid gap-4 border-t border-line/80 pt-4 sm:grid-cols-2">
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Giá</p>
-                          <p className="mt-1 font-semibold text-ink">{apartment.price}</p>
-                        </div>
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-steel">Diện tích</p>
-                          <p className="mt-1 font-semibold text-ink">{formatAreaValue(apartment.size ?? "Đang cập nhật")}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                <ProjectApartmentList apartments={project.apartments} />
               ) : (
                 <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
               )}

@@ -63,17 +63,19 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
           })
         ]}
       />
-      <section className="border-b border-line bg-white py-14">
+      <section className="border-b border-line bg-white py-8 sm:py-10">
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-steel">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-steel sm:text-xs">
             <Link href="/cho-thue">Cho thuê</Link> / {item.name}
           </p>
           {item.isSold ? (
-            <span className="hero-animate hero-animate-delay-1 mt-5 inline-flex rounded-full bg-red-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-red-700">
+            <span className="hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-full bg-red-100 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-red-700">
               Đã bán
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-4 max-w-4xl font-display text-5xl text-ink sm:text-6xl">{item.name}</h1>
+          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.5rem] leading-none text-ink sm:text-[3.25rem]">
+            {item.name}
+          </h1>
         </div>
       </section>
 

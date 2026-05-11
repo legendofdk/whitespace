@@ -67,21 +67,23 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden bg-[#243349] py-20 text-white">
+      <section className="relative isolate overflow-hidden bg-[#243349] py-10 text-white sm:py-12">
         <div className="absolute inset-0 opacity-20">
           <Image src={heroImage} alt={item.name} fill className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(164,191,255,0.24),transparent_38%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-sm uppercase tracking-[0.22em] text-[#b8cdf4]">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#b8cdf4] sm:text-xs">
             {item.projectSlug ? <Link href={`/du-an/${item.projectSlug}`}>{item.projectName ?? "Dự án"}</Link> : <span>Căn hộ</span>} / {item.name}
           </p>
           {item.isSold ? (
-            <span className="hero-animate hero-animate-delay-1 mt-5 inline-flex rounded-full bg-[#ffe0dc] px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8f2d1f]">
+            <span className="hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-full bg-[#ffe0dc] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#8f2d1f]">
               Đã bán
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-6 max-w-4xl font-display text-6xl">{item.name}</h1>
+          <h1 className="hero-animate hero-animate-delay-2 mt-3 max-w-4xl font-display text-[2.6rem] leading-none sm:text-[3.4rem]">
+            {item.name}
+          </h1>
         </div>
       </section>
 
