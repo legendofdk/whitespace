@@ -66,9 +66,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#cedaeb] bg-[linear-gradient(135deg,#f4e4c7_0%,#f2f7ff_46%,#dce9f7_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,248,235,0.88),transparent_40%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(181,204,232,0.52),transparent_34%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#c4d3e6] bg-[linear-gradient(135deg,#e7d2a8_0%,#e8f0fb_44%,#c9dcf0_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,234,205,0.72),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(145,176,214,0.44),transparent_34%)]" />
         <div className="shell relative z-10">
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/du-an">Dự án</Link> / {project.name}

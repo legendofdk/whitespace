@@ -63,9 +63,9 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#cedaeb] bg-[linear-gradient(135deg,#f1dfbf_0%,#f5f9ff_46%,#d9e7f6_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,246,228,0.88),transparent_40%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(177,201,230,0.5),transparent_34%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#c4d3e6] bg-[linear-gradient(135deg,#e4cea2_0%,#eaf2fc_44%,#c6d9ee_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(247,231,199,0.72),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(142,173,210,0.42),transparent_34%)]" />
         <div className="shell relative z-10">
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/cho-thue">Cho thuê</Link> / {item.name}

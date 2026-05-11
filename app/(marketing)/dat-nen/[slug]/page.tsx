@@ -64,9 +64,9 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#cedaeb] bg-[linear-gradient(135deg,#f3e2c2_0%,#f6faff_46%,#dde9f7_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,247,230,0.9),transparent_40%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(184,205,231,0.5),transparent_34%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#c4d3e6] bg-[linear-gradient(135deg,#e7d1a6_0%,#ecf3fc_44%,#cadcef_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,233,203,0.74),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(146,176,213,0.42),transparent_34%)]" />
         <div className="shell relative z-10">
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/dat-nen">Chuyển nhượng</Link> / {item.name}
