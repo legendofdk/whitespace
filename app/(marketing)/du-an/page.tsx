@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import { ProjectCard } from "@/components/cards/project-card";
 import { FeaturedProjectHeroCarousel } from "@/components/shared/featured-project-hero-carousel";
 import { FilterBar } from "@/components/shared/filter-bar";
-import { getPublicProjects } from "@/lib/public-api";
+import { ListingShortcuts } from "@/components/shared/listing-shortcuts";
+import { getPublicLandListings, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { buildMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -19,15 +20,39 @@ export default async function ProjectsPage({
   searchParams: Promise<{ featured?: string; area?: string; propertyType?: string; sort?: string }>;
 }) {
   const params = await searchParams;
-  const [featuredProjects, filteredProjects] = await Promise.all([
+  const [featuredProjects, filteredProjects, featuredLandListings, featuredRentals] = await Promise.all([
     getPublicProjects({ featured: true }),
     getPublicProjects({
       featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
       area: params.area || undefined,
       propertyType: params.propertyType || undefined,
       sort: params.sort || undefined
-    })
+    }),
+    getPublicLandListings({ featured: true }),
+    getPublicRentals({ featured: true })
   ]);
+  const projectShortcutLinks = featuredProjects.slice(0, 5).map((project) => ({
+    label: project.name,
+    href: `/du-an/${project.slug}`
+  }));
+  const featuredLandCounts = Array.from(
+    featuredLandListings.reduce((map, item) => {
+      const key = item.areaSlug ?? item.area;
+      const current = map.get(key);
+      map.set(key, { area: item.area, areaSlug: item.areaSlug ?? "", count: (current?.count ?? 0) + 1 });
+      return map;
+    }, new Map<string, { area: string; areaSlug: string; count: number }>())
+      .values()
+  );
+  const featuredRentalCounts = Array.from(
+    featuredRentals.reduce((map, item) => {
+      const key = item.areaSlug ?? item.area;
+      const current = map.get(key);
+      map.set(key, { area: item.area, areaSlug: item.areaSlug ?? "", count: (current?.count ?? 0) + 1 });
+      return map;
+    }, new Map<string, { area: string; areaSlug: string; count: number }>())
+      .values()
+  );
 
   return (
     <main className="bg-mist pb-16">
@@ -92,10 +117,34 @@ export default async function ProjectsPage({
       </section>
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
-        <div className="grid gap-5 lg:grid-cols-3">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="grid gap-5 lg:grid-cols-3">
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+          <ListingShortcuts
+            sections={[
+              {
+                title: "Dự án nổi bật",
+                links: projectShortcutLinks
+              },
+              {
+                title: "Chuyển nhượng nổi bật",
+                links: featuredLandCounts.map((item) => ({
+                  label: `${item.area} (${item.count})`,
+                  href: `/dat-nen?featured=true${item.areaSlug ? `&area=${item.areaSlug}` : ""}`
+                }))
+              },
+              {
+                title: "Cho thuê nổi bật",
+                links: featuredRentalCounts.map((item) => ({
+                  label: `${item.area} (${item.count})`,
+                  href: `/cho-thue?featured=true${item.areaSlug ? `&area=${item.areaSlug}` : ""}`
+                }))
+              }
+            ]}
+          />
         </div>
       </section>
     </main>

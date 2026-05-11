@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import { ListingCard } from "@/components/cards/listing-card";
 import { FilterBar } from "@/components/shared/filter-bar";
-import { getPublicLandListings } from "@/lib/public-api";
+import { ListingShortcuts } from "@/components/shared/listing-shortcuts";
+import { getPublicLandListings, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
 import { buildMetadata } from "@/lib/seo";
 
@@ -20,12 +21,39 @@ export default async function LandPage({
   searchParams: Promise<{ area?: string; featured?: string; propertyType?: string; sort?: string }>;
 }) {
   const params = await searchParams;
-  const filteredLandListings = await getPublicLandListings({
-    area: params.area,
-    featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
-    propertyType: params.propertyType || undefined,
-    sort: params.sort || undefined
-  });
+  const [filteredLandListings, featuredProjects, featuredLandListings, featuredRentals] = await Promise.all([
+    getPublicLandListings({
+      area: params.area,
+      featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
+      propertyType: params.propertyType || undefined,
+      sort: params.sort || undefined
+    }),
+    getPublicProjects({ featured: true }),
+    getPublicLandListings({ featured: true }),
+    getPublicRentals({ featured: true })
+  ]);
+  const projectShortcutLinks = featuredProjects.slice(0, 5).map((project) => ({
+    label: project.name,
+    href: `/du-an/${project.slug}`
+  }));
+  const featuredLandCounts = Array.from(
+    featuredLandListings.reduce((map, item) => {
+      const key = item.areaSlug ?? item.area;
+      const current = map.get(key);
+      map.set(key, { area: item.area, areaSlug: item.areaSlug ?? "", count: (current?.count ?? 0) + 1 });
+      return map;
+    }, new Map<string, { area: string; areaSlug: string; count: number }>())
+      .values()
+  );
+  const featuredRentalCounts = Array.from(
+    featuredRentals.reduce((map, item) => {
+      const key = item.areaSlug ?? item.area;
+      const current = map.get(key);
+      map.set(key, { area: item.area, areaSlug: item.areaSlug ?? "", count: (current?.count ?? 0) + 1 });
+      return map;
+    }, new Map<string, { area: string; areaSlug: string; count: number }>())
+      .values()
+  );
 
   return (
     <main className="bg-mist pb-16">
@@ -81,26 +109,50 @@ export default async function LandPage({
       </section>
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {filteredLandListings.map((item) => {
-            const cardItem = toLandCardItem(item);
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-2">
+            {filteredLandListings.map((item) => {
+              const cardItem = toLandCardItem(item);
 
-            return (
-              <ListingCard
-                key={item.id}
-                href={cardItem.href}
-                title={cardItem.name}
-                address={cardItem.address}
-                area={cardItem.area}
-                badge={cardItem.badge}
-                isSold={cardItem.isSold}
-                metric={cardItem.cardMeta}
-                price={cardItem.price}
-                image={cardItem.thumbnail}
-                description={cardItem.description}
-              />
-            );
-          })}
+              return (
+                <ListingCard
+                  key={item.id}
+                  href={cardItem.href}
+                  title={cardItem.name}
+                  address={cardItem.address}
+                  area={cardItem.area}
+                  badge={cardItem.badge}
+                  isSold={cardItem.isSold}
+                  metric={cardItem.cardMeta}
+                  price={cardItem.price}
+                  image={cardItem.thumbnail}
+                  description={cardItem.description}
+                />
+              );
+            })}
+          </div>
+          <ListingShortcuts
+            sections={[
+              {
+                title: "Dự án nổi bật",
+                links: projectShortcutLinks
+              },
+              {
+                title: "Chuyển nhượng nổi bật",
+                links: featuredLandCounts.map((item) => ({
+                  label: `${item.area} (${item.count})`,
+                  href: `/dat-nen?featured=true${item.areaSlug ? `&area=${item.areaSlug}` : ""}`
+                }))
+              },
+              {
+                title: "Cho thuê nổi bật",
+                links: featuredRentalCounts.map((item) => ({
+                  label: `${item.area} (${item.count})`,
+                  href: `/cho-thue?featured=true${item.areaSlug ? `&area=${item.areaSlug}` : ""}`
+                }))
+              }
+            ]}
+          />
         </div>
       </section>
     </main>

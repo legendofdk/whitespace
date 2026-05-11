@@ -7,6 +7,7 @@ export type RealEstateBase = {
   name: string;
   kind: RealEstateKind;
   area: string;
+  areaSlug?: string;
   address: string;
   coordinates: {
     lat: number;

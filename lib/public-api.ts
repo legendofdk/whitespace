@@ -16,6 +16,7 @@ type BackendProject = {
   kind?: string;
   name: string;
   area: string;
+  areaSlug?: string;
   address: string;
   price: string;
   hotline: string;
@@ -60,6 +61,7 @@ type BackendLandListing = {
   kind?: string;
   name: string;
   area: string;
+  areaSlug?: string;
   address: string;
   acreage?: string | null;
   legal?: string | null;
@@ -86,6 +88,7 @@ type BackendRental = {
   kind?: string;
   name: string;
   area: string;
+  areaSlug?: string;
   address: string;
   size?: string | null;
   rentalType?: string | null;
@@ -160,6 +163,7 @@ function mapProject(item: BackendProject): Project {
     name: item.name,
     kind: "project",
     area: item.area,
+    areaSlug: item.areaSlug,
     address: item.address,
     coordinates: withFallbackCoordinates(item.coordinates),
     price: item.price,
@@ -206,6 +210,7 @@ function mapLandListing(item: BackendLandListing): LandListing {
     name: item.name,
     kind: "land",
     area: item.area,
+    areaSlug: item.areaSlug,
     address: item.address,
     coordinates: withFallbackCoordinates(item.coordinates),
     price: item.price,
@@ -234,6 +239,7 @@ function mapRental(item: BackendRental): RentalListing {
     name: item.name,
     kind: "rental",
     area: item.area,
+    areaSlug: item.areaSlug,
     address: item.address,
     coordinates: withFallbackCoordinates(item.coordinates),
     price: item.price,
@@ -262,6 +268,7 @@ function mapApartment(item: BackendApartment): ApartmentListing {
     name: item.name,
     kind: "apartment",
     area: item.area,
+    areaSlug: item.areaSlug,
     address: item.address,
     coordinates: withFallbackCoordinates(item.coordinates),
     price: item.price,
