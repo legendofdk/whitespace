@@ -122,7 +122,7 @@ export default async function ProjectsPage({
       </section>
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_248px]">
+        <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_248px]">
           <div className="grid gap-5 lg:grid-cols-3">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
