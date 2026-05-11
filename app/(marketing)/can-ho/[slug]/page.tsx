@@ -67,13 +67,14 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden bg-[#243349] py-10 text-white sm:py-12">
-        <div className="absolute inset-0 opacity-20">
+      <section className="relative isolate overflow-hidden border-b border-[#d7dfeb] bg-[linear-gradient(135deg,#eef3fa_0%,#f6f9fd_50%,#e8f0fb_100%)] py-10 sm:py-12">
+        <div className="absolute inset-0 opacity-[0.1]">
           <Image src={heroImage} alt={item.name} fill className="object-cover" />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(164,191,255,0.24),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(174,198,234,0.32),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.7),transparent_42%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#b8cdf4] sm:text-xs">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6b7e99] sm:text-xs">
             {item.projectSlug ? <Link href={`/du-an/${item.projectSlug}`}>{item.projectName ?? "Dự án"}</Link> : <span>Căn hộ</span>} / {item.name}
           </p>
           {item.isSold ? (
@@ -81,13 +82,13 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               Đã bán
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-3 max-w-4xl font-display text-[2.6rem] leading-none sm:text-[3.4rem]">
+          <h1 className="hero-animate hero-animate-delay-2 mt-3 max-w-4xl font-display text-[2.2rem] leading-none text-[#16233a] sm:text-[2.95rem]">
             {item.name}
           </h1>
         </div>
       </section>
 
-      <section className="shell section-gap">
+      <section className="shell pb-[var(--space-section-y)] pt-8 sm:pt-10">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
             <div className="section-reveal rounded-[30px] border border-[#d8e2f2] bg-[linear-gradient(135deg,#ffffff,#e9f0fb)] p-6 shadow-[0_18px_36px_rgba(60,91,145,0.12)]">

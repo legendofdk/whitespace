@@ -64,9 +64,11 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
           })
         ]}
       />
-      <section className="border-b border-line bg-white py-8 sm:py-10">
+      <section className="relative isolate overflow-hidden border-b border-[#d7dfeb] bg-[linear-gradient(135deg,#f9f4ea_0%,#fbfdff_52%,#eef4fb_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.84),transparent_42%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(215,225,238,0.5),transparent_36%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-steel sm:text-xs">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/dat-nen">Chuyển nhượng</Link> / {item.name}
           </p>
           {item.isSold ? (
@@ -74,13 +76,13 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
               Đã bán
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.5rem] leading-none text-ink sm:text-[3.25rem]">
+          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-[#16233a] sm:text-[2.85rem]">
             {item.name}
           </h1>
         </div>
       </section>
 
-      <section className="shell section-gap">
+      <section className="shell pb-[var(--space-section-y)] pt-8 sm:pt-10">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
             <div className="section-reveal rounded-[30px] border border-line bg-[linear-gradient(135deg,#ffffff,#f4f7fb)] p-6 shadow-[0_18px_36px_rgba(24,39,75,0.08)]">

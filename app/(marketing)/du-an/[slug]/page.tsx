@@ -65,18 +65,20 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           })
         ]}
       />
-      <section className="border-b border-line bg-white py-8 sm:py-10">
+      <section className="relative isolate overflow-hidden border-b border-[#d7dfeb] bg-[linear-gradient(135deg,#f7f2e8_0%,#f8fbff_52%,#eef4fb_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.82),transparent_42%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(212,225,242,0.55),transparent_36%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-steel sm:text-xs">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
-          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.5rem] leading-none text-ink sm:text-[3.25rem]">
+          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-[#16233a] sm:text-[2.85rem]">
             {project.name}
           </h1>
         </div>
       </section>
 
-      <section className="shell section-gap">
+      <section className="shell pb-[var(--space-section-y)] pt-8 sm:pt-10">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-8">
             <div className="section-reveal rounded-[24px] border border-[#e4c58a] bg-[radial-gradient(circle_at_top_left,#fff8e8,transparent_45%),linear-gradient(135deg,#fff4dc,#ffe6aa)] px-5 py-4 shadow-[0_16px_28px_rgba(191,138,38,0.14)]">
