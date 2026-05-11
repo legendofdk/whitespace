@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { ProjectCard } from "@/components/cards/project-card";
-import { FeaturedProjectCarousel } from "@/components/shared/featured-project-carousel";
+import { FeaturedProjectHeroCarousel } from "@/components/shared/featured-project-hero-carousel";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { getPublicProjects } from "@/lib/public-api";
 import { buildMetadata } from "@/lib/seo";
@@ -29,7 +29,13 @@ export default async function ProjectsPage({
 
   return (
     <main className="bg-mist pb-16">
-      <section className="shell pt-8 sm:pt-10">
+      {featuredProjects.length ? (
+        <section className="pt-4 sm:pt-5">
+          <FeaturedProjectHeroCarousel projects={featuredProjects} />
+        </section>
+      ) : null}
+
+      <section className="shell pt-5 sm:pt-6">
         <FilterBar
           action="/du-an"
           showSearch={false}
@@ -57,14 +63,6 @@ export default async function ProjectsPage({
           ]}
         />
       </section>
-
-      {featuredProjects.length ? (
-        <section className="shell pt-5 sm:pt-6">
-          <div className="overflow-hidden rounded-[32px] border border-line bg-white py-5 shadow-[0_18px_40px_rgba(15,23,42,0.06)] sm:py-6">
-            <FeaturedProjectCarousel projects={featuredProjects} />
-          </div>
-        </section>
-      ) : null}
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
         <div className="grid gap-5 lg:grid-cols-3">
