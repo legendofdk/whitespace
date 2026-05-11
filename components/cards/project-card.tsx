@@ -16,7 +16,7 @@ export function ProjectCard({ project }: { project: Project }) {
             <h3 className="line-clamp-2 min-h-[3.5rem] text-[20px] font-medium leading-[1.35] tracking-[-0.2px] text-[#222]">
               {project.name}
             </h3>
-            <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-[15px] font-medium leading-[1.4] text-[#e4472f]">
+            <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-[15px] font-medium leading-[1.4] text-[#0066cc]">
               {project.cardMeta || project.address}
             </p>
           </div>

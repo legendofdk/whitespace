@@ -44,13 +44,13 @@ export function FilterBar({
           : "lg:grid-cols-[auto]";
 
   const fieldClassName =
-    "relative flex h-14 items-center rounded-[22px] border border-line/80 bg-white/92 px-4 text-sm text-ink shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition focus-within:border-navy/60 focus-within:shadow-[0_14px_30px_rgba(15,23,42,0.08)]";
+    "relative flex h-12 items-center rounded-[20px] border border-line/80 bg-white/92 px-3.5 text-sm text-ink shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition focus-within:border-navy/60 focus-within:shadow-[0_14px_30px_rgba(15,23,42,0.08)]";
 
   return (
-    <form action={action} className="glass-card p-5 sm:p-6">
-      <div className={`grid gap-4 ${gridClass}`}>
+    <form action={action} className="glass-card p-4 sm:p-5">
+      <div className={`grid gap-3 ${gridClass}`}>
         {showSearch ? (
-          <label className="grid gap-2">
+          <label className="grid gap-1.5">
             <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel">Từ khóa</span>
             <span className={fieldClassName}>
               <span className="mr-3 text-base text-steel" aria-hidden="true">⌕</span>
@@ -65,7 +65,7 @@ export function FilterBar({
           </label>
         ) : null}
         {filters.map((field) => (
-          <label key={field.name} className="grid gap-2">
+          <label key={field.name} className="grid gap-1.5">
             <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-steel">{field.label}</span>
             <span className={fieldClassName}>
               <select
@@ -83,7 +83,7 @@ export function FilterBar({
             </span>
           </label>
         ))}
-        <button className="h-14 self-end rounded-full bg-[#0066cc] px-6 text-sm font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
+        <button className="h-12 self-end rounded-full bg-[#0066cc] px-5 text-sm font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
           Tìm kiếm
         </button>
       </div>
