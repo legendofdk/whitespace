@@ -62,7 +62,7 @@ export default async function RentalPage({
 
   return (
     <main className="bg-mist pb-16">
-      <section className="shell pt-8 sm:pt-10">
+      <section className="shell pt-6 sm:pt-7">
         <FilterBar
           action="/cho-thue"
           showSearch={false}
@@ -111,14 +111,14 @@ export default async function RentalPage({
             }
           ]}
         />
-        <p className="mt-3 text-sm font-medium text-steel">
+        <p className="mt-2.5 text-sm font-medium text-steel">
           Hiện đang có {filteredRentals.length.toLocaleString("vi-VN")} sản phẩm cho thuê
         </p>
       </section>
 
-      <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_248px]">
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      <section className="shell pb-10 pt-4 sm:pb-12 sm:pt-5">
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_248px]">
+          <div className="grid gap-4.5 md:grid-cols-2 xl:grid-cols-3">
             {filteredRentals.map((item) => {
               const cardItem = toRentalCardItem(item);
 

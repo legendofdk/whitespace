@@ -82,10 +82,10 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
         </div>
       </section>
 
-      <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
-        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6">
-            <div className="section-reveal rounded-[30px] border border-line bg-[linear-gradient(135deg,#ffffff,#f4f7fb)] p-6 shadow-[0_18px_36px_rgba(24,39,75,0.08)]">
+      <section className="shell pb-[var(--space-section-y-tight)] pt-5 sm:pt-6">
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-4.5">
+            <div className="section-reveal rounded-[30px] border border-line bg-[linear-gradient(135deg,#ffffff,#f4f7fb)] p-5 shadow-[0_18px_36px_rgba(24,39,75,0.08)]">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-navy">Giá bán tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-ink">
                 {item.price}
@@ -98,7 +98,7 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
               </p>
             </div>
 
-            <div className="section-reveal grid gap-2.5 sm:grid-cols-2">
+            <div className="section-reveal grid gap-2 sm:grid-cols-2">
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
@@ -114,9 +114,9 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
               ))}
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-line bg-white p-6">
+            <div className="section-reveal rounded-[32px] border border-line bg-white p-5">
               <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
-              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
+              <div className="mt-4 space-y-2.5 text-sm leading-7 text-steel">
                 <HtmlContent html={item.description} className="max-w-none" />
                 <p>Thông tin nhanh: {item.cardMeta}.</p>
                 <p>Khu vực quan tâm: {item.area}, phù hợp nhu cầu giữ tài sản và theo dõi hạ tầng khu Đông Hà Nội.</p>
@@ -124,8 +124,8 @@ export default async function LandDetailPage({ params }: { params: Promise<{ slu
             </div>
           </div>
 
-          <aside className="space-y-5">
-            <div className="section-reveal rounded-[32px] border border-[#30465d] bg-[#233449] p-6 text-white">
+          <aside className="space-y-4">
+            <div className="section-reveal rounded-[32px] border border-[#30465d] bg-[#233449] p-5 text-white">
               <p className="text-sm uppercase tracking-[0.22em] text-[#dbe4ef]">Hotline / Zalo</p>
               <p className="mt-3 text-4xl font-semibold">{item.hotline}</p>
               <p className="mt-3 text-sm leading-6 text-[#dbe4ef]">

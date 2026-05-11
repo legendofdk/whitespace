@@ -67,7 +67,7 @@ export default async function ProjectsPage({
         </section>
       ) : null}
 
-      <section className="shell pt-5 sm:pt-6">
+      <section className="shell pt-4 sm:pt-5">
         <FilterBar
           action="/du-an"
           showSearch={false}
@@ -116,14 +116,14 @@ export default async function ProjectsPage({
             }
           ]}
         />
-        <p className="mt-3 text-sm font-medium text-steel">
+        <p className="mt-2.5 text-sm font-medium text-steel">
           Hiện đang có {filteredProjects.length.toLocaleString("vi-VN")} dự án
         </p>
       </section>
 
-      <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_248px]">
-          <div className="grid gap-5 lg:grid-cols-3">
+      <section className="shell pb-10 pt-4 sm:pb-12 sm:pt-5">
+        <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_248px]">
+          <div className="grid gap-4.5 lg:grid-cols-3">
             {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}

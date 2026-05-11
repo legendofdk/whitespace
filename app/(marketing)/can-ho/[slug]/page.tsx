@@ -88,10 +88,10 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
         </div>
       </section>
 
-      <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
-        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-6">
-            <div className="section-reveal rounded-[30px] border border-[#d8e2f2] bg-[linear-gradient(135deg,#ffffff,#e9f0fb)] p-6 shadow-[0_18px_36px_rgba(60,91,145,0.12)]">
+      <section className="shell pb-[var(--space-section-y-tight)] pt-5 sm:pt-6">
+        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-4.5">
+            <div className="section-reveal rounded-[30px] border border-[#d8e2f2] bg-[linear-gradient(135deg,#ffffff,#e9f0fb)] p-5 shadow-[0_18px_36px_rgba(60,91,145,0.12)]">
               <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#4c6790]">Giá tham khảo</p>
               <p className="mt-3 font-display text-5xl leading-none text-[#21314a]">
                 {item.price}
@@ -104,7 +104,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               </p>
             </div>
 
-            <div className="section-reveal grid gap-3 sm:grid-cols-2">
+            <div className="section-reveal grid gap-2.5 sm:grid-cols-2">
               {[
                 ["Dự án", item.projectName ?? "Đang cập nhật"],
                 ["Khu vực", item.area],
@@ -113,24 +113,24 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
                 ["Tình trạng bán", item.isSold ? "Đã bán" : "Còn hàng"],
                 ["Thông tin nhanh", item.cardMeta]
               ].map(([label, value]) => (
-                <div key={label} className="rounded-[24px] border border-[#d8e2f2] bg-white p-5">
+                <div key={label} className="rounded-[24px] border border-[#d8e2f2] bg-white p-4.5">
                   <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#6881a8]">{label}</p>
                   <p className="mt-2 text-lg font-semibold text-[#21314a]">{value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-[#d8e2f2] bg-white p-6">
+            <div className="section-reveal rounded-[32px] border border-[#d8e2f2] bg-white p-5">
               <h2 className="font-display text-4xl text-[#21314a]">Thông tin chi tiết</h2>
-              <div className="mt-5 space-y-3 text-sm leading-7 text-[#60758f]">
+              <div className="mt-4 space-y-2.5 text-sm leading-7 text-[#60758f]">
                 <HtmlContent html={item.description} className="max-w-none" />
                 <p>Thông tin nhanh: {item.cardMeta}.</p>
               </div>
             </div>
           </div>
 
-          <aside className="space-y-5">
-            <div className="section-reveal rounded-[32px] border border-[#314662] bg-[#23344c] p-6 text-white">
+          <aside className="space-y-4">
+            <div className="section-reveal rounded-[32px] border border-[#314662] bg-[#23344c] p-5 text-white">
               <p className="text-sm uppercase tracking-[0.22em] text-[#b8cdf4]">Hotline / Zalo</p>
               <p className="mt-3 text-4xl font-semibold">{item.hotline}</p>
               <p className="mt-3 text-sm leading-6 text-[#d9e4f2]">Liên hệ để nhận thông tin căn hộ chi tiết và lịch xem thực tế.</p>
