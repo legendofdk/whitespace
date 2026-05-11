@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { getProjectDisplayStatusClassName, getProjectDisplayStatusLabel } from "@/lib/project-display-status";
 import type { Project } from "@/types";
 
 export function FeaturedProjectHeroCarousel({ projects }: { projects: Project[] }) {
@@ -51,6 +52,11 @@ export function FeaturedProjectHeroCarousel({ projects }: { projects: Project[] 
           key={activeProject.id}
           className="max-w-3xl animate-[fade-slide-in_700ms_ease-out]"
         >
+          {activeProject.projectStatusTag ? (
+            <span className={`mb-4 inline-flex rounded-full px-4 py-1.5 text-sm font-semibold ${getProjectDisplayStatusClassName(activeProject.projectStatusTag)}`}>
+              {getProjectDisplayStatusLabel(activeProject.projectStatusTag)}
+            </span>
+          ) : null}
           <h2 className="font-display text-[2.25rem] leading-[1.02] text-white sm:text-[3.25rem]">
             {activeProject.name}
           </h2>

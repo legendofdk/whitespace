@@ -47,6 +47,7 @@ function mapProject(item: Prisma.PropertyGetPayload<{ include: typeof projectInc
     hotline: item.hotline,
     badge: item.badge,
     cardMeta: item.cardMeta,
+    projectStatusTag: item.projectStatusTag,
     apartments: item.apartments.map((apartment) => ({
       id: apartment.id,
       name: apartment.name,
@@ -187,6 +188,7 @@ export async function createProject(input: ProjectBodyInput) {
       longitude: input.longitude,
       badge: input.badge,
       cardMeta: input.cardMeta,
+      projectStatusTag: input.projectStatusTag === "NONE" ? null : input.projectStatusTag,
       utilities: {
         create: input.utilities.map((label) => ({ label }))
       },
@@ -263,6 +265,7 @@ export async function updateProject(slug: string, input: ProjectBodyInput) {
       longitude: input.longitude,
       badge: input.badge,
       cardMeta: input.cardMeta,
+      projectStatusTag: input.projectStatusTag === "NONE" ? null : input.projectStatusTag,
       utilities: {
         deleteMany: {},
         create: input.utilities.map((label) => ({ label }))

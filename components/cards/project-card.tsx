@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { HtmlContent } from "@/components/shared/html-content";
+import { getProjectDisplayStatusClassName, getProjectDisplayStatusLabel } from "@/lib/project-display-status";
 import { Project } from "@/types";
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -13,6 +14,11 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="flex flex-1 flex-col p-4">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
+            {project.projectStatusTag ? (
+              <span className={`mb-2 inline-flex rounded-full px-3 py-1 text-[11px] font-semibold ${getProjectDisplayStatusClassName(project.projectStatusTag)}`}>
+                {getProjectDisplayStatusLabel(project.projectStatusTag)}
+              </span>
+            ) : null}
             <h3 className="line-clamp-2 min-h-[3.5rem] text-[20px] font-medium leading-[1.35] tracking-[-0.2px] text-[#222]">
               {project.name}
             </h3>

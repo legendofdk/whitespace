@@ -1,4 +1,5 @@
 export type RealEstateKind = "project" | "land" | "rental" | "apartment";
+export type ProjectDisplayStatus = "NONE" | "ON_SALE" | "COMING_SOON" | "HANDED_OVER";
 
 export type RealEstateBase = {
   id: string;
@@ -48,6 +49,7 @@ export type Project = RealEstateBase & {
   floorPlanImages?: string[];
   seoTitle?: string;
   seoDescription?: string;
+  projectStatusTag?: Exclude<ProjectDisplayStatus, "NONE">;
 };
 
 export type LandListing = RealEstateBase & {

@@ -13,6 +13,7 @@ import { slugify } from "./slug";
 import { fetchAdminApi } from "./admin-api";
 import type { AreaOption } from "./area-options";
 import { useUnsavedChangesRegistration } from "./unsaved-changes-provider";
+import { PROJECT_DISPLAY_STATUS_OPTIONS } from "@/lib/project-display-status";
 
 const PRODUCT_TYPE_OPTIONS = ["Chung cư", "Biệt thự", "Shophouse", "Liền kề"] as const;
 
@@ -41,6 +42,7 @@ const initialForm = {
   seoTitle: "",
   seoDescription: "",
   status: "PUBLISHED",
+  projectStatusTag: "NONE",
   latitude: "",
   longitude: "",
   badge: "",
@@ -142,6 +144,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           seoTitle?: string | null;
           seoDescription?: string | null;
           status: string;
+          projectStatusTag?: string | null;
           coordinates?: { lat: number; lng: number } | null;
           badge?: string | null;
           cardMeta?: string | null;
@@ -172,6 +175,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
           seoTitle: item.seoTitle ?? "",
           seoDescription: item.seoDescription ?? "",
           status: item.status,
+          projectStatusTag: item.projectStatusTag ?? "NONE",
           latitude: item.coordinates?.lat?.toString() ?? "",
           longitude: item.coordinates?.lng?.toString() ?? "",
           badge: item.badge ?? "",
@@ -223,6 +227,7 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
         startTime: form.startTime.trim() || undefined,
         handoverTime: form.handoverTime.trim() || undefined,
         ownership: form.ownership.trim() || undefined,
+        projectStatusTag: form.projectStatusTag || "NONE",
         badge: form.badge.trim() || undefined,
         cardMeta: form.cardMeta.trim() || undefined
       };
@@ -350,6 +355,20 @@ export function ProjectEditor({ slug }: ProjectEditorProps) {
               className="h-4 w-4 rounded border-line"
             />
             Dự án nổi bật
+          </label>
+          <label className={fieldClassName}>
+            <FieldLabel label="Trạng thái hiển thị" className={labelClassName} />
+            <select
+              value={form.projectStatusTag}
+              onChange={(e) => setForm((c) => ({ ...c, projectStatusTag: e.target.value }))}
+              className="h-12 rounded-full border border-line px-5 text-sm outline-none"
+            >
+              {PROJECT_DISPLAY_STATUS_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
           <label className={`${fieldClassName} xl:col-span-2`}>
             <FieldLabel label="Loại sản phẩm" required className={labelClassName} />

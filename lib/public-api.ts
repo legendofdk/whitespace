@@ -26,6 +26,7 @@ type BackendProject = {
   isFeatured: boolean;
   badge?: string | null;
   cardMeta?: string | null;
+  projectStatusTag?: string | null;
   coordinates?: BackendCoordinates;
   investor?: string | null;
   bannerImage?: string | null;
@@ -170,6 +171,7 @@ function mapProject(item: BackendProject): Project {
     isFeatured: item.isFeatured,
     badge: item.badge ?? undefined,
     cardMeta: item.cardMeta ?? "",
+    projectStatusTag: item.projectStatusTag && item.projectStatusTag !== "NONE" ? (item.projectStatusTag as Project["projectStatusTag"]) : undefined,
     updatedAt: item.updatedAt ?? undefined,
     investor: normalizeOptionalText(item.investor) ?? "Đang cập nhật",
     bannerImage: item.bannerImage ?? item.thumbnail,

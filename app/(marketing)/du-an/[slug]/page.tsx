@@ -8,6 +8,7 @@ import { HtmlContent } from "@/components/shared/html-content";
 import { MapNearbyPanel } from "@/components/shared/map-nearby-panel";
 import { ProjectApartmentList } from "@/components/shared/project-apartment-list";
 import { getPublicProjectBySlug } from "@/lib/public-api";
+import { getProjectDisplayStatusClassName, getProjectDisplayStatusLabel } from "@/lib/project-display-status";
 import { buildBreadcrumbSchema, buildMetadata, buildRealEstateWebPageSchema } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
@@ -72,6 +73,11 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
+          {project.projectStatusTag ? (
+            <span className={`hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] ${getProjectDisplayStatusClassName(project.projectStatusTag)}`}>
+              {getProjectDisplayStatusLabel(project.projectStatusTag)}
+            </span>
+          ) : null}
           <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-[#16233a] sm:text-[2.85rem]">
             {project.name}
           </h1>

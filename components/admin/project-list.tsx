@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { getProjectDisplayStatusClassName, getProjectDisplayStatusLabel } from "@/lib/project-display-status";
 import { fetchAdminApi } from "./admin-api";
 
 type ProjectItem = {
@@ -13,6 +14,7 @@ type ProjectItem = {
   price: string;
   status: string;
   isFeatured: boolean;
+  projectStatusTag?: "ON_SALE" | "COMING_SOON" | "HANDED_OVER" | null;
 };
 
 export function ProjectList() {
@@ -123,6 +125,11 @@ export function ProjectList() {
                 </div>
                 <div className="flex items-center gap-2">
                   {item.isFeatured ? <span className="rounded-full bg-sand px-3 py-1 text-xs font-semibold text-ink">Nổi bật</span> : null}
+                  {item.projectStatusTag ? (
+                    <span className={`rounded-full px-3 py-1 text-xs font-semibold ${getProjectDisplayStatusClassName(item.projectStatusTag)}`}>
+                      {getProjectDisplayStatusLabel(item.projectStatusTag)}
+                    </span>
+                  ) : null}
                   <button
                     type="button"
                     onClick={() => void handleDelete(item)}

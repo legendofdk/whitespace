@@ -41,6 +41,7 @@ model Property {
   hotline          String
   badge            String?
   cardMeta         String?
+  projectStatusTag String?
   description      String
   thumbnail        String
   thumbnailPublicId String?
