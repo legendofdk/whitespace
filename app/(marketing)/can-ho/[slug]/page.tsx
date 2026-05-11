@@ -67,14 +67,14 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#bfd0e3] bg-[linear-gradient(135deg,#c7d9ef_0%,#dde9f7_48%,#b7cee8_100%)] py-10 sm:py-12">
+      <section className="relative isolate overflow-hidden border-b border-[#223552] bg-[linear-gradient(135deg,#102039_0%,#1a3255_48%,#294970_100%)] py-10 sm:py-12">
         <div className="absolute inset-0 opacity-[0.1]">
           <Image src={heroImage} alt={item.name} fill className="object-cover" />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(109,146,194,0.34),transparent_36%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(241,247,255,0.44),transparent_40%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(102,136,184,0.32),transparent_36%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(208,225,247,0.14),transparent_40%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6b7e99] sm:text-xs">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#b9cbe3] sm:text-xs">
             {item.projectSlug ? <Link href={`/du-an/${item.projectSlug}`}>{item.projectName ?? "Dự án"}</Link> : <span>Căn hộ</span>} / {item.name}
           </p>
           {item.isSold ? (
@@ -82,7 +82,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               Đã bán
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-3 max-w-4xl font-display text-[2.2rem] leading-none text-[#16233a] sm:text-[2.95rem]">
+          <h1 className="hero-animate hero-animate-delay-2 mt-3 max-w-4xl font-display text-[2.2rem] leading-none text-white sm:text-[2.95rem]">
             {item.name}
           </h1>
         </div>

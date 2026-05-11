@@ -66,11 +66,11 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#c4d3e6] bg-[linear-gradient(135deg,#e7d2a8_0%,#e8f0fb_44%,#c9dcf0_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(248,234,205,0.72),transparent_38%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(145,176,214,0.44),transparent_34%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#223552] bg-[linear-gradient(135deg,#12233c_0%,#1c3558_48%,#2a4a73_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(107,142,191,0.24),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(78,113,162,0.32),transparent_34%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#b9cbe3] sm:text-xs">
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
           {project.projectStatusTag ? (
@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               {getProjectDisplayStatusLabel(project.projectStatusTag)}
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-[#16233a] sm:text-[2.85rem]">
+          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-white sm:text-[2.85rem]">
             {project.name}
           </h1>
         </div>

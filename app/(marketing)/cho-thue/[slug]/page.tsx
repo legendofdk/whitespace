@@ -63,11 +63,11 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
           })
         ]}
       />
-      <section className="relative isolate overflow-hidden border-b border-[#c4d3e6] bg-[linear-gradient(135deg,#e4cea2_0%,#eaf2fc_44%,#c6d9ee_100%)] py-8 sm:py-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(247,231,199,0.72),transparent_38%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(142,173,210,0.42),transparent_34%)]" />
+      <section className="relative isolate overflow-hidden border-b border-[#223552] bg-[linear-gradient(135deg,#11213a_0%,#193253_48%,#28486f_100%)] py-8 sm:py-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(102,136,183,0.24),transparent_38%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_right,rgba(75,109,156,0.3),transparent_34%)]" />
         <div className="shell relative z-10">
-          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#6d7f97] sm:text-xs">
+          <p className="hero-animate hero-animate-delay-1 text-[11px] uppercase tracking-[0.18em] text-[#b9cbe3] sm:text-xs">
             <Link href="/cho-thue">Cho thuê</Link> / {item.name}
           </p>
           {item.isSold ? (
@@ -75,7 +75,7 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
               Đã bán
             </span>
           ) : null}
-          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-[#16233a] sm:text-[2.85rem]">
+          <h1 className="hero-animate hero-animate-delay-2 mt-2 max-w-4xl font-display text-[2.15rem] leading-none text-white sm:text-[2.85rem]">
             {item.name}
           </h1>
         </div>
