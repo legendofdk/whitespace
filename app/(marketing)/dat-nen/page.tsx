@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { ListingCard } from "@/components/cards/listing-card";
 import { FilterBar } from "@/components/shared/filter-bar";
 import { ListingShortcuts } from "@/components/shared/listing-shortcuts";
-import { getPublicLandListings, getPublicProjects, getPublicRentals } from "@/lib/public-api";
+import { getPublicLandListings, getPublicPosts, getPublicProjects, getPublicRentals } from "@/lib/public-api";
 import { toLandCardItem } from "@/lib/real-estate";
 import { buildMetadata } from "@/lib/seo";
 
@@ -21,7 +21,7 @@ export default async function LandPage({
   searchParams: Promise<{ area?: string; featured?: string; propertyType?: string; sort?: string }>;
 }) {
   const params = await searchParams;
-  const [filteredLandListings, featuredProjects, featuredLandListings, featuredRentals] = await Promise.all([
+  const [filteredLandListings, featuredProjects, featuredLandListings, featuredRentals, latestPosts] = await Promise.all([
     getPublicLandListings({
       area: params.area,
       featured: params.featured === "true" ? true : params.featured === "false" ? false : undefined,
@@ -30,11 +30,16 @@ export default async function LandPage({
     }),
     getPublicProjects({ featured: true }),
     getPublicLandListings({ featured: true }),
-    getPublicRentals({ featured: true })
+    getPublicRentals({ featured: true }),
+    getPublicPosts()
   ]);
-  const projectShortcutLinks = featuredProjects.slice(0, 5).map((project) => ({
+  const projectShortcutLinks = featuredProjects.map((project) => ({
     label: project.name,
     href: `/du-an/${project.slug}`
+  }));
+  const postShortcutLinks = latestPosts.slice(0, 5).map((post) => ({
+    label: post.title,
+    href: `/tin-tuc/${post.slug}`
   }));
   const featuredLandCounts = Array.from(
     featuredLandListings.reduce((map, item) => {
@@ -150,6 +155,10 @@ export default async function LandPage({
                   label: `${item.area} (${item.count})`,
                   href: `/cho-thue?featured=true${item.areaSlug ? `&area=${item.areaSlug}` : ""}`
                 }))
+              },
+              {
+                title: "Tin tức nổi bật",
+                links: postShortcutLinks
               }
             ]}
           />
