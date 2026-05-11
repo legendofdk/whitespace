@@ -7,7 +7,7 @@ import { Project } from "@/types";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="content-lift group flex h-full flex-col overflow-hidden rounded-[18px] border border-[#d9dce3] bg-white transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
+    <article className="content-lift group flex h-full flex-col overflow-hidden rounded-[12px] border border-[#d9dce3] bg-white transition duration-500 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(15,23,42,0.08)]">
       <div className="relative h-56 overflow-hidden border-b border-[#e8ebf0]">
         <Image src={project.thumbnail} alt={project.name} fill className="object-cover transition duration-700 group-hover:scale-[1.03]" />
       </div>
@@ -26,7 +26,7 @@ export function ProjectCard({ project }: { project: Project }) {
               {project.cardMeta || project.address}
             </p>
           </div>
-          <div className="shrink-0 rounded-xl bg-[linear-gradient(135deg,#fff5e1,#ffebbb)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.12)] ring-1 ring-[#ecd39c]">
+          <div className="shrink-0 rounded-[10px] bg-[linear-gradient(135deg,#fff5e1,#ffebbb)] px-3 py-2 text-right shadow-[0_10px_20px_rgba(191,138,38,0.12)] ring-1 ring-[#ecd39c]">
             <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#9f6a13]">Giá bán</p>
             <p className="mt-1 text-lg font-black leading-none text-[#8b5a16]">{project.price}</p>
           </div>

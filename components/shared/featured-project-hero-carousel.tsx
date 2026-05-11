@@ -57,7 +57,7 @@ export function FeaturedProjectHeroCarousel({ projects }: { projects: Project[] 
       <div className="relative z-10 flex min-h-[420px] flex-col justify-end p-6 text-white sm:min-h-[500px] sm:p-8 lg:p-10">
         <div
           key={activeProject.id}
-          className="max-w-3xl rounded-[28px] bg-[linear-gradient(135deg,rgba(8,18,37,0.62),rgba(8,18,37,0.34))] px-5 py-4 shadow-[0_18px_50px_rgba(8,18,37,0.16)] backdrop-blur-[6px] animate-[fade-slide-in_700ms_ease-out] sm:px-6 sm:py-5"
+          className="max-w-3xl rounded-[16px] bg-[linear-gradient(135deg,rgba(8,18,37,0.62),rgba(8,18,37,0.34))] px-5 py-4 shadow-[0_18px_50px_rgba(8,18,37,0.16)] backdrop-blur-[6px] animate-[fade-slide-in_700ms_ease-out] sm:px-6 sm:py-5"
         >
           {activeProject.projectStatusTag ? (
             <span className={`mb-4 inline-flex rounded-full px-4 py-1.5 text-sm font-semibold ${getProjectDisplayStatusClassName(activeProject.projectStatusTag)}`}>
