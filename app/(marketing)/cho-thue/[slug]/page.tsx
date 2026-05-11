@@ -81,10 +81,10 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
         </div>
       </section>
 
-      <section className="shell pb-[var(--space-section-y-tight)] pt-5 sm:pt-6">
-        <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="space-y-4.5">
-            <div className="section-reveal rounded-[26px] border border-line bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.6),transparent_34%),linear-gradient(135deg,#ffffff,#f3f7fc)] px-5 py-4.5 shadow-[0_18px_34px_rgba(24,39,75,0.08)]">
+      <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
+        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
+            <div className="section-reveal rounded-[26px] border border-line bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.6),transparent_34%),linear-gradient(135deg,#ffffff,#f3f7fc)] px-5 py-5 shadow-[0_18px_34px_rgba(24,39,75,0.08)]">
               <p className="text-[11px] font-bold uppercase tracking-[0.32em] text-navy">Giá thuê tham khảo</p>
               <p className="mt-2.5 font-display text-[2.6rem] leading-[0.95] text-ink sm:text-[2.9rem]">
                 {item.price}
@@ -94,7 +94,7 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
               </div>
             </div>
 
-            <div className="section-reveal grid gap-2 sm:grid-cols-2">
+            <div className="section-reveal grid gap-2.5 sm:grid-cols-2">
               {[
                 ["Khu vực", item.area],
                 ["Địa chỉ", item.address],
@@ -110,9 +110,9 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
               ))}
             </div>
 
-            <div className="section-reveal rounded-[32px] border border-line bg-white p-5">
+            <div className="section-reveal rounded-[32px] border border-line bg-white p-6">
               <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
-              <div className="mt-4 space-y-2.5 text-sm leading-7 text-steel">
+              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
                 <HtmlContent html={item.description} className="max-w-none" />
                 <p>Thông tin nhanh: {item.cardMeta}.</p>
                 <p>Phù hợp nhu cầu khai thác thương mại, văn phòng giao dịch hoặc mở rộng điểm kinh doanh tại khu Đông Hà Nội.</p>
@@ -120,7 +120,7 @@ export default async function RentalDetailPage({ params }: { params: Promise<{ s
             </div>
           </div>
 
-          <aside className="space-y-4">
+          <aside className="space-y-5">
             <div className="section-reveal rounded-[26px] border border-[#34475b] bg-[#213143] px-5 py-4 text-white">
               <p className="text-xs uppercase tracking-[0.2em] text-[#dbe4ef]">Hotline / Zalo</p>
               <p className="mt-2.5 text-[2rem] font-semibold leading-none">{item.hotline}</p>
