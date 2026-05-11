@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { Project } from "@/types";
 
@@ -13,6 +13,18 @@ export function FeaturedProjectHeroCarousel({ projects }: { projects: Project[] 
   }
 
   const activeProject = projects[activeIndex];
+
+  useEffect(() => {
+    if (projects.length <= 1) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current === projects.length - 1 ? 0 : current + 1));
+    }, 5000);
+
+    return () => window.clearInterval(intervalId);
+  }, [projects.length]);
 
   function goToPrevious() {
     setActiveIndex((current) => (current === 0 ? projects.length - 1 : current - 1));
@@ -29,13 +41,16 @@ export function FeaturedProjectHeroCarousel({ projects }: { projects: Project[] 
           src={activeProject.thumbnail}
           alt={activeProject.name}
           fill
-          className="object-cover"
+          className="scale-[1.015] object-cover transition-transform duration-[1600ms] ease-out"
         />
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.04)_0%,rgba(8,18,37,0.08)_55%,rgba(8,18,37,0.28)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,18,37,0.04)_0%,rgba(8,18,37,0.08)_55%,rgba(8,18,37,0.28)_100%)] transition-opacity duration-700" />
 
       <div className="relative z-10 flex min-h-[420px] flex-col justify-end p-6 text-white sm:min-h-[500px] sm:p-8 lg:p-10">
-        <div className="max-w-3xl">
+        <div
+          key={activeProject.id}
+          className="max-w-3xl animate-[fade-slide-in_700ms_ease-out]"
+        >
           <h2 className="font-display text-[2.25rem] leading-[1.02] text-white sm:text-[3.25rem]">
             {activeProject.name}
           </h2>
