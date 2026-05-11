@@ -36,7 +36,7 @@ export default async function HomePage() {
   const secondaryCtaClassName =
     "inline-flex rounded-full border border-[#0066cc] px-6 py-3 text-sm font-medium tracking-[-0.224px] text-[#0066cc] transition active:scale-95 hover:bg-[#0066cc] hover:text-white";
   const cardCtaClassName =
-    "inline-flex rounded-full border border-[#0066cc] px-4 py-2.5 text-sm font-medium tracking-[-0.224px] text-[#0066cc] transition hover:bg-[#0066cc] hover:text-white";
+    "inline-flex rounded-[8px] border border-[#0066cc] px-4 py-2.5 text-sm font-medium tracking-[-0.224px] text-[#0066cc] transition hover:bg-[#0066cc] hover:text-white";
 
   return (
     <main>

@@ -74,7 +74,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             <Link href="/du-an">Dự án</Link> / {project.name}
           </p>
           {project.projectStatusTag ? (
-            <span className={`hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] ${getProjectDisplayStatusClassName(project.projectStatusTag)}`}>
+            <span className={`hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-[8px] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] ${getProjectDisplayStatusClassName(project.projectStatusTag)}`}>
               {getProjectDisplayStatusLabel(project.projectStatusTag)}
             </span>
           ) : null}
@@ -92,7 +92,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               <p className="mt-2 font-display text-[2.35rem] leading-[0.95] text-[#7f4f10] drop-shadow-[0_8px_18px_rgba(191,138,38,0.14)] sm:text-[2.6rem]">
                 {project.price}
               </p>
-              <div className="mt-2.5 inline-flex rounded-full bg-white/78 px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#9f6a13] ring-1 ring-[#e7c06d]">
+              <div className="mt-2.5 inline-flex rounded-[8px] bg-white/78 px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#9f6a13] ring-1 ring-[#e7c06d]">
                 Bảng giá cập nhật liên tục
               </div>
             </div>
@@ -142,7 +142,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               <h2 className="font-display text-4xl text-ink">Tiện ích nổi bật</h2>
               <div className="mt-5 flex flex-wrap gap-2.5">
                 {project.utilities.map((utility) => (
-                  <span key={utility} className="rounded-full bg-mist px-3.5 py-1.5 text-sm font-medium text-navy">
+                  <span key={utility} className="rounded-[8px] bg-mist px-3.5 py-1.5 text-sm font-medium text-navy">
                     {utility}
                   </span>
                 ))}

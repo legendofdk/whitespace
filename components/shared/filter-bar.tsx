@@ -44,7 +44,7 @@ export function FilterBar({
           : "lg:grid-cols-[auto]";
 
   const fieldClassName =
-    "relative flex h-12 items-center rounded-[20px] border border-line/80 bg-white/92 px-3.5 text-sm text-ink shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition focus-within:border-navy/60 focus-within:shadow-[0_14px_30px_rgba(15,23,42,0.08)]";
+    "relative flex h-12 items-center rounded-[8px] border border-line/80 bg-white/92 px-3.5 text-sm text-ink shadow-[0_8px_24px_rgba(15,23,42,0.04)] transition focus-within:border-navy/60 focus-within:shadow-[0_14px_30px_rgba(15,23,42,0.08)]";
 
   return (
     <form action={action} className="glass-card p-4 sm:p-5">
@@ -83,7 +83,7 @@ export function FilterBar({
             </span>
           </label>
         ))}
-        <button className="h-12 self-end rounded-full bg-[#0066cc] px-5 text-sm font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
+        <button className="h-12 self-end rounded-[8px] bg-[#0066cc] px-5 text-sm font-medium tracking-[-0.224px] text-white transition active:scale-95 hover:bg-[#0071e3]">
           Tìm kiếm
         </button>
       </div>

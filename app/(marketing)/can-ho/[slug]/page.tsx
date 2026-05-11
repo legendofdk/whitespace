@@ -78,7 +78,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
             {item.projectSlug ? <Link href={`/du-an/${item.projectSlug}`}>{item.projectName ?? "Dự án"}</Link> : <span>Căn hộ</span>} / {item.name}
           </p>
           {item.isSold ? (
-            <span className="hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-full bg-[#ffe0dc] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#8f2d1f]">
+            <span className="hero-animate hero-animate-delay-1 mt-3 inline-flex rounded-[8px] bg-[#ffe0dc] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#8f2d1f]">
               Đã bán
             </span>
           ) : null}
@@ -96,7 +96,7 @@ export default async function ApartmentDetailPage({ params }: { params: Promise<
               <p className="mt-3 font-display text-5xl leading-none text-[#21314a]">
                 {item.price}
               </p>
-              <div className="mt-3 inline-flex rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#56739f] ring-1 ring-[#c8d6ee]">
+              <div className="mt-3 inline-flex rounded-[8px] bg-white/80 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-[#56739f] ring-1 ring-[#c8d6ee]">
                 Căn hộ theo từng mã căn
               </div>
               <p className="mt-3 text-sm leading-7 text-[#59708f]">

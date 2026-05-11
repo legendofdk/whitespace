@@ -40,7 +40,7 @@ export function ProjectApartmentList({ apartments }: { apartments: ApartmentItem
           Hiển thị {visibleApartments.length ? startIndex + 1 : 0}-{Math.min(startIndex + PAGE_SIZE, filteredApartments.length)} /{" "}
           {filteredApartments.length} căn
         </p>
-        <label className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink">
+        <label className="inline-flex w-fit items-center gap-2 rounded-[8px] border border-line bg-white px-3.5 py-1.5 text-[13px] font-medium text-ink">
           <input
             type="checkbox"
             checked={availableOnly}
@@ -65,14 +65,14 @@ export function ProjectApartmentList({ apartments }: { apartments: ApartmentItem
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-[1.45rem] font-semibold leading-none text-ink">{apartment.name}</p>
                       {apartment.isSold ? (
-                        <span className="rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-red-700">
+                        <span className="rounded-[8px] bg-red-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-red-700">
                           Đã bán
                         </span>
                       ) : null}
                     </div>
                     <p className="mt-0.5 text-[13px] text-steel">{apartment.rentalType ?? "Căn hộ"}</p>
                   </div>
-                  <span className="inline-flex w-fit rounded-full border border-ink px-3 py-1.5 text-[13px] font-semibold text-ink">
+                  <span className="inline-flex w-fit rounded-[8px] border border-ink px-3 py-1.5 text-[13px] font-semibold text-ink">
                     Xem chi tiết
                   </span>
                 </div>
@@ -104,8 +104,8 @@ export function ProjectApartmentList({ apartments }: { apartments: ApartmentItem
                     onClick={() => handlePageChange(page)}
                     className={
                       isActive
-                        ? "rounded-full border border-ink bg-ink px-3.5 py-1.5 text-[13px] font-semibold text-white"
-                        : "rounded-full border border-line bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink transition hover:border-ink/30"
+                        ? "rounded-[8px] border border-ink bg-ink px-3.5 py-1.5 text-[13px] font-semibold text-white"
+                        : "rounded-[8px] border border-line bg-white px-3.5 py-1.5 text-[13px] font-semibold text-ink transition hover:border-ink/30"
                     }
                   >
                     {page}
