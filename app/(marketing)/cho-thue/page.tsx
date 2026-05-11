@@ -112,8 +112,8 @@ export default async function RentalPage({
       </section>
 
       <section className="shell pb-12 pt-5 sm:pb-14 sm:pt-6">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-2">
+        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_248px]">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {filteredRentals.map((item) => {
               const cardItem = toRentalCardItem(item);
 
