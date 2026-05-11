@@ -1,5 +1,6 @@
 import { ContentStatus } from "@prisma/client";
 import { z } from "zod";
+const projectDisplayStatusSchema = z.enum(["NONE", "ON_SALE", "COMING_SOON", "HANDED_OVER"]);
 export const listProjectsQuerySchema = z.object({
     search: z.string().trim().optional(),
     area: z.string().trim().optional(),
@@ -37,5 +38,6 @@ export const projectBodySchema = z.object({
     latitude: z.coerce.number().optional(),
     longitude: z.coerce.number().optional(),
     badge: z.string().optional(),
-    cardMeta: z.string().optional()
+    cardMeta: z.string().optional(),
+    projectStatusTag: projectDisplayStatusSchema.optional()
 });

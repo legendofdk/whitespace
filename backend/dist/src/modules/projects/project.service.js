@@ -43,6 +43,7 @@ function mapProject(item) {
         hotline: item.hotline,
         badge: item.badge,
         cardMeta: item.cardMeta,
+        projectStatusTag: item.projectStatusTag,
         apartments: item.apartments.map((apartment) => ({
             id: apartment.id,
             name: apartment.name,
@@ -51,7 +52,8 @@ function mapProject(item) {
             size: apartment.size,
             rentalType: apartment.rentalType,
             status: apartment.status,
-            isFeatured: apartment.isFeatured
+            isFeatured: apartment.isFeatured,
+            isSold: apartment.isSold
         })),
         thumbnail: item.thumbnail,
         bannerImage: item.bannerImage,
@@ -166,6 +168,7 @@ export async function createProject(input) {
             longitude: input.longitude,
             badge: input.badge,
             cardMeta: input.cardMeta,
+            projectStatusTag: input.projectStatusTag === "NONE" ? null : input.projectStatusTag,
             utilities: {
                 create: input.utilities.map((label) => ({ label }))
             },
@@ -234,6 +237,7 @@ export async function updateProject(slug, input) {
             longitude: input.longitude,
             badge: input.badge,
             cardMeta: input.cardMeta,
+            projectStatusTag: input.projectStatusTag === "NONE" ? null : input.projectStatusTag,
             utilities: {
                 deleteMany: {},
                 create: input.utilities.map((label) => ({ label }))

@@ -24,6 +24,7 @@ export const rentalBodySchema = z.object({
     description: z.string().min(1),
     mapEmbedUrl: z.string().url().optional(),
     isFeatured: z.boolean().default(false),
+    isSold: z.boolean().default(false),
     seoTitle: z.string().optional(),
     seoDescription: z.string().optional(),
     status: z.nativeEnum(ContentStatus).default(ContentStatus.DRAFT),
