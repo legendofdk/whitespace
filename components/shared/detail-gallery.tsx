@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 type DetailGalleryProps = {
   title: string;
@@ -23,6 +24,12 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
   const [activeImage, setActiveImage] = useState<string | null>(null);
   const [slideState, setSlideState] = useState<SlideState>(null);
   const [isSlideActive, setIsSlideActive] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   if (!images.length) {
     return null;
@@ -92,11 +99,7 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
 
         <div className="mt-6">
           <div className="relative overflow-hidden rounded-[28px]">
-            <button
-              type="button"
-              onClick={() => setActiveImage(currentImage)}
-              className="relative block h-64 w-full overflow-hidden bg-mist text-left sm:h-80"
-            >
+            <div className="relative h-64 overflow-hidden bg-mist sm:h-80">
               <div className="absolute inset-0">
                 {slideState ? (
                   <>
@@ -138,7 +141,13 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
                   <Image src={currentImage} alt={title} fill className="object-cover" />
                 )}
               </div>
-            </button>
+              <button
+                type="button"
+                onClick={() => setActiveImage(currentImage)}
+                aria-label={`Phóng to ảnh ${title}`}
+                className="absolute inset-0 z-[1]"
+              />
+            </div>
 
             {images.length > 1 ? (
               <>
@@ -186,27 +195,30 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
         </div>
       </div>
 
-      {activeImage ? (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4"
-          onClick={() => setActiveImage(null)}
-        >
-          <button
-            type="button"
-            aria-label="Close image"
-            onClick={() => setActiveImage(null)}
-            className="absolute right-5 top-5 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white"
-          >
-            Đóng
-          </button>
-          <div
-            className="relative h-[75vh] w-full max-w-6xl overflow-hidden rounded-[28px]"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <Image src={activeImage} alt={title} fill className="object-contain" />
-          </div>
-        </div>
-      ) : null}
+      {mounted && activeImage
+        ? createPortal(
+            <div
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/92 p-4 sm:p-6"
+              onClick={() => setActiveImage(null)}
+            >
+              <button
+                type="button"
+                aria-label="Đóng ảnh"
+                onClick={() => setActiveImage(null)}
+                className="absolute right-5 top-5 z-[10000] rounded-[8px] border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur"
+              >
+                Đóng
+              </button>
+              <div
+                className="relative h-[88vh] w-full max-w-[92vw] overflow-hidden rounded-[18px]"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <Image src={activeImage} alt={title} fill className="object-contain" />
+              </div>
+            </div>,
+            document.body
+          )
+        : null}
     </>
   );
 }

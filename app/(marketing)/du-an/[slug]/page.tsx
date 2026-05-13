@@ -116,6 +116,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
+            <div className="section-reveal rounded-[18px] border border-line p-6">
+              <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
+              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
+                <HtmlContent html={project.description} className="max-w-none" />
+                <p>Sản phẩm: {project.productTypes.join(", ")}.</p>
+                {project.villaInfo ? <p>Biệt thự: {project.villaInfo}.</p> : null}
+                {project.shophouseInfo ? <p>Shophouse: {project.shophouseInfo}.</p> : null}
+              </div>
+            </div>
+
           </div>
 
           <aside className="space-y-5">
@@ -132,16 +142,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
             <div className="section-reveal">
               <DetailGallery title={project.name} images={project.gallery.length ? project.gallery : [project.thumbnail]} />
-            </div>
-
-            <div className="section-reveal rounded-[18px] border border-line p-6">
-              <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
-              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
-                <HtmlContent html={project.description} className="max-w-none" />
-                <p>Sản phẩm: {project.productTypes.join(", ")}.</p>
-                {project.villaInfo ? <p>Biệt thự: {project.villaInfo}.</p> : null}
-                {project.shophouseInfo ? <p>Shophouse: {project.shophouseInfo}.</p> : null}
-              </div>
             </div>
 
             <div className="section-reveal">
