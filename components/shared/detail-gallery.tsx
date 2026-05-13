@@ -198,14 +198,14 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
       {mounted && activeImage
         ? createPortal(
             <div
-              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/92 p-4 sm:p-6"
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-[rgba(3,8,18,0.96)] p-4 backdrop-blur-md sm:p-6"
               onClick={() => setActiveImage(null)}
             >
               <button
                 type="button"
                 aria-label="Đóng ảnh"
                 onClick={() => setActiveImage(null)}
-                className="absolute right-5 top-5 z-[10000] inline-flex h-12 w-12 items-center justify-center rounded-[10px] border border-white/70 bg-black/72 text-[30px] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur"
+                className="absolute right-5 top-5 z-[10000] inline-flex h-12 w-12 items-center justify-center rounded-[10px] border border-white/24 bg-white text-[28px] font-semibold leading-none text-[#111827] shadow-[0_12px_30px_rgba(0,0,0,0.45)]"
               >
                 ×
               </button>
