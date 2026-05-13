@@ -126,15 +126,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="section-reveal rounded-[18px] border border-line p-6">
-              <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
-              {project.apartments?.length ? (
-                <ProjectApartmentList apartments={project.apartments} />
-              ) : (
-                <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
-              )}
-            </div>
-
           </div>
 
           <aside className="space-y-5">
@@ -163,6 +154,15 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               />
             </div>
           </aside>
+        </div>
+
+        <div className="section-reveal mt-7 rounded-[18px] border border-line p-6">
+          <h2 className="font-display text-4xl text-ink">Danh sách căn hộ</h2>
+          {project.apartments?.length ? (
+            <ProjectApartmentList apartments={project.apartments} />
+          ) : (
+            <p className="mt-6 text-sm leading-7 text-steel">Dự án này chưa có căn hộ nào được cập nhật.</p>
+          )}
         </div>
       </section>
     </main>
