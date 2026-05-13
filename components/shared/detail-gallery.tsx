@@ -205,9 +205,9 @@ export function DetailGallery({ title, images }: DetailGalleryProps) {
                 type="button"
                 aria-label="Đóng ảnh"
                 onClick={() => setActiveImage(null)}
-                className="absolute right-5 top-5 z-[10000] rounded-[8px] border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur"
+                className="absolute right-5 top-5 z-[10000] inline-flex h-12 w-12 items-center justify-center rounded-[10px] border border-white/70 bg-black/72 text-[30px] font-semibold leading-none text-white shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur"
               >
-                Đóng
+                ×
               </button>
               <div
                 className="relative h-[88vh] w-full max-w-[92vw] overflow-hidden rounded-[18px]"
