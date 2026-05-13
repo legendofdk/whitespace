@@ -46,6 +46,8 @@ type BackendProject = {
     price: string;
     size?: string | null;
     rentalType?: string | null;
+    thumbnail: string;
+    bannerImage?: string | null;
     status: string;
     isFeatured: boolean;
     isSold: boolean;
@@ -194,6 +196,8 @@ function mapProject(item: BackendProject): Project {
       price: apartment.price,
       size: apartment.size ?? undefined,
       rentalType: apartment.rentalType ?? undefined,
+      thumbnail: apartment.thumbnail,
+      bannerImage: apartment.bannerImage ?? undefined,
       status: apartment.status,
       isFeatured: apartment.isFeatured,
       isSold: apartment.isSold

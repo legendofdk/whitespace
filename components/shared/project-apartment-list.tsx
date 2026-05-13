@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -53,40 +54,47 @@ export function ProjectApartmentList({ apartments }: { apartments: ApartmentItem
 
       {visibleApartments.length ? (
         <>
-          <div className="mt-3 grid gap-2.5">
+          <div className="mt-3 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
             {visibleApartments.map((apartment) => (
               <Link
                 key={apartment.id}
                 href={`/can-ho/${apartment.slug}`}
-                className="content-lift rounded-[18px] border border-line bg-mist/70 p-3.5 transition hover:border-ink/20 hover:bg-mist"
+                className="content-lift group overflow-hidden rounded-[18px] border border-line bg-white transition hover:-translate-y-1 hover:border-ink/20 hover:shadow-[0_18px_34px_rgba(15,23,42,0.08)]"
               >
-                <div className="flex flex-col gap-2.5 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="min-w-0">
+                <div className="relative h-52 overflow-hidden">
+                  <Image
+                    src={apartment.bannerImage ?? apartment.thumbnail}
+                    alt={apartment.name}
+                    fill
+                    className="object-cover transition duration-700 group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,16,31,0.04)_0%,rgba(7,16,31,0.2)_48%,rgba(7,16,31,0.84)_100%)]" />
+                  <div className="absolute inset-x-0 bottom-0 p-4 text-white">
                     <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-[1.45rem] font-semibold leading-none text-ink">{apartment.name}</p>
+                      <p className="font-display text-[1.9rem] leading-[1.02]">{apartment.name}</p>
                       {apartment.isSold ? (
-                        <span className="rounded-[8px] bg-red-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-red-700">
+                        <span className="rounded-[8px] bg-[#ffe0dc] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#8f2d1f]">
                           Đã bán
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-0.5 text-[13px] text-steel">{apartment.rentalType ?? "Căn hộ"}</p>
+                    <div className="mt-3 flex flex-wrap gap-4 text-[13px] font-semibold text-white/92">
+                      <span>{apartment.price}</span>
+                      <span>{formatAreaValue(apartment.size ?? "Đang cập nhật")}</span>
+                    </div>
                   </div>
-                  <span className="inline-flex w-fit rounded-[8px] border border-ink px-3 py-1.5 text-[13px] font-semibold text-ink">
-                    Xem chi tiết
-                  </span>
                 </div>
-                <div className="mt-3 grid gap-2.5 border-t border-line/80 pt-2.5 sm:grid-cols-2">
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-steel">Giá</p>
-                    <p className="mt-0.5 text-[1rem] font-semibold leading-5 text-ink">{apartment.price}</p>
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-steel">Diện tích</p>
-                    <p className="mt-0.5 text-[1rem] font-semibold leading-5 text-ink">
-                      {formatAreaValue(apartment.size ?? "Đang cập nhật")}
+                <div className="space-y-3 p-4">
+                  <div className="space-y-2 text-[15px] text-steel">
+                    <p className="line-clamp-2">{apartment.rentalType ?? "Căn hộ thuộc dự án"}</p>
+                    <p className="line-clamp-2">Thuộc dự án hiện tại</p>
+                    <p>
+                      <span className="font-semibold text-ink">Loại diện tích:</span> {formatAreaValue(apartment.size ?? "Đang cập nhật")}
                     </p>
                   </div>
+                  <span className="inline-flex rounded-[8px] border border-ink px-3 py-1.5 text-[13px] font-semibold text-ink transition group-hover:bg-ink group-hover:text-white">
+                    Xem chi tiết
+                  </span>
                 </div>
               </Link>
             ))}

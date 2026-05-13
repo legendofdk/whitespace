@@ -43,6 +43,8 @@ export type Project = RealEstateBase & {
     price: string;
     size?: string;
     rentalType?: string;
+    thumbnail: string;
+    bannerImage?: string;
     status: string;
     isFeatured: boolean;
     isSold: boolean;
