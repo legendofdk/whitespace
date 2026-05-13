@@ -85,7 +85,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       </section>
 
       <section className="shell pb-[var(--space-section-y-tight)] pt-7 sm:pt-8">
-        <div className="grid gap-7 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-7 lg:grid-cols-[0.92fr_1.08fr]">
           <div className="space-y-6">
             <div className="section-reveal rounded-[16px] border border-[#e4c58a] bg-[radial-gradient(circle_at_top_left,#fff8e8,transparent_45%),linear-gradient(135deg,#fff4dc,#ffe6aa)] px-5 py-4 shadow-[0_16px_28px_rgba(191,138,38,0.14)]">
               <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#9f6a13]">Giá bán tham khảo</p>
@@ -116,16 +116,6 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <div className="section-reveal rounded-[18px] border border-line p-6">
-              <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
-              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
-                <HtmlContent html={project.description} className="max-w-none" />
-                <p>Sản phẩm: {project.productTypes.join(", ")}.</p>
-                {project.villaInfo ? <p>Biệt thự: {project.villaInfo}.</p> : null}
-                {project.shophouseInfo ? <p>Shophouse: {project.shophouseInfo}.</p> : null}
-              </div>
-            </div>
-
           </div>
 
           <aside className="space-y-5">
@@ -142,6 +132,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
 
             <div className="section-reveal">
               <DetailGallery title={project.name} images={project.gallery.length ? project.gallery : [project.thumbnail]} />
+            </div>
+
+            <div className="section-reveal rounded-[18px] border border-line p-6">
+              <h2 className="font-display text-4xl text-ink">Thông tin chi tiết</h2>
+              <div className="mt-5 space-y-3 text-sm leading-7 text-steel">
+                <HtmlContent html={project.description} className="max-w-none" />
+                <p>Sản phẩm: {project.productTypes.join(", ")}.</p>
+                {project.villaInfo ? <p>Biệt thự: {project.villaInfo}.</p> : null}
+                {project.shophouseInfo ? <p>Shophouse: {project.shophouseInfo}.</p> : null}
+              </div>
             </div>
 
             <div className="section-reveal">
