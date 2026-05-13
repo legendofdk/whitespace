@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { formatAreaValue } from "@/lib/format-area";
 import type { Project } from "@/types";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 9;
 
 type ApartmentItem = NonNullable<Project["apartments"]>[number];
 
@@ -54,7 +54,7 @@ export function ProjectApartmentList({ apartments }: { apartments: ApartmentItem
 
       {visibleApartments.length ? (
         <>
-          <div className="mt-4 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {visibleApartments.map((apartment) => (
               <Link
                 key={apartment.id}
@@ -87,7 +87,9 @@ export function ProjectApartmentList({ apartments }: { apartments: ApartmentItem
                     <p>
                       <span className="font-semibold text-ink">Giá:</span> {apartment.price}
                     </p>
-                    <p className="line-clamp-2">{apartment.rentalType ?? "Căn hộ thuộc dự án"}</p>
+                    <p className="line-clamp-2">
+                      <span className="font-semibold text-ink">Loại hình:</span> {apartment.rentalType ?? "Căn hộ thuộc dự án"}
+                    </p>
                     <p>
                       <span className="font-semibold text-ink">Diện tích:</span> {formatAreaValue(apartment.size ?? "Đang cập nhật")}
                     </p>
